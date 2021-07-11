@@ -1,3 +1,5 @@
+import 'package:etrafficcomplainer/screens/login/binding/login_binding.dart';
+import 'package:etrafficcomplainer/screens/login/view/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:etrafficcomplainer/screens/home/binding/home_binding.dart';
@@ -22,8 +24,9 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: "/home", page: ()=>HomeScreen(), binding: HomeBinding()),
         GetPage(name: "/register", page: ()=>RegisterScreen(), binding: RegisterBinding()),
+        GetPage(name: "/login", page: ()=>LoginScreen(), binding: LoginBinding()),
       ],
-      initialRoute: "/register",
+      initialRoute: "/login",
     );
   }
 }
