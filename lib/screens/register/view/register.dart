@@ -15,6 +15,7 @@ class RegisterScreen extends GetView<RegisterController> {
   final hintTextColor = Color(0xFFB2B5C4);
   final dropshadowColor = Color(0x1A4B4B4B);
   final redColor = Color(0xFFFF6666);
+  final popupBarrierColor = Color(0xFF151929).withOpacity(0.4);
 
   Widget getTextFormField({required String hint, required TextEditingController controller, required Function validator, double paddingTop = 16.0}){
     return Padding(
@@ -148,53 +149,82 @@ class RegisterScreen extends GetView<RegisterController> {
                                       return null;
                                     }
                                   }, paddingTop: 32),
-                                  getTextFormField(hint: "Nearest Police Division", controller: controller.npdController, validator: (value){
-                                    if(value!.isEmpty){
-                                      return "Required!";
-                                    }
-                                    else{
-                                      return null;
-                                    }
-                                  }),
-                                  DropdownSearch<String>(
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 16.0),
+                                    child: DropdownSearch<String>(
                                       mode: Mode.DIALOG,
-                                      showSelectedItem: true,
-                                      items: ["Brazil", "Italia", "Tunisia", 'Canada'],
-                                      hint: "country in menu mode",
+                                      showSelectedItem: false,
+                                      items: ["PD001 - Colombo Police Head Office","PD001 - Colombo Police Head Office","PD001 - Colombo Police Head Office","PD001 - Colombo Police Head Office","PD001 - Colombo Police Head Office","PD001 - Colombo Police Head Office","PD001 - Colombo Police Head Office","PD001 - Colombo Police Head Office", "Italia", "Tunisia", 'Canada'],
+                                      hint: "Nearest Police Division",
                                       onChanged: print,
-                                      selectedItem: "Brazil",
-                                    showSearchBox: true,
-                                    dropdownSearchBaseStyle: TextStyle(fontSize: 18.0,),
-                                    dropdownSearchDecoration: InputDecoration(
-                                      fillColor: whiteColor,
-                                      filled: true,
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: secondaryColor, width: 1.0),
-                                        borderRadius: const BorderRadius.all(
-                                          const Radius.circular(8.0),
-                                        ),
+                                      showSearchBox: true,
+                                      popupBarrierColor: popupBarrierColor,
+                                      popupShape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(8.0))
                                       ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: borderEnableColor, width: 1.0),
-                                        borderRadius: const BorderRadius.all(
-                                          const Radius.circular(8.0),
+                                      searchFieldProps: TextFieldProps(cursorColor: secondaryColor, cursorWidth: 1.5),
+                                      searchBoxDecoration: InputDecoration(
+                                        suffixIcon: Icon(CupertinoIcons.search_circle_fill, size: 19, color: primaryColor,),
+                                        fillColor: whiteColor,
+                                        filled: true,
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(color: secondaryColor, width: 1),
+                                          borderRadius: const BorderRadius.all(
+                                            const Radius.circular(8.0),
+                                          ),
                                         ),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: redColor, width: 1.0),
-                                        borderRadius: const BorderRadius.all(
-                                          const Radius.circular(8.0),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(color: borderEnableColor, width: 1.5),
+                                          borderRadius: const BorderRadius.all(
+                                            const Radius.circular(8.0),
+                                          ),
                                         ),
+                                        contentPadding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 16.0),
+                                        hintText: "Search",
+                                        hintStyle: TextStyle(color: hintTextColor, fontSize: 14.0),
                                       ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: redColor, width: 1.0),
-                                        borderRadius: const BorderRadius.all(
-                                          const Radius.circular(8.0),
+                                      searchBoxController: controller.npdController,
+                                      dropdownSearchBaseStyle: TextStyle(fontSize: 18.0,),
+                                      dropDownButton: Icon(CupertinoIcons.chevron_down_circle_fill, size: 19, color: primaryColor,),
+                                      dropdownSearchDecoration: InputDecoration(
+                                        fillColor: whiteColor,
+                                        filled: true,
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(color: secondaryColor, width: 1.0),
+                                          borderRadius: const BorderRadius.all(
+                                            const Radius.circular(8.0),
+                                          ),
                                         ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(color: borderEnableColor, width: 1.0),
+                                          borderRadius: const BorderRadius.all(
+                                            const Radius.circular(8.0),
+                                          ),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(color: redColor, width: 1.0),
+                                          borderRadius: const BorderRadius.all(
+                                            const Radius.circular(8.0),
+                                          ),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(color: redColor, width: 1.0),
+                                          borderRadius: const BorderRadius.all(
+                                            const Radius.circular(8.0),
+                                          ),
+                                        ),
+                                        errorStyle: TextStyle(color: redColor),
+                                        contentPadding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
+                                        hintStyle: TextStyle(color: hintTextColor, fontSize: 14.0),
                                       ),
-                                      errorStyle: TextStyle(color: redColor),
-                                      contentPadding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
-                                      hintStyle: TextStyle(color: hintTextColor, fontSize: 14.0),
+                                      validator: (value){
+                                        if(value == null || value.isEmpty){
+                                          return "Required!";
+                                        }
+                                        else{
+                                          return null;
+                                        }
+                                      },
                                     ),
                                   ),
                                   getTextFormField(hint: "National ID", controller: controller.nicController, validator: (value){

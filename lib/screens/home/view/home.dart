@@ -18,29 +18,13 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Obx(
-              () => Text(
-                "${homeController.count}",
-                style: TextStyle(fontSize: 24),
-              ),
-            ),
-            FlatButton(
-              onPressed: () {
-                // Get.toNamed("/detail");
-                // print(apiService.fetchTextFromApi());
-                homeController.increment();
-              },
-              child: Text("Increment"),
-              color: Colors.black,
-              textColor: Colors.white,
-            ),
             FlatButton(
               onPressed: () {
                 // Get.defaultDialog(title: "This is dialog");
                 //Get.snackbar("Title", "This is getx snackbar", snackPosition: SnackPosition.BOTTOM);
-                Get.toNamed("/detail");
+                Get.toNamed("/login");
               },
-              child: Text("Go to detail"),
+              child: Text("Logout"),
               color: Colors.red,
               textColor: Colors.white,
             )

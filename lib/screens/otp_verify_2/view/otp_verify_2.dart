@@ -218,7 +218,7 @@ class _OTPFormState extends State<OTPForm> {
             ),
             child: TextButton(
               onPressed: (){
-                otp2Controller.otpVerify(otpCodeController.text);
+                otp2Controller.otpVerify(otpCodeController.text, context);
               },
               style: ButtonStyle(
                   elevation: MaterialStateProperty.all(0),

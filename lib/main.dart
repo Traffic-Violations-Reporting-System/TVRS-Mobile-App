@@ -49,7 +49,7 @@ void configLoading() {
     ..backgroundColor = Colors.white70
     ..indicatorColor = Color(0xFF414B70)
     ..textColor = Color(0xFF8E92A8)
-    ..maskColor = Colors.black.withOpacity(0.6)
+    ..maskColor = Color(0xFF151929).withOpacity(0.4)
     ..maskType = EasyLoadingMaskType.custom
     ..textPadding = EdgeInsets.only(top: 6,bottom: 15)
     ..contentPadding = EdgeInsets.symmetric(vertical: 10, horizontal: 10)

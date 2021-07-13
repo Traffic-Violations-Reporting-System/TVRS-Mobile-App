@@ -30,8 +30,12 @@ class OTPVerifyScreen extends StatelessWidget {
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
-              leading: BackButton(
-                  color: primaryColor
+              leading: IconButton(
+                  icon: Icon(CupertinoIcons.clear),
+                  color: primaryColor,
+                  onPressed: (){
+
+               },
               ),
             ),
             body: Padding(

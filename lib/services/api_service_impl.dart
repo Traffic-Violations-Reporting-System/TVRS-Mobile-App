@@ -3,7 +3,7 @@
 import 'package:dio/dio.dart';
 import 'package:etrafficcomplainer/services/api_service.dart';
 
-const BASE_URL = "https://etrafficcomplainerbackendtest4.free.beeceptor.com/api/v1/mobile";
+const BASE_URL = "http://3.142.238.131:4000/api/v1/mobile";
 const API_KEY = "fb12a31181aa4498ba52877978913275";
 
 class ApiServiceImpl implements ApiService{
