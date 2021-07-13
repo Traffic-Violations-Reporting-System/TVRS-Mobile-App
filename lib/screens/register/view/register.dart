@@ -1,19 +1,22 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:etrafficcomplainer/screens/register/controller/register_controller.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 class RegisterScreen extends GetView<RegisterController> {
 
   final primaryColor = Color(0xFF414B70);
+  final secondaryColor = Color(0xFF8E92A8);
   final whiteColor = Color(0xFFFFFFFF);
   final backgroundGradient = LinearGradient(colors: [Colors.white, Color(0xFFEEEEEC)], begin: Alignment.topCenter, end: Alignment.bottomCenter,);
-  final primaryLiteColor = Color(0xFF8E92A8);
   final borderEnableColor = Color(0xFFF6F6F6);
   final hintTextColor = Color(0xFFB2B5C4);
   final dropshadowColor = Color(0x1A4B4B4B);
+  final redColor = Color(0xFFFF6666);
 
-  Widget getTextFormField({required String hint, required TextEditingController controller, required Function validator, double paddingTop = 8.0}){
+  Widget getTextFormField({required String hint, required TextEditingController controller, required Function validator, double paddingTop = 16.0}){
     return Padding(
       padding: EdgeInsets.only(top: paddingTop),
       child: TextFormField(
@@ -22,7 +25,7 @@ class RegisterScreen extends GetView<RegisterController> {
           fillColor: whiteColor,
           filled: true,
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: primaryLiteColor, width: 1.0),
+            borderSide: BorderSide(color: secondaryColor, width: 1.0),
             borderRadius: const BorderRadius.all(
               const Radius.circular(8.0),
             ),
@@ -33,6 +36,19 @@ class RegisterScreen extends GetView<RegisterController> {
               const Radius.circular(8.0),
             ),
           ),
+          errorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: redColor, width: 1.0),
+            borderRadius: const BorderRadius.all(
+              const Radius.circular(8.0),
+            ),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: redColor, width: 1.0),
+            borderRadius: const BorderRadius.all(
+              const Radius.circular(8.0),
+            ),
+          ),
+          errorStyle: TextStyle(color: redColor),
           contentPadding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
           hintText: hint,
           hintStyle: TextStyle(color: hintTextColor, fontSize: 14.0),
@@ -89,17 +105,27 @@ class RegisterScreen extends GetView<RegisterController> {
                             alignment: Alignment.topCenter,
                             child: Padding(
                               padding: const EdgeInsets.only(top: 15.0),
-                              child: TextButton.icon(
-                                style: TextButton.styleFrom(
+                              child:   OutlinedButton(
+                                child: Row(
+                                  children: [
+                                    Text('Login'),
+                                    SizedBox(width: 3,),
+                                    Icon(CupertinoIcons.lock_shield_fill, color: primaryColor, size: 19,)
+                                  ],
+                                ),
+                                style: OutlinedButton.styleFrom(
                                   primary: primaryColor,
-                                  textStyle: const TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.w500
+                                  backgroundColor: Colors.transparent,
+                                  side: BorderSide(color: primaryColor, width: 1),
+                                  textStyle: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18,
                                   ),
                                 ),
-                                icon: const Text('Login'),
-                                label: const Icon(Icons.login_rounded),
-                                onPressed: () {},
+                                onPressed: () {
+                                  FocusScope.of(context).unfocus();
+                                  controller.loginUser();
+                                },
                               ),
                             ),
                           ),
@@ -122,14 +148,6 @@ class RegisterScreen extends GetView<RegisterController> {
                                       return null;
                                     }
                                   }, paddingTop: 32),
-                                  getTextFormField(hint: "NIC/Licence", controller: controller.nicController, validator: (value){
-                                    if(value!.isEmpty){
-                                      return "Required!";
-                                    }
-                                    else{
-                                      return null;
-                                    }
-                                  }),
                                   getTextFormField(hint: "Nearest Police Division", controller: controller.npdController, validator: (value){
                                     if(value!.isEmpty){
                                       return "Required!";
@@ -138,8 +156,49 @@ class RegisterScreen extends GetView<RegisterController> {
                                       return null;
                                     }
                                   }),
-                                  getTextFormField(hint: "Email", controller: controller.emailController, validator: (value){
-                                    if(!GetUtils.isEmail(value!)){
+                                  DropdownSearch<String>(
+                                      mode: Mode.DIALOG,
+                                      showSelectedItem: true,
+                                      items: ["Brazil", "Italia", "Tunisia", 'Canada'],
+                                      hint: "country in menu mode",
+                                      onChanged: print,
+                                      selectedItem: "Brazil",
+                                    showSearchBox: true,
+                                    dropdownSearchBaseStyle: TextStyle(fontSize: 18.0,),
+                                    dropdownSearchDecoration: InputDecoration(
+                                      fillColor: whiteColor,
+                                      filled: true,
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: secondaryColor, width: 1.0),
+                                        borderRadius: const BorderRadius.all(
+                                          const Radius.circular(8.0),
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: borderEnableColor, width: 1.0),
+                                        borderRadius: const BorderRadius.all(
+                                          const Radius.circular(8.0),
+                                        ),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: redColor, width: 1.0),
+                                        borderRadius: const BorderRadius.all(
+                                          const Radius.circular(8.0),
+                                        ),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: redColor, width: 1.0),
+                                        borderRadius: const BorderRadius.all(
+                                          const Radius.circular(8.0),
+                                        ),
+                                      ),
+                                      errorStyle: TextStyle(color: redColor),
+                                      contentPadding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
+                                      hintStyle: TextStyle(color: hintTextColor, fontSize: 14.0),
+                                    ),
+                                  ),
+                                  getTextFormField(hint: "National ID", controller: controller.nicController, validator: (value){
+                                    if(value!.isEmpty){
                                       return "Required!";
                                     }
                                     else{
@@ -179,6 +238,7 @@ class RegisterScreen extends GetView<RegisterController> {
                                     ),
                                     child: TextButton(
                                       onPressed: () {
+                                        FocusScope.of(context).unfocus();
                                         controller.registerUser();
                                       },
                                       style: ButtonStyle(
@@ -210,6 +270,7 @@ class RegisterScreen extends GetView<RegisterController> {
                                       ],
                                     ),
                                   ),
+                                  SizedBox(height: 25),
                               ],
                             ),
 

@@ -11,6 +11,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Home Screen"),
+        backwardsCompatibility: false,
       ),
       body: Container(
         width: double.infinity,
