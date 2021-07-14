@@ -90,11 +90,11 @@ class RegisterScreen extends GetView<RegisterController> {
                             alignment: Alignment.bottomLeft,
                             child: Container(
                               margin: EdgeInsets.only(left: 30,),
-                              height: 90,
-                              width: 90,
+                              height: 80,
+                              width: 120,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage("assets/img/logo.png"),
+                                    image: AssetImage("assets/img/e_logo.png"),
                                     fit: BoxFit.contain,
                                     alignment: Alignment.center
                                 ),
@@ -154,7 +154,16 @@ class RegisterScreen extends GetView<RegisterController> {
                                     child: DropdownSearch<String>(
                                       mode: Mode.DIALOG,
                                       showSelectedItem: false,
-                                      items: ["PD001 - Colombo Police Head Office","PD001 - Colombo Police Head Office","PD001 - Colombo Police Head Office","PD001 - Colombo Police Head Office","PD001 - Colombo Police Head Office","PD001 - Colombo Police Head Office","PD001 - Colombo Police Head Office","PD001 - Colombo Police Head Office", "Italia", "Tunisia", 'Canada'],
+                                      items: [
+                                        "PD001 - Colombo Police Head Office",
+                                        "PD002 - Matara Police Devision",
+                                        "PD003 - Galle Police Devision",
+                                        "PD004 - Hambanthota Police Devision",
+                                        "PD005 - Kalutara Police Devision",
+                                        "PD006 - Dickwella Police Devision",
+                                        "PD007 - Kamburupitiya Police Devision",
+                                        "PD008 - Akuressa Police Devision",
+                                      ],
                                       hint: "Nearest Police Division",
                                       onChanged: print,
                                       showSearchBox: true,
@@ -231,6 +240,9 @@ class RegisterScreen extends GetView<RegisterController> {
                                     if(value!.isEmpty){
                                       return "Required!";
                                     }
+                                    else if(value.length < 10 || value.length > 12 || value.length == 11){
+                                      return "Invalid NIC number!";
+                                    }
                                     else{
                                       return null;
                                     }
@@ -239,13 +251,19 @@ class RegisterScreen extends GetView<RegisterController> {
                                     if(value!.isEmpty){
                                       return "Required!";
                                     }
+                                    else if(value.length < 8){
+                                      return "Password must be 8 characters long.";
+                                    }
                                     else{
                                       return null;
                                     }
                                   }),
                                   getTextFormField(hint: "Confirm Password", controller: controller.confirmPasswordController, validator: (value){
-                                    if(value!.isEmpty){
+                                    if(value != null && value!.isEmpty){
                                       return "Required!";
+                                    }
+                                    else if(value != controller.passwordController.text){
+                                      return "Password mismatched!";
                                     }
                                     else{
                                       return null;

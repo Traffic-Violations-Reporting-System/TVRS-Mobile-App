@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:etrafficcomplainer/screens/otp_verify/controller/otp_verify_controller.dart';
 
@@ -139,6 +140,7 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
                 hintStyle: TextStyle(color: hintTextColor, fontSize: 14.0),
               ),
               keyboardType: TextInputType.phone,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               controller: mnoController,
               validator: (value){
                 if(value!.length != 10){

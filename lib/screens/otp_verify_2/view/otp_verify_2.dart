@@ -1,4 +1,5 @@
 import 'package:etrafficcomplainer/screens/otp_verify_2/controller/otp_verify_2_controller.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -105,7 +106,11 @@ class OTPVerify2Screen extends StatelessWidget {
                         ),
                         children: <TextSpan>[
                           TextSpan(text: 'Didn\'t receive the code?  '),
-                          TextSpan(text: 'RESEND', style: new TextStyle(color: primaryColor, fontWeight: FontWeight.w500, decoration: TextDecoration.underline,)
+                          TextSpan(text: 'RESEND', style: new TextStyle(color: primaryColor, fontWeight: FontWeight.w500, decoration: TextDecoration.underline,),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                  otp2Controller.resendOTP();
+                              }
                           ),
                         ],
                       ),
@@ -218,7 +223,7 @@ class _OTPFormState extends State<OTPForm> {
             ),
             child: TextButton(
               onPressed: (){
-                otp2Controller.otpVerify(otpCodeController.text, context);
+                otp2Controller.otpVerify(otpCodeController.text);
               },
               style: ButtonStyle(
                   elevation: MaterialStateProperty.all(0),

@@ -41,7 +41,7 @@ class RegisterController extends GetxController{
       try {
 
         final response = await _apiservice.postRequest("/user/register", {
-          'fullName': fullNameController.text.trim(),
+          'fullname': fullNameController.text.trim(),
           'nic': nicController.text.trim(),
           'regionid': npdController.text.split(" - ")[0].trim(),
           'password': confirmPasswordController.text,
