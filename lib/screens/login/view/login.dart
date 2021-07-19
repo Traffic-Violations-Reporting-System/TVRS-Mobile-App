@@ -1,6 +1,7 @@
 import 'package:etrafficcomplainer/screens/login/controller/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:string_validator/string_validator.dart';
 
 class LoginScreen extends GetView<LoginController> {
 
@@ -119,8 +120,14 @@ class LoginScreen extends GetView<LoginController> {
                                 if(value!.isEmpty){
                                   return "Required!";
                                 }
-                                else{
+                                else if(value.length == 10 && (value.contains('V') || value.contains('v')) && (value.indexOf('V')==9 || value.indexOf('v')==9) ){
+                                  return "null";
+                                }
+                                else if(value.length == 12 && isNumeric(value)){
                                   return null;
+                                }
+                                else{
+                                  return "Invalid nic number!";
                                 }
                               }),
                               getTextFormField(hint: "Password", controller: controller.passwordController, validator: (value){

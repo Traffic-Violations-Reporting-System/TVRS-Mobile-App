@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:etrafficcomplainer/screens/otp_verify/controller/otp_verify_controller.dart';
+import 'package:string_validator/string_validator.dart';
 
 class OTPVerifyScreen extends StatelessWidget {
 
@@ -144,6 +145,9 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
               controller: mnoController,
               validator: (value){
                 if(value!.length != 10){
+                  return "Invalid mobile number.";
+                }
+                else if(!isNumeric(value)){
                   return "Invalid mobile number.";
                 }
                 return null;

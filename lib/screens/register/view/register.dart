@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:etrafficcomplainer/screens/register/controller/register_controller.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:string_validator/string_validator.dart';
+
 
 class RegisterScreen extends GetView<RegisterController> {
 
@@ -145,10 +147,15 @@ class RegisterScreen extends GetView<RegisterController> {
                                     if(value!.isEmpty){
                                       return "Required!";
                                     }
-                                    else{
+                                    else if(isAlpha(value) || value.contains(' ')) {
                                       return null;
                                     }
+                                    else{
+                                      return "invalid name format!";
+                                    }
+
                                   }, paddingTop: 32),
+
                                   Padding(
                                     padding: const EdgeInsets.only(top: 16.0),
                                     child: DropdownSearch<String>(
@@ -240,11 +247,14 @@ class RegisterScreen extends GetView<RegisterController> {
                                     if(value!.isEmpty){
                                       return "Required!";
                                     }
-                                    else if(value.length < 10 || value.length > 12 || value.length == 11){
-                                      return "Invalid NIC number!";
+                                    else if(value.length == 10 && (value.contains('V') || value.contains('v')) && (value.indexOf('V')==9 || value.indexOf('v')==9) ){
+                                      return "null";
+                                    }
+                                    else if(value.length == 12 && isNumeric(value)){
+                                      return null;
                                     }
                                     else{
-                                      return null;
+                                      return "Invalid nic number!";
                                     }
                                   }),
                                   getTextFormField(hint: "Password", controller: controller.passwordController, validator: (value){
@@ -253,6 +263,15 @@ class RegisterScreen extends GetView<RegisterController> {
                                     }
                                     else if(value.length < 8){
                                       return "Password must be 8 characters long.";
+                                    }
+                                    else if(isNumeric(value) || isAlpha(value)){
+                                      return "Password must have both characters and numbers";
+                                    }
+                                    else if(isLowercase(value)){
+                                      return "password must have uppercase letters";
+                                    }
+                                    else if(isUppercase(value)){
+                                      return "password must have lowercase letters";
                                     }
                                     else{
                                       return null;
