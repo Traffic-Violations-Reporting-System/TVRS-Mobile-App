@@ -1,7 +1,8 @@
-class ApiService{
-  String fetchTextFromApi(){
-    return "this text is loaded from backend";
-  }
+import 'package:dio/dio.dart';
 
-  int value = 2;
+abstract class ApiService{
+  void init();
+
+  Future<Response> getRequest(String url);
+  Future<Response> postRequest(String url, dynamic data);
 }
