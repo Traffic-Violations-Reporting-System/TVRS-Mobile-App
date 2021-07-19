@@ -71,7 +71,7 @@ class RegisterController extends GetxController{
   }
 
   void loginUser(){
-
+    Get.toNamed("/login");
   }
 
 }

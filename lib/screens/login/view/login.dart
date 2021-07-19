@@ -11,6 +11,7 @@ class LoginScreen extends GetView<LoginController> {
   final borderEnableColor = Color(0xFFF6F6F6);
   final hintTextColor = Color(0xFFB2B5C4);
   final dropshadowColor = Color(0x1A4B4B4B);
+  final redColor = Color(0xFFFF6666);
 
   Widget getTextFormField({required String hint, required TextEditingController controller, required Function validator, double paddingTop = 8.0}){
     return Padding(
@@ -32,6 +33,19 @@ class LoginScreen extends GetView<LoginController> {
               const Radius.circular(8.0),
             ),
           ),
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: redColor, width: 1.0),
+            borderRadius: const BorderRadius.all(
+              const Radius.circular(8.0),
+            ),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: redColor, width: 1.0),
+            borderRadius: const BorderRadius.all(
+              const Radius.circular(8.0),
+            ),
+          ),
+          errorStyle: TextStyle(color: redColor),
           contentPadding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
           hintText: hint,
           hintStyle: TextStyle(color: hintTextColor, fontSize: 14.0),
@@ -73,11 +87,11 @@ class LoginScreen extends GetView<LoginController> {
                         alignment: Alignment.bottomLeft,
                         child: Container(
                           margin: EdgeInsets.only(left: 30,),
-                          height: 90,
-                          width: 90,
+                          height: 80,
+                          width: 120,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage("assets/img/logo.png"),
+                                image: AssetImage("assets/img/e_logo.png"),
                                 fit: BoxFit.contain,
                                 alignment: Alignment.center
                             ),
@@ -101,8 +115,8 @@ class LoginScreen extends GetView<LoginController> {
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
 
-                              getTextFormField(hint: "Email", controller: controller.emailController, validator: (value){
-                                if(!GetUtils.isEmail(value!)){
+                              getTextFormField(hint: "National ID", controller: controller.usernameController, validator: (value){
+                                if(value!.isEmpty){
                                   return "Required!";
                                 }
                                 else{
@@ -159,7 +173,7 @@ class LoginScreen extends GetView<LoginController> {
 
 
                               ),
-                              SizedBox(height:200 ,),
+                              SizedBox(height:170 ,),
                               new Divider()
                             ],
 
@@ -187,7 +201,7 @@ class LoginScreen extends GetView<LoginController> {
 
                             child: TextButton(
                               onPressed: () {
-
+                              //  Get.offNamed("/register");
                               },
                               style: ButtonStyle(
                                   elevation: MaterialStateProperty.all(0),

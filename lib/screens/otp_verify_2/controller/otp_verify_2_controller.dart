@@ -50,7 +50,7 @@ class OTPVerify2Controller extends GetxController{
         }
         else if (response.statusCode == 400) {
           EasyLoading.dismiss();
-          Get.snackbar("OTP Failed!", "Otp verification failed. Please click resend and try again.", snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 3), colorText: redColor, icon: Icon(CupertinoIcons.info_circle_fill, color: redColor), backgroundColor: Colors.white70, overlayColor: Color(0xFF151929).withOpacity(0.4) , overlayBlur: 0.001, isDismissible: true, margin: EdgeInsets.only(left: 5.0, right: 5.0, bottom: 10.0));
+          Get.snackbar("OTP Failed!", "Otp verification failed. Please try again.", snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 3), colorText: redColor, icon: Icon(CupertinoIcons.info_circle_fill, color: redColor), backgroundColor: Colors.white70, overlayColor: Color(0xFF151929).withOpacity(0.4) , overlayBlur: 0.001, isDismissible: true, margin: EdgeInsets.only(left: 5.0, right: 5.0, bottom: 10.0));
           print('${response.statusCode} : ${response.data.toString()}');
         }
         else{
@@ -60,7 +60,9 @@ class OTPVerify2Controller extends GetxController{
         }
 
       } catch (error) {
+        EasyLoading.dismiss();
         print(error);
+        Get.snackbar("OTP Failed!", "Otp verification failed. Please try again.", snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 3), colorText: redColor, icon: Icon(CupertinoIcons.info_circle_fill, color: redColor), backgroundColor: Colors.white70, overlayColor: Color(0xFF151929).withOpacity(0.4) , overlayBlur: 0.001, isDismissible: true, margin: EdgeInsets.only(left: 5.0, right: 5.0, bottom: 10.0));
       }
     }else{
       isTapVerifyBtn.value = true;
