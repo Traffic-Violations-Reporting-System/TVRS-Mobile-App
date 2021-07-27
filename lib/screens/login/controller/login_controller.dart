@@ -32,6 +32,10 @@ class LoginController extends GetxController{
   }
 
   void loginUser() async{
+
+    Get.offNamed("/home");
+    return;
+
     print(usernameController.value);
     print(passwordController.value);
 

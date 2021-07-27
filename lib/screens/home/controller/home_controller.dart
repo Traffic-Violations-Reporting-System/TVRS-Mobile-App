@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
 
 class HomeController extends GetxController{
-  var count = 0.obs;
+  var pageIndex = 0;
 
-  increment(){
-    count++;
+  void changePageIndex(int index){
+    pageIndex = index;
+    update();
   }
 }
