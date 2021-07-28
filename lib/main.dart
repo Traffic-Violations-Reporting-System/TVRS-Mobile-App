@@ -1,9 +1,11 @@
+import 'package:camera/camera.dart';
 import 'package:etrafficcomplainer/screens/login/binding/login_binding.dart';
 import 'package:etrafficcomplainer/screens/login/view/login.dart';
 import 'package:etrafficcomplainer/screens/otp_verify/binding/otp_verify_binding.dart';
 import 'package:etrafficcomplainer/screens/otp_verify/view/otp_verify.dart';
 import 'package:etrafficcomplainer/screens/otp_verify_2/binding/otp_verify_2_binding.dart';
 import 'package:etrafficcomplainer/screens/otp_verify_2/view/otp_verify_2.dart';
+import 'package:etrafficcomplainer/screens/pages/record/view/record.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -12,7 +14,12 @@ import 'package:etrafficcomplainer/screens/home/view/home.dart';
 import 'package:etrafficcomplainer/screens/register/binding/register_binding.dart';
 import 'package:etrafficcomplainer/screens/register/view/register.dart';
 
-void main() {
+Future<void> main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  cameras = await availableCameras();
+
   runApp(MyApp());
   configLoading();
 }
@@ -34,6 +41,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/login", page: ()=>LoginScreen(), binding: LoginBinding()),
         GetPage(name: "/otp_verify", page: ()=>OTPVerifyScreen(), binding: OTPVerifyBinding()),
         GetPage(name: "/otp_verify_2", page: ()=>OTPVerify2Screen(), binding: OTPVerify2Binding()),
+        GetPage(name: "/record", page: ()=>RecordScreen()),
       ],
       initialRoute: "/register",
       builder: EasyLoading.init(),
