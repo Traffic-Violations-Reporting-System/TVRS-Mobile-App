@@ -1,8 +1,13 @@
-import 'dart:math';
+
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:etrafficcomplainer/screens/pages/record/controller/record_controller.dart';
+import 'package:etrafficcomplainer/screens/pages/record/view/VideoView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:path/path.dart';
 
 late List<CameraDescription> cameras;
@@ -17,10 +22,9 @@ class RecordScreen extends StatefulWidget {
 class _RecordScreenState extends State<RecordScreen> {
   late CameraController _cameraController;
   late Future<void> cameraValue;
-  bool isRecoring = false;
-  bool flash = false;
   bool iscamerafront = true;
   double transform = 0;
+  final controller = Get.put(RecordController());
 
   final redColor = Color(0xFFFF6666);
   final greenColor = Color(0xFF67C2C9);
@@ -32,7 +36,7 @@ class _RecordScreenState extends State<RecordScreen> {
   @override
   void initState() {
     super.initState();
-    _cameraController = CameraController(cameras[0], ResolutionPreset.high);
+    _cameraController = CameraController(cameras[0], ResolutionPreset.veryHigh);
     cameraValue = _cameraController.initialize();
   }
 
@@ -40,12 +44,34 @@ class _RecordScreenState extends State<RecordScreen> {
   void dispose() {
     super.dispose();
     _cameraController.dispose();
+    controller.disposeRecording();
+    print("RecordScreen is displose!");
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
+    print("Record Screen is Build!");
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        automaticallyImplyLeading: false,
+        middle: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(CupertinoIcons.videocam_circle, color: primaryColor,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5.0),
+              child: Icon(CupertinoIcons.chevron_right_2, color: secondaryColor, size: 10,),
+            ),
+            Icon(CupertinoIcons.crop, color: secondaryColor,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5.0),
+              child: Icon(CupertinoIcons.chevron_right_2, color: secondaryColor, size: 10,),
+            ),
+            Icon(CupertinoIcons.cloud_upload, color: secondaryColor,),
+          ],
+        ),
+      ),
+      child: Stack(
         children: [
           FutureBuilder(
               future: cameraValue,
@@ -65,16 +91,21 @@ class _RecordScreenState extends State<RecordScreen> {
             bottom: 0.0,
             child: Container(
               height: 108,
-              color: primaryColor,
+              color: primaryColor.withOpacity(0.7),
               width: MediaQuery.of(context).size.width,
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: 4.0,),
-                  Text("10:00", style: TextStyle(
-                    color: whiteColor,
-                  ),),
+                  Obx(()=>controller.isRecording.isTrue?
+                  Text(
+                      controller.time.value,
+                      style: TextStyle(
+                        color: whiteColor,
+                      )
+                  ) : SizedBox(height: 16,)
+                  ),
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -82,16 +113,14 @@ class _RecordScreenState extends State<RecordScreen> {
                     children: [
                       IconButton(
                         iconSize: 48,
-                        icon: Icon(
-                          flash ? CupertinoIcons.light_max : CupertinoIcons.light_min,
+                        icon: Obx(() => Icon(
+                          controller.flash.isTrue ? CupertinoIcons.light_max : CupertinoIcons.light_min,
                           color: Colors.white,
-                          size: 28,
-                        ),
+                          size: 30,
+                        )),
                         onPressed: () {
-                          setState(() {
-                            flash = !flash;
-                          });
-                          flash
+                          controller.flash.toggle();
+                          controller.flash.isTrue
                               ? _cameraController
                               .setFlashMode(FlashMode.torch)
                               : _cameraController.setFlashMode(FlashMode.off);
@@ -99,7 +128,7 @@ class _RecordScreenState extends State<RecordScreen> {
                       IconButton(
                           padding: EdgeInsets.all(0.0),
                           iconSize: 80,
-                          icon: isRecoring
+                          icon: Obx(() => controller.isRecording.isTrue
                               ? Stack(
                               alignment: Alignment.center,
                               children: [
@@ -113,8 +142,8 @@ class _RecordScreenState extends State<RecordScreen> {
                                   color: Colors.white,
                                 ),
                               ]
-                            )
-                            : Stack(
+                              )
+                              : Stack(
                               alignment: Alignment.center,
                               children: [
                                 Icon(
@@ -126,64 +155,62 @@ class _RecordScreenState extends State<RecordScreen> {
                                   color: redColor,
                                   size: 25,
                                 ),
-                              ]
-                            ),
+                              ])
+                          ),
                           onPressed: () async {
-                            setState(() {
-                              isRecoring = true;
-                            });
+                            controller.isRecording.toggle();
+                            if(controller.isRecording.isTrue){
+                              await _cameraController.startVideoRecording();
+                              controller.timer.start();
+                            }else{
+                              controller.timer.reset();
+                              XFile videopath = await _cameraController.stopVideoRecording();
+                              print("video path is: "+videopath.path);
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (builder) => VideoViewPage(
+                                            file: File(videopath.path),
+                                          )));
+                              //video save to phone after edit
+                              // await GallerySaver.saveVideo(video.path);
+                              // File(video.path).deleteSync();
+                            }
                           }),
-                      // GestureDetector(
-                      //   onLongPress: () async {
-                      //     await _cameraController.startVideoRecording();
-                      //     setState(() {
-                      //       isRecoring = true;
-                      //     });
-                      //   },
-                      //   onLongPressUp: () async {
-                      //     XFile videopath =
-                      //     await _cameraController.stopVideoRecording();
-                      //     setState(() {
-                      //       isRecoring = false;
-                      //     });
-                      //     // Navigator.push(
-                      //     //     context,
-                      //     //     MaterialPageRoute(
-                      //     //         builder: (builder) => VideoViewPage(
-                      //     //               path: videopath.path,
-                      //     //             )));
-                      //   },
-                      //   onTap: () {
-                      //     if (!isRecoring) takePhoto(context);
-                      //   },
-                      //   child: isRecoring
-                      //       ? Icon(
-                      //     Icons.radio_button_on,
-                      //     color: Colors.red,
-                      //     size: 80,
-                      //   )
-                      //       : Icon(
-                      //     Icons.panorama_fish_eye,
-                      //     color: Colors.white,
-                      //     size: 80,
-                      //   ),
-                      // ),
-                      IconButton(
+                      Obx(() => controller.isRecording.isTrue? IconButton(
                           iconSize: 48,
-                          icon: Icon(
+                          icon: controller.isPaused.isTrue? Icon(
+                            CupertinoIcons.play_circle,
+                            color: Colors.white,
+                          )
+                              :
+                          Icon(
                             CupertinoIcons.pause_circle,
                             color: Colors.white,
                           ),
                           onPressed: () async {
-                            setState(() {
-                              iscamerafront = !iscamerafront;
-                              transform = transform + pi;
-                            });
-                            int cameraPos = iscamerafront ? 0 : 1;
-                            _cameraController = CameraController(
-                                cameras[cameraPos], ResolutionPreset.high);
-                            cameraValue = _cameraController.initialize();
-                          }),
+                            !controller.isPaused.isTrue? controller.timer.pause() : controller.timer.start();
+                            controller.isPaused.toggle();
+                          })
+                          :
+                          IconButton(
+                            iconSize: 48,
+                            icon: controller.isPaused.isTrue? Icon(
+                              CupertinoIcons.camera_rotate_fill,
+                              color: Colors.white,
+                              size: 30,
+                          )
+                              :
+                          Icon(
+                            CupertinoIcons.camera_rotate,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                          onPressed: () async {
+                            !controller.isPaused.isTrue? controller.timer.pause() : controller.timer.start();
+                            controller.isPaused.toggle();
+                          })
+                      ),
                     ],
                   ),
                 ],
@@ -193,15 +220,5 @@ class _RecordScreenState extends State<RecordScreen> {
         ],
       ),
     );
-  }
-
-  void takePhoto(BuildContext context) async {
-    XFile file = await _cameraController.takePicture();
-    // Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (builder) => CameraViewPage(
-    //               path: file.path,
-    //             )));
   }
 }

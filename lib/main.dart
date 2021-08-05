@@ -5,6 +5,7 @@ import 'package:etrafficcomplainer/screens/otp_verify/binding/otp_verify_binding
 import 'package:etrafficcomplainer/screens/otp_verify/view/otp_verify.dart';
 import 'package:etrafficcomplainer/screens/otp_verify_2/binding/otp_verify_2_binding.dart';
 import 'package:etrafficcomplainer/screens/otp_verify_2/view/otp_verify_2.dart';
+import 'package:etrafficcomplainer/screens/pages/record/binding/record_binding.dart';
 import 'package:etrafficcomplainer/screens/pages/record/view/record.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -41,7 +42,6 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/login", page: ()=>LoginScreen(), binding: LoginBinding()),
         GetPage(name: "/otp_verify", page: ()=>OTPVerifyScreen(), binding: OTPVerifyBinding()),
         GetPage(name: "/otp_verify_2", page: ()=>OTPVerify2Screen(), binding: OTPVerify2Binding()),
-        GetPage(name: "/record", page: ()=>RecordScreen()),
       ],
       initialRoute: "/register",
       builder: EasyLoading.init(),
