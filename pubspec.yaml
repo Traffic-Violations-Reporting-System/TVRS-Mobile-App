@@ -33,6 +33,10 @@ dependencies:
   pin_code_fields: ^7.2.0
   dio: ^4.0.0
   dropdown_search: ^0.6.3
+  chewie: ^1.2.2
+  video_player: ^2.1.12
+  geolocator: ^7.3.1
+  location: ^4.3.0
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +59,7 @@ flutter:
     - assets/img/back_vec_2.png
     - assets/img/logo.png
     - assets/img/e_logo.png
+    - assets/videos/intro.mp4
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

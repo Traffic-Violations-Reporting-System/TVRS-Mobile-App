@@ -166,9 +166,14 @@ class LoginScreen extends GetView<LoginController> {
                               ),
                               SizedBox(height: 21),
                               Container(
-                                child: new InkWell(
-                                  child: new Text('forgot your password?',style: TextStyle(color: Color(0xFF414B70)),),
-
+                                child: TextButton(
+                                  style: ButtonStyle(
+                                    foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                                  ),
+                                  onPressed: () {
+                                    controller.forgotPasswordPage();
+                                  },
+                                  child: Text('TextButton'),
                                 ),
 
 

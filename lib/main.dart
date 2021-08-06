@@ -1,9 +1,14 @@
+
 import 'package:etrafficcomplainer/screens/login/binding/login_binding.dart';
 import 'package:etrafficcomplainer/screens/login/view/login.dart';
 import 'package:etrafficcomplainer/screens/otp_verify/binding/otp_verify_binding.dart';
 import 'package:etrafficcomplainer/screens/otp_verify/view/otp_verify.dart';
 import 'package:etrafficcomplainer/screens/otp_verify_2/binding/otp_verify_2_binding.dart';
 import 'package:etrafficcomplainer/screens/otp_verify_2/view/otp_verify_2.dart';
+import 'package:etrafficcomplainer/screens/pages/record/binding/get_location_binding.dart';
+import 'package:etrafficcomplainer/screens/pages/record/binding/lodge_complain_binding.dart';
+import 'package:etrafficcomplainer/screens/pages/record/view/get_location.dart';
+import 'package:etrafficcomplainer/screens/pages/record/view/lodge_complain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -34,8 +39,11 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/login", page: ()=>LoginScreen(), binding: LoginBinding()),
         GetPage(name: "/otp_verify", page: ()=>OTPVerifyScreen(), binding: OTPVerifyBinding()),
         GetPage(name: "/otp_verify_2", page: ()=>OTPVerify2Screen(), binding: OTPVerify2Binding()),
+        GetPage(name: "/lodge_complain", page: ()=>VideoFormFieldWidget(), binding: LodgeComplainBinding()),
+        GetPage(name: "/get_location", page: ()=>LocationFieldWidget(), binding: GetLocationBinding()),
+
       ],
-      initialRoute: "/register",
+      initialRoute: "/login",
       builder: EasyLoading.init(),
     );
   }

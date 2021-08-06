@@ -18,7 +18,9 @@ class LoginController extends GetxController{
     _apiservice = Get.find<ApiServiceImpl>();
     _apiservice.init();
   }
-
+  void forgotPasswordPage(){
+    Get.toNamed("/forgot_password");
+  }
   @override
   void onInit() {
     super.onInit();
@@ -70,4 +72,5 @@ class LoginController extends GetxController{
     }
 
   }
+
 }
