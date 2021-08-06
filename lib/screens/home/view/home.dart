@@ -29,38 +29,69 @@ class HomeScreen extends StatelessWidget {
     return GetBuilder<HomeController>(
         builder: (controller) {
           return SafeArea(
-            child: Scaffold(
-              body: IndexedStack(
-                index: controller.pageIndex,
-                children: pages,
-              ),
-              bottomNavigationBar: BottomNavigationBar(
-                type: BottomNavigationBarType.fixed,
+            child: CupertinoTabScaffold(
+              tabBar: CupertinoTabBar(
                 backgroundColor: whiteColor,
-                selectedItemColor: primaryColor,
-                unselectedItemColor: secondaryColor,
+                activeColor: primaryColor,
+                inactiveColor: secondaryColor,
                 currentIndex: controller.pageIndex,
                 onTap: controller.changePageIndex,
                 items: [
-                  BottomNavigationBarItem(
-                      icon: controller.pageIndex==0? Icon(CupertinoIcons.videocam_circle_fill) : Icon(CupertinoIcons.videocam_circle),
-                      label: "Record"
-                  ),
-                  BottomNavigationBarItem(
-                      icon: controller.pageIndex==1? Icon(CupertinoIcons.exclamationmark_octagon_fill) : Icon(CupertinoIcons.exclamationmark_octagon),
-                      label: "Complaints"
-                  ),
-                  BottomNavigationBarItem(
-                      icon: controller.pageIndex==2? Icon(CupertinoIcons.person_crop_circle_fill) : Icon(CupertinoIcons.person_crop_circle),
-                      label: "My Profile"
-                  ),
-                  BottomNavigationBarItem(
-                      icon: Icon(CupertinoIcons.settings),
-                      label: "Settings"
-                  ),
+                        BottomNavigationBarItem(
+                            icon: controller.pageIndex==0? Icon(CupertinoIcons.videocam_circle_fill) : Icon(CupertinoIcons.videocam_circle),
+                            label: "Record"
+                        ),
+                        BottomNavigationBarItem(
+                            icon: controller.pageIndex==1? Icon(CupertinoIcons.exclamationmark_octagon_fill) : Icon(CupertinoIcons.exclamationmark_octagon),
+                            label: "Complaints"
+                        ),
+                        BottomNavigationBarItem(
+                            icon: controller.pageIndex==2? Icon(CupertinoIcons.person_crop_circle_fill) : Icon(CupertinoIcons.person_crop_circle),
+                            label: "My Profile"
+                        ),
+                        BottomNavigationBarItem(
+                            icon: Icon(CupertinoIcons.settings),
+                            label: "Settings"
+                        ),
                 ],
               ),
+              tabBuilder: (BuildContext context, int index) {
+                    return CupertinoTabView(
+                      builder: (context){
+                        return CupertinoPageScaffold(child: pages[index]);
+                      },
+                    );
+              },
             ),
+            // child: Scaffold(
+            //   body: pages[controller.pageIndex],
+            //   bottomNavigationBar: BottomNavigationBar(
+            //     type: BottomNavigationBarType.fixed,
+            //     backgroundColor: whiteColor,
+            //     selectedItemColor: primaryColor,
+            //     unselectedItemColor: secondaryColor,
+            //     currentIndex: controller.pageIndex,
+            //     onTap: controller.changePageIndex,
+            //     items: [
+            //       BottomNavigationBarItem(
+            //           icon: controller.pageIndex==0? Icon(CupertinoIcons.videocam_circle_fill) : Icon(CupertinoIcons.videocam_circle),
+            //           label: "Record"
+            //       ),
+            //       BottomNavigationBarItem(
+            //           icon: controller.pageIndex==1? Icon(CupertinoIcons.exclamationmark_octagon_fill) : Icon(CupertinoIcons.exclamationmark_octagon),
+            //           label: "Complaints"
+            //       ),
+            //       BottomNavigationBarItem(
+            //           icon: controller.pageIndex==2? Icon(CupertinoIcons.person_crop_circle_fill) : Icon(CupertinoIcons.person_crop_circle),
+            //           label: "My Profile"
+            //       ),
+            //       BottomNavigationBarItem(
+            //           icon: Icon(CupertinoIcons.settings),
+            //           label: "Settings"
+            //       ),
+            //     ],
+            //   ),
+            // ),
           );
         },);
   }

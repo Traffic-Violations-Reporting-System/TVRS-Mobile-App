@@ -1,10 +1,12 @@
-
+import 'package:camera/camera.dart';
 import 'package:etrafficcomplainer/screens/login/binding/login_binding.dart';
 import 'package:etrafficcomplainer/screens/login/view/login.dart';
 import 'package:etrafficcomplainer/screens/otp_verify/binding/otp_verify_binding.dart';
 import 'package:etrafficcomplainer/screens/otp_verify/view/otp_verify.dart';
 import 'package:etrafficcomplainer/screens/otp_verify_2/binding/otp_verify_2_binding.dart';
 import 'package:etrafficcomplainer/screens/otp_verify_2/view/otp_verify_2.dart';
+import 'package:etrafficcomplainer/screens/pages/record/binding/record_binding.dart';
+import 'package:etrafficcomplainer/screens/pages/record/view/record.dart';
 import 'package:etrafficcomplainer/screens/pages/record/binding/get_location_binding.dart';
 import 'package:etrafficcomplainer/screens/pages/record/binding/lodge_complain_binding.dart';
 import 'package:etrafficcomplainer/screens/pages/record/view/get_location.dart';
@@ -17,7 +19,12 @@ import 'package:etrafficcomplainer/screens/home/view/home.dart';
 import 'package:etrafficcomplainer/screens/register/binding/register_binding.dart';
 import 'package:etrafficcomplainer/screens/register/view/register.dart';
 
-void main() {
+Future<void> main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  cameras = await availableCameras();
+
   runApp(MyApp());
   configLoading();
 }
@@ -43,7 +50,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/get_location", page: ()=>LocationFieldWidget(), binding: GetLocationBinding()),
 
       ],
-      initialRoute: "/login",
+      initialRoute: "/register",
       builder: EasyLoading.init(),
     );
   }
