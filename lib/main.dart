@@ -46,7 +46,6 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/login", page: ()=>LoginScreen(), binding: LoginBinding()),
         GetPage(name: "/otp_verify", page: ()=>OTPVerifyScreen(), binding: OTPVerifyBinding()),
         GetPage(name: "/otp_verify_2", page: ()=>OTPVerify2Screen(), binding: OTPVerify2Binding()),
-        GetPage(name: "/lodge_complain", page: ()=>VideoFormFieldWidget(), binding: LodgeComplainBinding()),
         GetPage(name: "/get_location", page: ()=>LocationFieldWidget(), binding: GetLocationBinding()),
 
       ],

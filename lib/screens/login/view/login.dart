@@ -65,11 +65,11 @@ class LoginScreen extends GetView<LoginController> {
       child: Container(
         decoration: BoxDecoration(
           gradient: backgroundGradient,
-            image: DecorationImage(
-                image: AssetImage("assets/img/back_vec_1.png"),
-                fit: BoxFit.contain,
-                alignment: Alignment.topCenter
-            ),
+          image: DecorationImage(
+              image: AssetImage("assets/img/back_vec_1.png"),
+              fit: BoxFit.contain,
+              alignment: Alignment.topCenter
+          ),
         ),
 
         child: Scaffold(
@@ -166,14 +166,12 @@ class LoginScreen extends GetView<LoginController> {
                               ),
                               SizedBox(height: 21),
                               Container(
-                                child: TextButton(
-                                  style: ButtonStyle(
-                                    foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-                                  ),
-                                  onPressed: () {
-                                    controller.forgotPasswordPage();
+                                child: new InkWell(
+                                  onTap: (){
+
                                   },
-                                  child: Text('TextButton'),
+                                  child: new Text('forgot your password?',style: TextStyle(color: Color(0xFF414B70)),),
+
                                 ),
 
 
@@ -190,41 +188,41 @@ class LoginScreen extends GetView<LoginController> {
                         Text("Dont have an account?", style: TextStyle(color:primaryColor ),),
                         SizedBox(height: 15,),
                         new Container(
-                            width: double.infinity,
-                            height: 53,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(8)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: dropshadowColor,
-                                  spreadRadius: 0,
-                                  blurRadius: 20,
-                                  offset: Offset(0, 4), // changes position of shadow
-                                ),
-                              ],
-                            ),
-
-                            child: TextButton(
-                              onPressed: () {
-                              //  Get.offNamed("/register");
-                              },
-                              style: ButtonStyle(
-                                  elevation: MaterialStateProperty.all(0),
-                                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                                  backgroundColor: MaterialStateProperty.all(borderEnableColor),
-                                  foregroundColor: MaterialStateProperty.all(primaryColor),
-                                  textStyle: MaterialStateProperty.all(TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18,
-                                  ))
+                          width: double.infinity,
+                          height: 53,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: dropshadowColor,
+                                spreadRadius: 0,
+                                blurRadius: 20,
+                                offset: Offset(0, 4), // changes position of shadow
                               ),
+                            ],
+                          ),
 
-
-                              child: Text("Register"),
-
+                          child: TextButton(
+                            onPressed: () {
+                              //  Get.offNamed("/register");
+                            },
+                            style: ButtonStyle(
+                                elevation: MaterialStateProperty.all(0),
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                                backgroundColor: MaterialStateProperty.all(borderEnableColor),
+                                foregroundColor: MaterialStateProperty.all(primaryColor),
+                                textStyle: MaterialStateProperty.all(TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
+                                ))
                             ),
+
+
+                            child: Text("Register"),
 
                           ),
+
+                        ),
 
                       ],
 

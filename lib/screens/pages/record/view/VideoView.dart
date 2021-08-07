@@ -1,7 +1,10 @@
 import 'dart:io';
 
+import 'package:etrafficcomplainer/screens/pages/record/view/lodge_complain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get.dart';
 import 'package:video_trimmer/video_trimmer.dart';
 
 class VideoViewPage extends StatefulWidget {
@@ -29,12 +32,8 @@ class _VideoViewPageState extends State<VideoViewPage> {
   double _endValue = 0.0;
 
   bool _isPlaying = false;
-  bool _progressVisibility = false;
 
   Future<String?> _saveVideo() async {
-    setState(() {
-      _progressVisibility = true;
-    });
 
     String? _value;
 
@@ -42,7 +41,6 @@ class _VideoViewPageState extends State<VideoViewPage> {
         .saveTrimmedVideo(startValue: _startValue, endValue: _endValue)
         .then((value) {
       setState(() {
-        _progressVisibility = false;
         _value = value;
       });
     });
@@ -88,11 +86,29 @@ class _VideoViewPageState extends State<VideoViewPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
-          SizedBox(height: 40,),
+          SizedBox(height: 44,),
           Expanded(
             child: Stack(
                 children: [
                   VideoViewer(trimmer: _trimmer),
+                  Container(
+                    height: 23,
+                    color: redColor,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(CupertinoIcons.info_circle_fill, color: whiteColor, size: 15,),
+                        SizedBox(width: 5.0,),
+                        Text("Crop the video & try to capture hottest minute!", style: TextStyle(
+                          color: whiteColor,
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w600
+                        ),
+                          textAlign: TextAlign.center,),
+                      ],
+                    ),
+                  ),
                   Center(
                     child: IconButton(
                         padding: EdgeInsets.all(0.0),
@@ -150,76 +166,106 @@ class _VideoViewPageState extends State<VideoViewPage> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(right: 24.0, left: 24.0, top: 8.0, bottom: 12.0),
+            padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 16.0, bottom: 32.0),
             color: whiteColor,
-            child: Column(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                    color: secondaryColor.withOpacity(0.3),
-                    border: Border.all(color: secondaryColor)
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                    child: Text("You can upload only 1 minute video.\nTry to capture hottest minute of the video.", style: TextStyle(
-                      color: secondaryColor,
-                      fontSize: 14.0,
-                      fontStyle: FontStyle.italic,
-                    ),
-                    textAlign: TextAlign.center,),
-                  ),
-                ),
-                SizedBox(height: 16.0,),
-                Container(
-                  width: double.infinity,
-                  height: 53,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: dropshadowColor,
-                        spreadRadius: 0,
-                        blurRadius: 20,
-                        offset: Offset(0, 4), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: TextButton(
-                    onPressed: (){
-                      //otp2Controller.otpVerify(otpCodeController.text);
-                    },
-                    style: ButtonStyle(
-                        elevation: MaterialStateProperty.all(0),
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                        backgroundColor: MaterialStateProperty.all(redColor),
-                        foregroundColor: MaterialStateProperty.all(whiteColor),
-                        overlayColor: MaterialStateProperty.all(whiteColor.withOpacity(0.1)),
-                        textStyle: MaterialStateProperty.all(TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                        ))
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20.0),
-                          child: Text("Lodge Complain"),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(right: 20.0),
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage("assets/img/slide.png"),
-                                fit: BoxFit.contain,
-                                alignment: Alignment.center
-                            ),
-                          ),
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    height: 49,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      border: Border.all(color: primaryColor, width: 1.5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: dropshadowColor,
+                          spreadRadius: 0,
+                          blurRadius: 20,
+                          offset: Offset(0, 4), // changes position of shadow
                         ),
                       ],
+                    ),
+                    child: TextButton(
+                      onPressed: (){
+                      },
+                      style: ButtonStyle(
+                          elevation: MaterialStateProperty.all(0),
+                          shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                          backgroundColor: MaterialStateProperty.all(whiteColor),
+                          foregroundColor: MaterialStateProperty.all(primaryColor),
+                          overlayColor: MaterialStateProperty.all(primaryColor.withOpacity(0.3)),
+                          textStyle: MaterialStateProperty.all(TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                          ))
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(CupertinoIcons.square_arrow_down),
+                          SizedBox(width: 6.0,),
+                          Text("Save")
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 16.0,),
+                Expanded(
+                  child: Container(
+                    height: 49,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: dropshadowColor,
+                          spreadRadius: 0,
+                          blurRadius: 20,
+                          offset: Offset(0, 4), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        EasyLoading.show(status: "Cropping...");
+                        _saveVideo().then((value) {
+                          EasyLoading.dismiss();
+                          if(value!.isNotEmpty){
+                            print(value);
+                            final page = LodgeComplain(
+                              file: File(value),
+                            );
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (builder) => page
+                                )
+                            );
+                          }
+                        });
+                      },
+                      style: ButtonStyle(
+                          elevation: MaterialStateProperty.all(0),
+                          shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                          backgroundColor: MaterialStateProperty.all(primaryColor),
+                          foregroundColor: MaterialStateProperty.all(whiteColor),
+                          textStyle: MaterialStateProperty.all(TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                          ))
+                      ),
+                      child:  Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(CupertinoIcons.crop),
+                          SizedBox(width: 6.0,),
+                          Text("Crop")
+                        ],
+                      ),
+                      // child: Icon(CupertinoIcons.checkmark, size: 24,),
                     ),
                   ),
                 ),

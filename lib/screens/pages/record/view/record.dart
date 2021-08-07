@@ -45,7 +45,7 @@ class _RecordScreenState extends State<RecordScreen> {
     super.dispose();
     _cameraController.dispose();
     controller.disposeRecording();
-    print("RecordScreen is displose!");
+    print("RecordScreen is dispose!");
   }
 
   @override
@@ -166,12 +166,14 @@ class _RecordScreenState extends State<RecordScreen> {
                               controller.timer.reset();
                               XFile videopath = await _cameraController.stopVideoRecording();
                               print("video path is: "+videopath.path);
+                              final page = VideoViewPage(
+                                file: File(videopath.path),
+                              );
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (builder) => VideoViewPage(
-                                            file: File(videopath.path),
-                                          )));
+                                      builder: (builder) => page)
+                              );
                               //video save to phone after edit
                               // await GallerySaver.saveVideo(video.path);
                               // File(video.path).deleteSync();
