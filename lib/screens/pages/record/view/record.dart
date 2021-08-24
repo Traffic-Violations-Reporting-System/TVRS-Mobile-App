@@ -158,25 +158,26 @@ class _RecordScreenState extends State<RecordScreen> {
                               ])
                           ),
                           onPressed: () async {
-                            controller.isRecording.toggle();
-                            if(controller.isRecording.isTrue){
+                            if(controller.isRecording.isFalse){
+                              controller.isRecording.toggle();
                               await _cameraController.startVideoRecording();
                               controller.timer.start();
+                              controller.determinePosition();
                             }else{
-                              controller.timer.reset();
+                              if(controller.complainLocation == null) return;
+                              controller.isRecording.toggle();
+                              controller.timer.pause();
                               XFile videopath = await _cameraController.stopVideoRecording();
                               print("video path is: "+videopath.path);
                               final page = VideoViewPage(
-                                file: File(videopath.path),
+                                  file: File(videopath.path),
+                                  location: controller.complainLocation!
                               );
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (builder) => page)
                               );
-                              //video save to phone after edit
-                              // await GallerySaver.saveVideo(video.path);
-                              // File(video.path).deleteSync();
                             }
                           }),
                       Obx(() => controller.isRecording.isTrue? IconButton(

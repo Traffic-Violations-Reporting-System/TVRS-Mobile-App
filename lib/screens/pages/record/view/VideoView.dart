@@ -4,12 +4,15 @@ import 'package:etrafficcomplainer/screens/pages/record/view/lodge_complain.dart
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:gallery_saver/gallery_saver.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:video_trimmer/video_trimmer.dart';
 
 class VideoViewPage extends StatefulWidget {
-  const VideoViewPage({Key? key, required this.file}) : super(key: key);
+  const VideoViewPage({Key? key, required this.file, required this.location}) : super(key: key);
   final File file;
+  final Position location;
 
   @override
   _VideoViewPageState createState() => _VideoViewPageState();
@@ -63,7 +66,15 @@ class _VideoViewPageState extends State<VideoViewPage> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        automaticallyImplyLeading: false,
+        leading: IconButton(
+          padding: const EdgeInsets.all(0.0),
+          icon: Icon(CupertinoIcons.back, color: primaryColor,),
+          iconSize: 32.0,
+          alignment: Alignment.centerLeft,
+          onPressed: (){
+
+          },
+        ),
         middle: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -80,6 +91,7 @@ class _VideoViewPageState extends State<VideoViewPage> {
             Icon(CupertinoIcons.cloud_upload, color: secondaryColor,),
           ],
         ),
+        trailing: SizedBox(width: 48.0,),
       ),
       backgroundColor: Colors.black,
       child: Column(
@@ -189,7 +201,13 @@ class _VideoViewPageState extends State<VideoViewPage> {
                       ],
                     ),
                     child: TextButton(
-                      onPressed: (){
+                      onPressed: () async {
+                        EasyLoading.show(status: "Saving...");
+                        //video save
+                        await GallerySaver.saveVideo(widget.file.path);
+                        widget.file.deleteSync();
+                        EasyLoading.dismiss();
+                        //Go to draft complain view
                       },
                       style: ButtonStyle(
                           elevation: MaterialStateProperty.all(0),
@@ -237,6 +255,7 @@ class _VideoViewPageState extends State<VideoViewPage> {
                             print(value);
                             final page = LodgeComplain(
                               file: File(value),
+                              location: widget.location
                             );
                             Navigator.pushReplacement(
                                 context,

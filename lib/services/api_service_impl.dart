@@ -11,6 +11,17 @@ class ApiServiceImpl implements ApiService{
   late Dio _dio;
 
   @override
+  void init() {
+    _dio = Dio(BaseOptions(
+      baseUrl: BASE_URL,
+      //headers: {"Authorization" : "$API_KEY"}
+    ));
+
+    //initializeInterceptors();
+  }
+
+
+  @override
   Future<Response> getRequest(String url) async{
     Response response;
     try {
@@ -24,20 +35,23 @@ class ApiServiceImpl implements ApiService{
   }
 
   @override
-  void init() {
-    _dio = Dio(BaseOptions(
-        baseUrl: BASE_URL,
-        //headers: {"Authorization" : "$API_KEY"}
-    ));
-
-    //initializeInterceptors();
-  }
-
-  @override
   Future<Response> postRequest(String url, dynamic data) async{
     Response response;
     try {
       response = await _dio.post(url, data: data);
+    } on DioError catch (e) {
+      print(e.message);
+      throw Exception(e.message);
+    }
+
+    return response;
+  }
+
+  @override
+  Future<Response> putRequest(String url, dynamic data) async{
+    Response response;
+    try {
+      response = await _dio.put(url, data: data);
     } on DioError catch (e) {
       print(e.message);
       throw Exception(e.message);
