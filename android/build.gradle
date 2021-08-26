@@ -26,4 +26,6 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-ext.flutterFFmpegPackage = 'min-gpl'
+ext {
+    flutterFFmpegPackage  = "full-gpl"
+}

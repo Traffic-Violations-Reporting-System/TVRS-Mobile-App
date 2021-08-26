@@ -187,7 +187,7 @@ class LoginScreen extends GetView<LoginController> {
                         SizedBox(height: 23,),
                         Text("Dont have an account?", style: TextStyle(color:primaryColor ),),
                         SizedBox(height: 15,),
-                        new Container(
+                        Container(
                           width: double.infinity,
                           height: 53,
                           decoration: BoxDecoration(

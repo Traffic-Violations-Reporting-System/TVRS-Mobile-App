@@ -18,7 +18,7 @@ class LodgeComplainController extends GetxController{
   late ApiService _apiservice;
 
   LodgeComplainController(){
-    _apiservice = Get.find<ApiServiceImpl>();
+    _apiservice = Get.put(ApiServiceImpl());
     _apiservice.init();
   }
 

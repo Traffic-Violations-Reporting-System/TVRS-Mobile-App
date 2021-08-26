@@ -186,7 +186,6 @@ class _VideoViewPageState extends State<VideoViewPage> {
               children: [
                 Expanded(
                   child: Container(
-                    width: double.infinity,
                     height: 49,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -250,9 +249,10 @@ class _VideoViewPageState extends State<VideoViewPage> {
                       onPressed: () {
                         EasyLoading.show(status: "Cropping...");
                         _saveVideo().then((value) {
+                          widget.file.deleteSync();
                           EasyLoading.dismiss();
                           if(value!.isNotEmpty){
-                            print(value);
+                            print("crop file path: " + value);
                             final page = LodgeComplain(
                               file: File(value),
                               location: widget.location

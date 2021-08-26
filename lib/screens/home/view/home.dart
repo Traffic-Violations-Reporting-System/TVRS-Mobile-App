@@ -63,35 +63,6 @@ class HomeScreen extends StatelessWidget {
                     );
               },
             ),
-            // child: Scaffold(
-            //   body: pages[controller.pageIndex],
-            //   bottomNavigationBar: BottomNavigationBar(
-            //     type: BottomNavigationBarType.fixed,
-            //     backgroundColor: whiteColor,
-            //     selectedItemColor: primaryColor,
-            //     unselectedItemColor: secondaryColor,
-            //     currentIndex: controller.pageIndex,
-            //     onTap: controller.changePageIndex,
-            //     items: [
-            //       BottomNavigationBarItem(
-            //           icon: controller.pageIndex==0? Icon(CupertinoIcons.videocam_circle_fill) : Icon(CupertinoIcons.videocam_circle),
-            //           label: "Record"
-            //       ),
-            //       BottomNavigationBarItem(
-            //           icon: controller.pageIndex==1? Icon(CupertinoIcons.exclamationmark_octagon_fill) : Icon(CupertinoIcons.exclamationmark_octagon),
-            //           label: "Complaints"
-            //       ),
-            //       BottomNavigationBarItem(
-            //           icon: controller.pageIndex==2? Icon(CupertinoIcons.person_crop_circle_fill) : Icon(CupertinoIcons.person_crop_circle),
-            //           label: "My Profile"
-            //       ),
-            //       BottomNavigationBarItem(
-            //           icon: Icon(CupertinoIcons.settings),
-            //           label: "Settings"
-            //       ),
-            //     ],
-            //   ),
-            // ),
           );
         },);
   }

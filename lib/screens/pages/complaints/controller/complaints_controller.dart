@@ -5,10 +5,18 @@ import 'package:get/get.dart';
 class ComplaintsController extends GetxController{
 
   late ApiService _apiservice;
+  int pageIndex = 0;
 
   ComplaintsController(){
-    _apiservice = Get.find<ApiServiceImpl>();
+    _apiservice = Get.put(ApiServiceImpl());
     _apiservice.init();
+  }
+
+  int getPageIndex() => pageIndex;
+
+  void changePageIndex(int index){
+    pageIndex = index;
+    update();
   }
 
 }
