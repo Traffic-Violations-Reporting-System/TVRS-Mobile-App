@@ -20,6 +20,8 @@ class ComplaintsScreen extends StatelessWidget {
   final greenColor = Color(0xFF67C2C9);
   final dropshadowColor2 = Color(0xFF4B4B4B).withOpacity(0.15);
 
+  //final complaintController = Get.put(ComplaintsController());
+
   @override
   Widget build(BuildContext context) {
     print("Complaints is build!");
@@ -76,29 +78,40 @@ class ComplaintsScreen extends StatelessWidget {
                       borderRadius: const BorderRadius.all(
                           const Radius.circular(8.0)),
                     ),
-                    Container(
+                    SizedBox(
                       height: 23,
-                      color: yellowColor,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(CupertinoIcons.refresh_thick, color: whiteColor, size: 15,),
-                          SizedBox(width: 5.0,),
-                          Text("Tap to Refresh!", style: TextStyle(
-                              color: whiteColor,
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w600
-                          ),
-                            textAlign: TextAlign.center,),
-                        ],
+                      child: TextButton(
+                        onPressed: () {
+                          controller.tapToRefresh();
+                        },
+                        style: ButtonStyle(
+                            elevation: MaterialStateProperty.all(0),
+                            shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(0))),
+                            backgroundColor: MaterialStateProperty.all(yellowColor),
+                            overlayColor: MaterialStateProperty.all(whiteColor.withOpacity(0.3)),
+                            padding: MaterialStateProperty.all(EdgeInsets.all(0.0)),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(CupertinoIcons.refresh_thick, color: whiteColor, size: 15,),
+                            SizedBox(width: 5.0,),
+                            Text("Tap to Refresh!", style: TextStyle(
+                                color: whiteColor,
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w600
+                            ),
+                              textAlign: TextAlign.center,),
+                          ],
+                        ),
                       ),
                     ),
                     Expanded(
                       child: CupertinoTabView(
                         builder: (context) {
                           return CupertinoPageScaffold(
-                              child: controller.pageIndex == 0? _activeComplaints(context, controller) : Spacer());
+                              child: controller.pageIndex == 0? _activeComplaints(context) : SizedBox.shrink());
                         },
                       ),
                     )
@@ -111,7 +124,8 @@ class ComplaintsScreen extends StatelessWidget {
     );
   }
 
-  Widget _activeComplaints(BuildContext context, ComplaintsController controller){
+  Widget _activeComplaints(BuildContext context){
+    final controller = Get.find<ComplaintsController>();
     return Container(
       height: double.infinity,
       width: double.infinity,
@@ -123,13 +137,13 @@ class ComplaintsScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: controller.myComplainList.map( (complaint) => _complainViewComponent(context, complaint.createdAt, complaint.complainID, complaint.userID, complaint.getStatus())).toList()
+          children: controller.myComplainList != null? controller.myComplainList!.map( (complaint) => _complainViewComponent(context, complaint.createdAt, complaint.complainID, complaint.userID, complaint.getStatus())).toList(): [SizedBox.shrink()],
         ),
       ),
     );
   }
 
-  Widget _complainViewComponent(BuildContext context, DateTime? createdAt, String? complainID, String? userID, String status){
+  Widget _complainViewComponent(BuildContext context, String? createdAt, String? complainID, String? userID, String status){
     return Container(
         margin: EdgeInsets.only(left: 24.0, right: 24.0, bottom: 16.0),
         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),

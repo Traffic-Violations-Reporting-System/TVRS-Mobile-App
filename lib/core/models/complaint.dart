@@ -1,7 +1,9 @@
 
+import 'package:intl/intl.dart';
+
 class Complaint{
 
-  DateTime? createdAt;
+  String? createdAt;
   String? complainID;
   String? latestStatus;
   String? userID;
@@ -19,10 +21,10 @@ class Complaint{
     }
   }
 
-  factory Complaint.fromJson(Map<String, dynamic> data) => Complaint(
-    complainID: data["id"],
-    userID: data["nic"],
-    createdAt: DateTime.parse(data["createdAt"]),
+  factory Complaint.fromJson(Map<String, dynamic> data, String accountID) => Complaint(
+    complainID: data["complainant_id"],
+    userID: accountID,
+    createdAt: "hhhhhh",//DateFormat("yyyy-MM-dd HH:mm:ss").format("2020-11-09 "),
     latestStatus: data["status"],
   );
 
