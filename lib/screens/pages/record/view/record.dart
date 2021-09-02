@@ -1,5 +1,4 @@
 
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
@@ -8,9 +7,7 @@ import 'package:etrafficcomplainer/screens/pages/record/view/VideoView.dart';
 import 'package:etrafficcomplainer/screens/pages/record/view/lodge_complain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart';
 
 late List<CameraDescription> cameras;
 
@@ -27,7 +24,6 @@ class _RecordScreenState extends State<RecordScreen> {
   bool iscamerafront = true;
   double transform = 0;
   final controller = Get.put(RecordController());
-  final FlutterFFmpeg _flutterFFmpeg = new FlutterFFmpeg();
 
   final redColor = Color(0xFFFF6666);
   final greenColor = Color(0xFF67C2C9);
@@ -173,7 +169,7 @@ class _RecordScreenState extends State<RecordScreen> {
                               XFile videopath = await _cameraController.stopVideoRecording();
                               print("video path is: "+videopath.path);
                               late final page;
-                              String convertedVideoPath;
+                              //String convertedVideoPath;
                               if(controller.timer.tick > 10){
                                 // convertedVideoPath = videopath.path.replaceAll(".mp4", "_converted.mp4");
                                 // int result = await _flutterFFmpeg.execute("ffmpeg -i ${videopath.path} -vcodec mov -acodec libfaac $convertedVideoPath");
@@ -209,7 +205,13 @@ class _RecordScreenState extends State<RecordScreen> {
                             color: Colors.white,
                           ),
                           onPressed: () async {
-                            !controller.isPaused.isTrue? controller.timer.pause() : controller.timer.start();
+                            if(controller.isPaused.isFalse){
+                              controller.timer.pause();
+                              _cameraController.pauseVideoRecording();
+                            }else{
+                              controller.timer.start();
+                              _cameraController.resumeVideoRecording();
+                            }
                             controller.isPaused.toggle();
                           })
                           :
@@ -227,8 +229,8 @@ class _RecordScreenState extends State<RecordScreen> {
                             size: 30,
                           ),
                           onPressed: () async {
-                            !controller.isPaused.isTrue? controller.timer.pause() : controller.timer.start();
-                            controller.isPaused.toggle();
+                            // !controller.isPaused.isTrue? controller.timer.pause() : controller.timer.start();
+                            // controller.isPaused.toggle();
                           })
                       ),
                     ],

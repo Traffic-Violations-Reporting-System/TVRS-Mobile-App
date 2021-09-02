@@ -1,4 +1,3 @@
-import 'package:etrafficcomplainer/services/api_service.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:pausable_timer/pausable_timer.dart';
@@ -17,6 +16,11 @@ class RecordController extends GetxController{
 
   RecordController(){
     initTimer();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
   }
 
   void initTimer() {

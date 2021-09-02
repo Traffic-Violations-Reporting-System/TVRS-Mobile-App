@@ -149,6 +149,7 @@ class LoginScreen extends GetView<LoginController> {
                                 ),
                                 child: TextButton(
                                   onPressed: () {
+                                    FocusScope.of(context).unfocus();
                                     controller.loginUser();
                                   },
                                   style: ButtonStyle(
@@ -204,7 +205,7 @@ class LoginScreen extends GetView<LoginController> {
 
                           child: TextButton(
                             onPressed: () {
-                              //  Get.offNamed("/register");
+                              Get.offNamed("/register");
                             },
                             style: ButtonStyle(
                                 elevation: MaterialStateProperty.all(0),

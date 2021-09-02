@@ -144,7 +144,7 @@ class _OTPFormState extends State<OTPForm> {
   final whiteColor = Color(0xFFFFFFFF);
 
   final otp2Controller = Get.find<OTPVerify2Controller>();
-  final otpCodeController = TextEditingController();
+
 
   @override
   void dispose() {
@@ -182,7 +182,7 @@ class _OTPFormState extends State<OTPForm> {
             animationDuration: Duration(milliseconds: 300),
             backgroundColor: Colors.transparent,
             enableActiveFill: true,
-            controller: otpCodeController,
+            controller: otp2Controller.otpCodeController,
             autovalidateMode: AutovalidateMode.disabled,
             cursorColor: primaryColor,
             onCompleted: (v) {
@@ -223,7 +223,7 @@ class _OTPFormState extends State<OTPForm> {
             ),
             child: TextButton(
               onPressed: (){
-                otp2Controller.otpVerify(otpCodeController.text);
+                otp2Controller.otpVerify(otp2Controller.otpCodeController.text);
               },
               style: ButtonStyle(
                   elevation: MaterialStateProperty.all(0),

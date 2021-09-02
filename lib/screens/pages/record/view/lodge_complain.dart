@@ -351,6 +351,42 @@ class LodgeComplain extends StatelessWidget {
                           child: Text("Lodge Complaint"),
                         ),
                       ),
+                      SizedBox(height: 16),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 24.0),
+                        width: double.infinity,
+                        height: 53,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          border: Border.all(color: primaryColor, width: 1.5),
+                          boxShadow: [
+                            BoxShadow(
+                              color: dropshadowColor,
+                              spreadRadius: 0,
+                              blurRadius: 20,
+                              offset: Offset(0, 4), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: TextButton(
+                          onPressed: () {
+                            FocusScope.of(context).unfocus();
+                            controller.discardComplaint(file);
+                          },
+                          style: ButtonStyle(
+                              elevation: MaterialStateProperty.all(0),
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                              backgroundColor: MaterialStateProperty.all(whiteColor),
+                              foregroundColor: MaterialStateProperty.all(primaryColor),
+                              overlayColor: MaterialStateProperty.all(primaryColor.withOpacity(0.3)),
+                              textStyle: MaterialStateProperty.all(TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18,
+                              ))
+                          ),
+                          child: Text("Discard"),
+                        ),
+                      ),
                       SizedBox(height: 32),
                     ],
                   ),

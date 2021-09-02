@@ -6,7 +6,10 @@ import 'package:etrafficcomplainer/screens/otp_verify/view/otp_verify.dart';
 import 'package:etrafficcomplainer/screens/otp_verify_2/binding/otp_verify_2_binding.dart';
 import 'package:etrafficcomplainer/screens/otp_verify_2/view/otp_verify_2.dart';
 import 'package:etrafficcomplainer/screens/pages/record/view/record.dart';
+import 'package:etrafficcomplainer/screens/screen_controller/binding/screencontroller_binding.dart';
+import 'package:etrafficcomplainer/screens/screen_controller/view/screencontroller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:etrafficcomplainer/screens/home/binding/home_binding.dart';
@@ -19,6 +22,12 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   cameras = await availableCameras();
+
+  final secondaryColor = Color(0xFF8E92A8);
+
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: secondaryColor
+  ));
 
   runApp(MyApp());
   configLoading();
@@ -36,6 +45,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       getPages: [
+        GetPage(name: "/screen_controller", page: ()=>ScreenController(), binding: ScreenControllerBinding()),
         GetPage(name: "/home", page: ()=>HomeScreen(), binding: HomeBinding()),
         GetPage(name: "/register", page: ()=>RegisterScreen(), binding: RegisterBinding()),
         GetPage(name: "/login", page: ()=>LoginScreen(), binding: LoginBinding()),
@@ -43,7 +53,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/otp_verify_2", page: ()=>OTPVerify2Screen(), binding: OTPVerify2Binding()),
 
       ],
-      initialRoute: "/home",
+      initialRoute: "/screen_controller",
       builder: EasyLoading.init(),
     );
   }
