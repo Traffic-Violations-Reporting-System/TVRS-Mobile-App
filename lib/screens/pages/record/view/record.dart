@@ -1,6 +1,4 @@
 
-import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:etrafficcomplainer/screens/pages/record/controller/record_controller.dart';
 import 'package:etrafficcomplainer/screens/pages/record/view/VideoView.dart';
@@ -168,22 +166,20 @@ class _RecordScreenState extends State<RecordScreen> {
                               controller.timer.pause();
                               XFile videopath = await _cameraController.stopVideoRecording();
                               print("video path is: "+videopath.path);
+
                               late final page;
                               //String convertedVideoPath;
                               if(controller.timer.tick > 10){
-                                // convertedVideoPath = videopath.path.replaceAll(".mp4", "_converted.mp4");
-                                // int result = await _flutterFFmpeg.execute("ffmpeg -i ${videopath.path} -vcodec mov -acodec libfaac $convertedVideoPath");
-                                // print("converted_result: " + result.toString());
-                                // return;
-                                // convertedVideoPath = result == 0? convertedVideoPath : videopath.path;
+
                                 page = VideoViewPage(
-                                    file: File(videopath.path),
+                                    path: videopath.path,
                                     location: controller.complainLocation!
                                 );
                               }else{
                                 page = LodgeComplain(
-                                    file: File(videopath.path),
-                                    location: controller.complainLocation!
+                                    path: videopath.path,
+                                    location: controller.complainLocation!,
+                                    isCropped: false,
                                 );
                               }
                               Navigator.pushReplacement(

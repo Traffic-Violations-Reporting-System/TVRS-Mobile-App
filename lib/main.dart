@@ -66,10 +66,11 @@ void configLoading() {
     ..loadingStyle = EasyLoadingStyle.custom
     ..indicatorSize = 18.0
     ..radius = 8.0
-    ..progressColor = Color(0xFF8E92A8)
+    ..progressColor = Color(0xFF414B70)
+    ..progressWidth = 3
     ..backgroundColor = Colors.white70
     ..indicatorColor = Color(0xFF414B70)
-    ..textColor = Color(0xFF8E92A8)
+    ..textColor = Color(0xFF414B70)
     ..maskColor = Color(0xFF151929).withOpacity(0.4)
     ..maskType = EasyLoadingMaskType.custom
     ..textPadding = EdgeInsets.only(top: 6,bottom: 15)

@@ -61,6 +61,7 @@ class LoginController extends GetxController{
   _saveMyAuthToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('AuthToken', token);
+    prefs.setString('USER_STATUS', "LOGGED");
   }
 
   void loginErrorHandler(DioError error){

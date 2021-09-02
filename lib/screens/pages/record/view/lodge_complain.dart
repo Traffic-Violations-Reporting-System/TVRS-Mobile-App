@@ -5,18 +5,21 @@ import 'package:chewie/chewie.dart';
 import 'package:etrafficcomplainer/screens/pages/record/controller/lodge_complain_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:video_compress/video_compress.dart';
 import 'package:video_player/video_player.dart';
 
 //enum SingingCharacter { lafayette, jefferson }
 class LodgeComplain extends StatelessWidget {
 
   final controller = Get.put(LodgeComplainController());
-  LodgeComplain({required this.file, required this.location});
-  final File file;
+  LodgeComplain({required this.path, required this.location, required this.isCropped});
+  final String path;
   final Position location;
+  final bool isCropped;
   //SingingCharacter? _character = SingingCharacter.lafayette;
 
   final primaryColor = Color(0xFF414B70);
@@ -133,7 +136,7 @@ class LodgeComplain extends StatelessWidget {
             color: whiteColor,
             child: SizedBox(
               height: 140,
-              child: VideoView(file: file)
+              child: VideoView(path: path, isCropped: isCropped,)
               ),
           ),
           SizedBox(
@@ -336,7 +339,7 @@ class LodgeComplain extends StatelessWidget {
                         child: TextButton(
                           onPressed: () {
                             FocusScope.of(context).unfocus();
-                            controller.lodgeComplaint(file, location);
+                            controller.lodgeComplaint(location);
                           },
                           style: ButtonStyle(
                               elevation: MaterialStateProperty.all(0),
@@ -371,12 +374,12 @@ class LodgeComplain extends StatelessWidget {
                         child: TextButton(
                           onPressed: () {
                             FocusScope.of(context).unfocus();
-                            controller.discardComplaint(file);
+                            controller.discardComplaint();
                           },
                           style: ButtonStyle(
                               elevation: MaterialStateProperty.all(0),
                               shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                              backgroundColor: MaterialStateProperty.all(whiteColor),
+                              backgroundColor: MaterialStateProperty.all(backgroundColor),
                               foregroundColor: MaterialStateProperty.all(primaryColor),
                               overlayColor: MaterialStateProperty.all(primaryColor.withOpacity(0.3)),
                               textStyle: MaterialStateProperty.all(TextStyle(
@@ -401,8 +404,9 @@ class LodgeComplain extends StatelessWidget {
 }
 
 class VideoView extends StatefulWidget {
-  const VideoView({Key? key, required this.file}) : super(key: key);
-  final File file;
+  const VideoView({Key? key, required this.path, required this.isCropped}) : super(key: key);
+  final String path;
+  final bool isCropped;
 
   @override
   _VideoViewState createState() => _VideoViewState();
@@ -416,6 +420,10 @@ class _VideoViewState extends State<VideoView> {
   late VideoPlayerController _videoPlayerController;
   ChewieController? _chewieController;
 
+  final controller = Get.find<LodgeComplainController>();
+
+  late Subscription _subscription;
+
   @override
   void initState() {
     super.initState();
@@ -426,11 +434,38 @@ class _VideoViewState extends State<VideoView> {
   void dispose() {
     _videoPlayerController.dispose();
     _chewieController?.dispose();
+    _subscription.unsubscribe();
     super.dispose();
   }
 
   Future<void> initializePlayer() async {
-    _videoPlayerController = VideoPlayerController.file(widget.file);
+
+    if(widget.isCropped){
+      _videoPlayerController = VideoPlayerController.file(File(widget.path));
+      controller.videoFile = File(widget.path);
+    }else{
+      _subscription =
+          VideoCompress.compressProgress$.subscribe((progress) {
+            EasyLoading.showProgress(progress/100, status: 'Compressing...');
+          });
+
+      try{
+        await VideoCompress.setLogLevel(0);
+        MediaInfo? compressedMediaInfo = await VideoCompress.compressVideo(
+            widget.path,
+            quality: VideoQuality.LowQuality,
+            deleteOrigin: true,
+            includeAudio: true // It's false by default
+        );
+        EasyLoading.dismiss();
+        controller.videoFile = compressedMediaInfo!.file!;
+        _videoPlayerController = VideoPlayerController.file(compressedMediaInfo.file!);
+      }catch (e){
+        VideoCompress.cancelCompression();
+        controller.videoFile = File(widget.path);
+        _videoPlayerController = VideoPlayerController.file(controller.videoFile);
+      }
+    }
 
     await _videoPlayerController.initialize();
     _chewieController = ChewieController(
