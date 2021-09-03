@@ -38,6 +38,7 @@ class RegisterController extends GetxController{
   }
 
   void registerUser() async{
+
     if(registerFormKey.currentState!.validate()){
 
     EasyLoading.show(status: "Loading...");

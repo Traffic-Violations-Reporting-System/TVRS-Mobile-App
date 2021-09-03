@@ -132,12 +132,20 @@ class ComplaintsScreen extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: backgroundGradient,
       ),
-      child: SingleChildScrollView(
+      child: controller.myComplainList != null? SingleChildScrollView(
         padding: EdgeInsets.only(top: 24.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: controller.myComplainList != null? controller.myComplainList!.map( (complaint) => _complainViewComponent(context, complaint.createdAt, complaint.complainID, complaint.userID, complaint.getStatus())).toList(): [SizedBox.shrink()],
+          children: controller.myComplainList!.map( (complaint) => _complainViewComponent(context, complaint.createdAt, complaint.complainID, complaint.userID, complaint.getStatus())).toList(),
+        ),
+      ):
+      Center(
+        child: Text("You don't have any complaints yet.", style: TextStyle(
+          color: secondaryColor,
+          fontSize: 12.0,
+          fontWeight: FontWeight.w500
+          ),
         ),
       ),
     );

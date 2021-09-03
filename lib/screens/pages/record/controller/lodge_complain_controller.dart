@@ -59,7 +59,7 @@ class LodgeComplainController extends GetxController{
               'message': messageController.text.trim(),
               'location': "${location.latitude}, ${location.longitude}",
               'complainant': radioValue == 1? "non-victim" : "victim",
-              'videoReference': videoFile.path.split('/').last.replaceAll(".mp4", "")
+              'videoReference': preSignedUrl.split('?')[0].split('com/')[1]
             }, errorHandler);
 
             if (response3?.statusCode == 200) {

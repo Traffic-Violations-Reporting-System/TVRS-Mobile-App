@@ -25,7 +25,7 @@ class Complaint{
     complainID: data["complainant_id"],
     userID: accountID,
     createdAt: "hhhhhh",//DateFormat("yyyy-MM-dd HH:mm:ss").format("2020-11-09 "),
-    latestStatus: data["status"],
+    latestStatus: data["complaint_status"],
   );
 
 
