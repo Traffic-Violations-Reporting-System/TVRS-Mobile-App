@@ -5,6 +5,8 @@ import 'package:etrafficcomplainer/screens/otp_verify/binding/otp_verify_binding
 import 'package:etrafficcomplainer/screens/otp_verify/view/otp_verify.dart';
 import 'package:etrafficcomplainer/screens/otp_verify_2/binding/otp_verify_2_binding.dart';
 import 'package:etrafficcomplainer/screens/otp_verify_2/view/otp_verify_2.dart';
+import 'package:etrafficcomplainer/screens/pages/complaints/binding/complaint_status_binding.dart';
+import 'package:etrafficcomplainer/screens/pages/complaints/view/view_mycomplaint_status.dart';
 import 'package:etrafficcomplainer/screens/pages/record/binding/record_binding.dart';
 import 'package:etrafficcomplainer/screens/pages/record/view/record.dart';
 import 'package:etrafficcomplainer/screens/pages/record/binding/get_location_binding.dart';
@@ -47,9 +49,10 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/otp_verify", page: ()=>OTPVerifyScreen(), binding: OTPVerifyBinding()),
         GetPage(name: "/otp_verify_2", page: ()=>OTPVerify2Screen(), binding: OTPVerify2Binding()),
         GetPage(name: "/get_location", page: ()=>LocationFieldWidget(), binding: GetLocationBinding()),
+        GetPage(name: "/my_complaint_status", page: ()=>MyComplaintScreen(), binding: complaintStatusBinding()),
 
       ],
-      initialRoute: "/register",
+      initialRoute: "/my_complaint_status",
       builder: EasyLoading.init(),
     );
   }
