@@ -35,25 +35,8 @@ class ComplaintStatusController extends GetxController{
     return location;
   }
 
-  List getStatusArray(){
+  void getStatusArray(){
 
-    // try{
-    //   final response = await _apiservice.postRequest("/complain/complaintStatus", {
-    //     'complaint_id': dataset['complaint_id']
-    //   });
-    //
-    //   if (response.statusCode == 200){
-    //       var readData = json.decode(response.data);
-    //       return readData;
-    //   }
-    // }catch (error){
-    //   print(error);
-    // }
-
-
-
-    List oo = jsonDecode('[{"date": "2021/08/24","time": "08.09","status": "status #"},{"date": "2021/08/25","time": "08.10","status": "status #"},{"date": "2021/08/25","time": "08.10","status": "status #"},{"date": "2021/08/25","time": "08.10","status": "status #"}]');
-
-    return oo;
   }
-}
+
+  }

@@ -1,8 +1,11 @@
 import 'package:etrafficcomplainer/screens/pages/complaints/controller/complaint_status_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:intl/intl.dart';
+
 class MyComplaintScreen extends StatelessWidget{
+
 
   final myComplaintController = Get.find<ComplaintStatusController>();
   final primaryColor = Color(0xFF414B70);
@@ -188,12 +191,8 @@ class _MyComplaintStatusState extends State<MyComplaintStatus> {
   Widget build(BuildContext context) {
     final mycomplaintController = Get.find<ComplaintStatusController>();
     final myList = mycomplaintController.getStatusArray();
-    final length = myList.length;
-
-    print(length);
 
     print("My complaint status build");
-
     return SafeArea(
       child: Container(
         decoration: new BoxDecoration(
@@ -206,16 +205,16 @@ class _MyComplaintStatusState extends State<MyComplaintStatus> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 24,),
-            for(int i=0; i<length; i++)
+            for(int i=0; i<4; i++)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Column(
                     children: [
-                      Text(myList[i]["date"]+"       ", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500,color: primaryColor),),
-                      Text(myList[i]["time"]+"       ", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500,color: primaryColor),),
-                      Text("\n"),
+                       Text("kasun"+"       ", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500,color: primaryColor),),
+                      // Text(myList[i]["time"]+"       ", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500,color: primaryColor),),
+                      // Text("\n"),
                     ],
                   ),
                   Column(
@@ -228,7 +227,7 @@ class _MyComplaintStatusState extends State<MyComplaintStatus> {
                         Icon(Icons.email, size: 24),
                       if(i==3)
                         Icon(Icons.upload, size: 24),
-                      if(i<length-1)
+                      if(i<5-1)
                       Container(
                         color: primaryColor,
                         height: 30,
@@ -240,35 +239,14 @@ class _MyComplaintStatusState extends State<MyComplaintStatus> {
 
                   Column(
                     children: [
-                      Text(" "+myList[i]["status"], style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500,color: primaryColor),),
+                    // Text(" "+myList[i]["status"], style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500,color: primaryColor),),
+                      Text(" "+"lakshitha", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500,color: primaryColor),),
+
                     ],
                   ),
 
                 ],
-
-
               )
-
-
-                // RichText(
-                //   text: TextSpan(
-                //     children: [
-                //       WidgetSpan(
-                //         child: Icon(Icons.download, size: 24),
-                //
-                //       ),
-                //       TextSpan(text: "       "),
-                //       TextSpan(
-                //         text: " Complaint Created ",
-                //         style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500,color: primaryColor,background: paint),
-                //       ),
-                //
-                //     ],
-                //   ),
-                //
-                // ),
-
-
           ],
         ),
       ),
