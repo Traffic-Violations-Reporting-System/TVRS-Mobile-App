@@ -43,6 +43,7 @@ class ComplaintsController extends GetxController{
               .map((complaint) => Complaint.fromJson(complaint, response.data['result'][0]['mobile_user']['nic']))
               .toList();
         }
+        print(myComplainList);
       }
       EasyLoading.dismiss();
       update();

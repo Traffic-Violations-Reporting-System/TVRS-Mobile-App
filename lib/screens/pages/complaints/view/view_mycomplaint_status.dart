@@ -190,7 +190,8 @@ class _MyComplaintStatusState extends State<MyComplaintStatus> {
   @override
   Widget build(BuildContext context) {
     final mycomplaintController = Get.find<ComplaintStatusController>();
-    final myList = mycomplaintController.getStatusArray();
+    final myList = mycomplaintController.getMyStatusComplainList();
+    // print(myList);
 
     print("My complaint status build");
     return SafeArea(

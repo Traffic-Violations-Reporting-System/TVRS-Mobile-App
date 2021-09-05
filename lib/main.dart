@@ -5,6 +5,8 @@ import 'package:etrafficcomplainer/screens/otp_verify/binding/otp_verify_binding
 import 'package:etrafficcomplainer/screens/otp_verify/view/otp_verify.dart';
 import 'package:etrafficcomplainer/screens/otp_verify_2/binding/otp_verify_2_binding.dart';
 import 'package:etrafficcomplainer/screens/otp_verify_2/view/otp_verify_2.dart';
+import 'package:etrafficcomplainer/screens/pages/complaints/binding/complaint_status_binding.dart';
+import 'package:etrafficcomplainer/screens/pages/complaints/view/view_mycomplaint_status.dart';
 import 'package:etrafficcomplainer/screens/pages/record/view/record.dart';
 import 'package:etrafficcomplainer/screens/screen_controller/binding/screencontroller_binding.dart';
 import 'package:etrafficcomplainer/screens/screen_controller/view/screencontroller.dart';
@@ -51,9 +53,9 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/login", page: ()=>LoginScreen(), binding: LoginBinding()),
         GetPage(name: "/otp_verify", page: ()=>OTPVerifyScreen(), binding: OTPVerifyBinding()),
         GetPage(name: "/otp_verify_2", page: ()=>OTPVerify2Screen(), binding: OTPVerify2Binding()),
-
+        GetPage(name: "/complaintStatus", page: ()=>MyComplaintScreen(), binding: complaintStatusBinding()),
       ],
-      initialRoute: "/screen_controller",
+      initialRoute: "/login",
       builder: EasyLoading.init(),
     );
   }

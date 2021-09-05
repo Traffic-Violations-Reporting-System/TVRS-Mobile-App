@@ -126,12 +126,14 @@ class ComplaintsScreen extends StatelessWidget {
 
   Widget _activeComplaints(BuildContext context){
     final controller = Get.find<ComplaintsController>();
+
     return Container(
       height: double.infinity,
       width: double.infinity,
       decoration: BoxDecoration(
         gradient: backgroundGradient,
       ),
+
       child: controller.myComplainList != null? SingleChildScrollView(
         padding: EdgeInsets.only(top: 24.0),
         child: Column(
@@ -149,6 +151,7 @@ class ComplaintsScreen extends StatelessWidget {
         ),
       ),
     );
+
   }
 
   Widget _complainViewComponent(BuildContext context, String? createdAt, String? complainID, String? userID, String status){
