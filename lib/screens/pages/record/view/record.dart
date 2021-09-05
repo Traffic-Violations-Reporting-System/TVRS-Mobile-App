@@ -1,14 +1,11 @@
 
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:etrafficcomplainer/screens/pages/record/controller/record_controller.dart';
 import 'package:etrafficcomplainer/screens/pages/record/view/VideoView.dart';
+import 'package:etrafficcomplainer/screens/pages/record/view/lodge_complain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart';
 
 late List<CameraDescription> cameras;
 
@@ -158,25 +155,38 @@ class _RecordScreenState extends State<RecordScreen> {
                               ])
                           ),
                           onPressed: () async {
-                            controller.isRecording.toggle();
-                            if(controller.isRecording.isTrue){
+                            if(controller.isRecording.isFalse){
+                              controller.isRecording.toggle();
                               await _cameraController.startVideoRecording();
                               controller.timer.start();
+                              controller.determinePosition();
                             }else{
-                              controller.timer.reset();
+                              if(controller.complainLocation == null) return;
+                              controller.isRecording.toggle();
+                              controller.timer.pause();
                               XFile videopath = await _cameraController.stopVideoRecording();
                               print("video path is: "+videopath.path);
-                              final page = VideoViewPage(
-                                file: File(videopath.path),
-                              );
+
+                              late final page;
+                              //String convertedVideoPath;
+                              if(controller.timer.tick > 10){
+
+                                page = VideoViewPage(
+                                    path: videopath.path,
+                                    location: controller.complainLocation!
+                                );
+                              }else{
+                                page = LodgeComplain(
+                                    path: videopath.path,
+                                    location: controller.complainLocation!,
+                                    isCropped: false,
+                                );
+                              }
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (builder) => page)
                               );
-                              //video save to phone after edit
-                              // await GallerySaver.saveVideo(video.path);
-                              // File(video.path).deleteSync();
                             }
                           }),
                       Obx(() => controller.isRecording.isTrue? IconButton(
@@ -191,7 +201,13 @@ class _RecordScreenState extends State<RecordScreen> {
                             color: Colors.white,
                           ),
                           onPressed: () async {
-                            !controller.isPaused.isTrue? controller.timer.pause() : controller.timer.start();
+                            if(controller.isPaused.isFalse){
+                              controller.timer.pause();
+                              _cameraController.pauseVideoRecording();
+                            }else{
+                              controller.timer.start();
+                              _cameraController.resumeVideoRecording();
+                            }
                             controller.isPaused.toggle();
                           })
                           :
@@ -209,8 +225,8 @@ class _RecordScreenState extends State<RecordScreen> {
                             size: 30,
                           ),
                           onPressed: () async {
-                            !controller.isPaused.isTrue? controller.timer.pause() : controller.timer.start();
-                            controller.isPaused.toggle();
+                            // !controller.isPaused.isTrue? controller.timer.pause() : controller.timer.start();
+                            // controller.isPaused.toggle();
                           })
                       ),
                     ],
