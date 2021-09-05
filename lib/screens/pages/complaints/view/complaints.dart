@@ -240,7 +240,7 @@ class ComplaintsScreen extends StatelessWidget {
                     alignment: Alignment.topRight,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 6.0),
-                      child: Text("26 Aug", style: TextStyle(
+                      child: Text(createdAt ?? "Error", style: TextStyle(
                           color: secondaryColor,
                           fontSize: 12.0,
                           fontWeight: FontWeight.w400

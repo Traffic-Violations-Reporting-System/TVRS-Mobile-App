@@ -41,7 +41,7 @@ class ComplaintsController extends GetxController{
         if((response.data['result'] as List).isNotEmpty) {
           myComplainList = (response.data['result'][0]['mobile_user']['complaints'] as List)
               .map((complaint) => Complaint.fromJson(complaint, response.data['result'][0]['mobile_user']['nic']))
-              .toList();
+              .toList().reversed.toList();
         }
         print(myComplainList);
       }
