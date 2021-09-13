@@ -37,13 +37,16 @@ class ComplaintsController extends GetxController{
       }));
       if (response.statusCode == 200) {
         //create widget list
+
         print(response);
         if((response.data['result'] as List).isNotEmpty) {
+
           myComplainList = (response.data['result'][0]['mobile_user']['complaints'] as List)
               .map((complaint) => Complaint.fromJson(complaint, response.data['result'][0]['mobile_user']['nic']))
               .toList().reversed.toList();
+          print("*******");
         }
-        print(myComplainList);
+
       }
       EasyLoading.dismiss();
       update();

@@ -73,7 +73,7 @@ class MyComplaintScreen extends StatelessWidget{
 
                           ),
 
-                          Text("${myComplaintController.getComplaintID()}",
+                          Text("${myComplaintController.getComplaintId}",
                                   style: TextStyle(
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.w500,
@@ -84,7 +84,7 @@ class MyComplaintScreen extends StatelessWidget{
                         ],
                     ),
                     Divider( color: secondaryColor,),
-                    Text("${myComplaintController.getPoliceDevision()}",
+                    Text("${myComplaintController.getPoliceDevision}",
                     style: TextStyle(
                       fontSize: 15.0,
                       fontWeight: FontWeight.w500,
@@ -94,7 +94,7 @@ class MyComplaintScreen extends StatelessWidget{
                     ),
 
                     SizedBox(height: 10,),
-                    Text("${myComplaintController.getFullName()}",
+                    Text("${myComplaintController.getComplainantName}",
                       style: TextStyle(
                         fontSize: 14.0,
                         // fontWeight: FontWeight.w500,
@@ -104,7 +104,7 @@ class MyComplaintScreen extends StatelessWidget{
                     ),
                     Divider( color: secondaryColor,),
 
-                    Text("${myComplaintController.getLocation()}",
+                    Text("${myComplaintController.getComplaintLocation}",
                       style: TextStyle(
                           fontSize: 15.0,
                           fontWeight: FontWeight.w500,
@@ -151,7 +151,8 @@ class MyComplaintScreen extends StatelessWidget{
               ),
                 Column(
                   children: [
-                    MyComplaintStatus(),
+                    getStatus(context),
+
                   ],
                 ),
 
@@ -165,93 +166,191 @@ class MyComplaintScreen extends StatelessWidget{
       ),
     );
   }
-}
 
+  Widget getStatus(BuildContext context){
+    final controller = Get.find<ComplaintStatusController>();
 
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: backgroundGradient,
+      ),
 
-class MyComplaintStatus extends StatefulWidget {
-  @override
-  _MyComplaintStatusState createState() => _MyComplaintStatusState();
-}
-class _MyComplaintStatusState extends State<MyComplaintStatus> {
-
-  DateTime now = DateTime.now();
-
-  final primaryColor = Color(0xFF414B70);
-  final secondaryColor = Color(0xFF8E92A8);
-  final whiteColor = Color(0xFFFFFFFF);
-  final backgroundGradient = LinearGradient(colors: [Colors.white, Color(0xFFEEEEEC)], begin: Alignment.topCenter, end: Alignment.bottomCenter,);
-  final borderEnableColor = Color(0xFFF6F6F6);
-  final hintTextColor = Color(0xFFB2B5C4);
-  final dropshadowColor = Color(0x1A4B4B4B);
-  final redColor = Color(0xFFFF6666);
-  final popupBarrierColor = Color(0xFF151929).withOpacity(0.4);
-
-  @override
-  Widget build(BuildContext context) {
-    final mycomplaintController = Get.find<ComplaintStatusController>();
-    final myList = mycomplaintController.getMyStatusComplainList();
-    // print(myList);
-
-    print("My complaint status build");
-    return SafeArea(
-      child: Container(
-        decoration: new BoxDecoration(
-          borderRadius: new BorderRadius.circular(16.0),
-          color: whiteColor,
-        ),
-
+      child: controller.myStatusList != null? SingleChildScrollView(
+        padding: EdgeInsets.only(top: 24.0),
         child: Column(
-
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 24,),
-            for(int i=0; i<4; i++)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    children: [
-                       Text("kasun"+"       ", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500,color: primaryColor),),
-                      // Text(myList[i]["time"]+"       ", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500,color: primaryColor),),
-                      // Text("\n"),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      if(i==0)
-                      Icon(Icons.download, size: 24),
-                      if(i==1)
-                        Icon(Icons.check, size: 24),
-                      if(i==2)
-                        Icon(Icons.email, size: 24),
-                      if(i==3)
-                        Icon(Icons.upload, size: 24),
-                      if(i<5-1)
-                      Container(
-                        color: primaryColor,
-                        height: 30,
-                        width: 1,
-                      ),
-                    ],
-                  ),
-
-
-                  Column(
-                    children: [
-                    // Text(" "+myList[i]["status"], style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500,color: primaryColor),),
-                      Text(" "+"lakshitha", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500,color: primaryColor),),
-
-                    ],
-                  ),
-
-                ],
-              )
-          ],
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: controller.myStatusList!.map( (complaintStatus) => _statusViewComponent(context, complaintStatus.date, complaintStatus.status)).toList(),
+        ),
+      ):
+      Center(
+        child: Text("You don't have any complaints yet.", style: TextStyle(
+            color: secondaryColor,
+            fontSize: 12.0,
+            fontWeight: FontWeight.w500
+        ),
         ),
       ),
     );
+
   }
-}
+
+  Widget _statusViewComponent(BuildContext context, String? createdAt, String? complainID){
+
+      final mycomplaintController = Get.find<ComplaintStatusController>();
+      // final myList = mycomplaintController.getMyStatusComplainList();
+      // print(myList);
+
+      print("My complaint status build");
+      return SafeArea(
+        child: Container(
+          decoration: new BoxDecoration(
+            borderRadius: new BorderRadius.circular(16.0),
+            color: whiteColor,
+          ),
+
+          child: Column(
+
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 24,),
+              for(int i=0; i<4; i++)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      children: [
+                        Text("kasun"+"       ", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500,color: primaryColor),),
+                        // Text(myList[i]["time"]+"       ", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500,color: primaryColor),),
+                        // Text("\n"),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        if(i==0)
+                          Icon(Icons.download, size: 24),
+                        if(i==1)
+                          Icon(Icons.check, size: 24),
+                        if(i==2)
+                          Icon(Icons.email, size: 24),
+                        if(i==3)
+                          Icon(Icons.upload, size: 24),
+                        if(i<5-1)
+                          Container(
+                            color: primaryColor,
+                            height: 30,
+                            width: 1,
+                          ),
+                      ],
+                    ),
+
+
+                    Column(
+                      children: [
+                        // Text(" "+myList[i]["status"], style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500,color: primaryColor),),
+                        Text(" "+"lakshitha", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500,color: primaryColor),),
+
+                      ],
+                    ),
+
+                  ],
+                )
+            ],
+          ),
+        ),
+      );
+    }
+  }
+
+
+
+
+// class MyComplaintStatus extends StatefulWidget {
+//   @override
+//   _MyComplaintStatusState createState() => _MyComplaintStatusState();
+// }
+// class _MyComplaintStatusState extends State<MyComplaintStatus> {
+
+  // DateTime now = DateTime.now();
+  //
+  // final primaryColor = Color(0xFF414B70);
+  // final secondaryColor = Color(0xFF8E92A8);
+  // final whiteColor = Color(0xFFFFFFFF);
+  // final backgroundGradient = LinearGradient(colors: [Colors.white, Color(0xFFEEEEEC)], begin: Alignment.topCenter, end: Alignment.bottomCenter,);
+  // final borderEnableColor = Color(0xFFF6F6F6);
+  // final hintTextColor = Color(0xFFB2B5C4);
+  // final dropshadowColor = Color(0x1A4B4B4B);
+  // final redColor = Color(0xFFFF6666);
+  // final popupBarrierColor = Color(0xFF151929).withOpacity(0.4);
+  //
+  // @override
+  // Widget build(BuildContext context) {
+  //   final mycomplaintController = Get.find<ComplaintStatusController>();
+  //   // final myList = mycomplaintController.getMyStatusComplainList();
+  //   // print(myList);
+  //
+  //   print("My complaint status build");
+  //   return SafeArea(
+  //     child: Container(
+  //       decoration: new BoxDecoration(
+  //         borderRadius: new BorderRadius.circular(16.0),
+  //         color: whiteColor,
+  //       ),
+  //
+  //       child: Column(
+  //
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           SizedBox(height: 24,),
+  //           for(int i=0; i<4; i++)
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.center,
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 Column(
+  //                   children: [
+  //                      Text("kasun"+"       ", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500,color: primaryColor),),
+  //                     // Text(myList[i]["time"]+"       ", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500,color: primaryColor),),
+  //                     // Text("\n"),
+  //                   ],
+  //                 ),
+  //                 Column(
+  //                   children: [
+  //                     if(i==0)
+  //                     Icon(Icons.download, size: 24),
+  //                     if(i==1)
+  //                       Icon(Icons.check, size: 24),
+  //                     if(i==2)
+  //                       Icon(Icons.email, size: 24),
+  //                     if(i==3)
+  //                       Icon(Icons.upload, size: 24),
+  //                     if(i<5-1)
+  //                     Container(
+  //                       color: primaryColor,
+  //                       height: 30,
+  //                       width: 1,
+  //                     ),
+  //                   ],
+  //                 ),
+  //
+  //
+  //                 Column(
+  //                   children: [
+  //                   // Text(" "+myList[i]["status"], style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500,color: primaryColor),),
+  //                     Text(" "+"lakshitha", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500,color: primaryColor),),
+  //
+  //                   ],
+  //                 ),
+  //
+  //               ],
+  //             )
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+// }
 

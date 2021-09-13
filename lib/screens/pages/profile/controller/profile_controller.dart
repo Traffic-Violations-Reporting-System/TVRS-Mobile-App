@@ -1,14 +1,17 @@
-import 'package:etrafficcomplainer/services/api_service.dart';
-import 'package:etrafficcomplainer/services/api_service_impl.dart';
 import 'package:get/get.dart';
 
-class ProfileController extends GetxController{
+class ProfileDataController extends GetxController {
 
-  late ApiService _apiservice;
-
-  ProfileController(){
-    _apiservice = Get.find<ApiServiceImpl>();
-    _apiservice.init();
+  String getUserName(){
+    return 'kasun lakshitha';
   }
-
+  String phone(){
+    return '0712470584';
+  }
+  String Password(){
+    return '********';
+  }
+  String Police(){
+    return 'matara';
+  }
 }

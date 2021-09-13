@@ -1,11 +1,8 @@
-
-import 'package:etrafficcomplainer/screens/pages/profile/controller/profile_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
-class ProfileScreen extends GetView<ProfileController> {
-
+class ProfileScreen extends StatelessWidget{
   final primaryColor = Color(0xFF414B70);
   final whiteColor = Color(0xFFFFFFFF);
   final backgroundColor = Color(0xFFF6F6F6);
@@ -14,493 +11,327 @@ class ProfileScreen extends GetView<ProfileController> {
   final borderEnableColor = Color(0xFFF6F6F6);
   final hintTextColor = Color(0xFFB2B5C4);
   final dropshadowColor = Color(0x1A4B4B4B);
-  final dropshadowColor2 = Color(0xFF4B4B4B).withOpacity(0.15);
   final redColor = Color(0xFFFF6666);
+  final yellowColor = Color(0xFFFFBE15);
   final greenColor = Color(0xFF67C2C9);
+  final dropshadowColor2 = Color(0xFF4B4B4B).withOpacity(0.15);
 
   @override
   Widget build(BuildContext context) {
-    print("Profile is build!");
-    return Container(
+    print("login is build!");
+    return SafeArea(
+      child: Container(
         height: double.infinity,
         width: double.infinity,
         decoration: BoxDecoration(
           gradient: backgroundGradient,
+          image: DecorationImage(
+              image: AssetImage("assets/img/back_vec_1.png"),
+              fit: BoxFit.contain,
+              alignment: Alignment.topCenter
+          ),
         ),
+
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 24.0,),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 24.0),
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-                width: double.infinity,
-                height: 170,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  color: whiteColor,
-                  boxShadow: [
-                    BoxShadow(
-                      color: dropshadowColor2,
-                      spreadRadius: 0,
-                      blurRadius: 25,
-                      offset: Offset(0, 6), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 48.0,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 48.0,
-                            height: 48.0,
-                            child: Image.asset('assets/img/map.png'),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Complain No: ", style: TextStyle(
-                                      color: secondaryColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    ),
-                                    SizedBox(height: 4.0,),
-                                    Text("Account ID: ", style: TextStyle(
-                                      color: secondaryColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(width: 4.0,),
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("23456789", style: TextStyle(
-                                      color: primaryColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    ),
-                                    SizedBox(height: 4.0,),
-                                    Text("980750736V", style: TextStyle(
-                                      color: primaryColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 6.0),
-                              child: Text("26 Aug", style: TextStyle(
-                                color: secondaryColor,
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w400
-                              ),),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 14.0,),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      width: MediaQuery.of(context).size.width,
-                      height: 23.0,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: greenColor, width: 1.5),
-                        borderRadius: BorderRadius.all(Radius.circular(16)),
-                        color: whiteColor,
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(CupertinoIcons.square_list, color: greenColor, size: 15.0,),
-                          SizedBox(width: 8.0,),
-                          Text("Police Agent Assigned Your Complaint.", style: TextStyle(
-                            color: greenColor,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 16.0,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
+
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children :[
+                  Container(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20,top: 70),
+                    child: Column(
                       children: [
-                        Expanded(
-                          child: Container(
-                            height: 33,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(8)),
-                              border: Border.all(color: primaryColor, width: 1.5),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: dropshadowColor,
-                                  spreadRadius: 0,
-                                  blurRadius: 20,
-                                  offset: Offset(0, 4), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: TextButton(
-                              onPressed: () async {
-
-                              },
-                              style: ButtonStyle(
-                                  elevation: MaterialStateProperty.all(0),
-                                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                                  backgroundColor: MaterialStateProperty.all(whiteColor),
-                                  foregroundColor: MaterialStateProperty.all(primaryColor),
-                                  overlayColor: MaterialStateProperty.all(primaryColor.withOpacity(0.3)),
-                                  textStyle: MaterialStateProperty.all(TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
-                                  ))
-                              ),
-                              child: Text("Withdraw")
-                            ),
+                        Text("My Profile",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: primaryColor,
+                            fontSize: 22,
                           ),
                         ),
-                        SizedBox(width: 6.0,),
-                        Expanded(
-                          child: Container(
-                            height: 33,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(8)),
-                              border: Border.all(color: primaryColor, width: 1.5),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: dropshadowColor,
-                                  spreadRadius: 0,
-                                  blurRadius: 20,
-                                  offset: Offset(0, 4), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: TextButton(
-                              onPressed: () async {
+                        SizedBox(height: 20,),
 
-                              },
-                              style: ButtonStyle(
-                                  elevation: MaterialStateProperty.all(0),
-                                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                                  backgroundColor: MaterialStateProperty.all(whiteColor),
-                                  foregroundColor: MaterialStateProperty.all(primaryColor),
-                                  overlayColor: MaterialStateProperty.all(primaryColor.withOpacity(0.3)),
-                                  textStyle: MaterialStateProperty.all(TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
-                                  ))
-                              ),
-                              child: Text("LiveTrack")
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 6.0,),
-                        Expanded(
-                          child: Container(
-                            height: 33,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(8)),
-                              border: Border.all(color: primaryColor, width: 1.5),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: dropshadowColor,
-                                  spreadRadius: 0,
-                                  blurRadius: 20,
-                                  offset: Offset(0, 4), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: TextButton(
-                              onPressed: () async {
-
-                              },
-                              style: ButtonStyle(
-                                  elevation: MaterialStateProperty.all(0),
-                                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                                  backgroundColor: MaterialStateProperty.all(whiteColor),
-                                  foregroundColor: MaterialStateProperty.all(primaryColor),
-                                  overlayColor: MaterialStateProperty.all(primaryColor.withOpacity(0.3)),
-                                  textStyle: MaterialStateProperty.all(TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
-                                  ))
-                              ),
-                              child: Text("Delete")
-                            ),
-                          ),
-                        ),
                       ],
-                    )
-                  ],
-                )
-              ),
-              SizedBox(height: 16.0,),
-              Container(
-                  margin: EdgeInsets.symmetric(horizontal: 24.0),
-                  padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                    ),
+                  ),
+                ),
+
+                Container(
+
+                  decoration: BoxDecoration(
+                    color: whiteColor,
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  margin: EdgeInsets.only(left: 20,right: 20),
+                  height: 300,
+                  width: 330,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+
+                      // Name Container
+                      Container(
+                        margin: EdgeInsets.only(left: 20, top: 14,bottom: 10,right: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children:[
+                            Text("Name",
+                            style: TextStyle(
+                              color: secondaryColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                            Row(
+                              children: [
+                                Text("Kasun Lakshitha",
+                                  style: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                SizedBox(width: 104,),
+                                Text("Update",
+                                  style: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                          ]
+                        ),
+                      ),
+                      //devider to seperate containers
+                      Container(
+                        child: Divider(
+                          color: hintTextColor,
+                        ),
+                      ),
+
+                      // Password Container
+                      Container(
+                        margin: EdgeInsets.only(left: 20, top: 12,bottom: 10,right: 10),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children:[
+                              Text("Password",
+                                style: TextStyle(
+                                  color: secondaryColor,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Text("********",
+                                    style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  SizedBox(width: 172,),
+                                  Text("Update",
+                                    style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                            ]
+                        ),
+                      ),
+                      //devider to seperate containers
+                      Container(
+                        child: Divider(
+                          color: hintTextColor,
+                        ),
+                      ),
+
+                      //Phone number Container
+                      Container(
+                        margin: EdgeInsets.only(left: 20, top: 12,bottom: 10,right: 10),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children:[
+                              Text("Phone",
+                                style: TextStyle(
+                                  color: secondaryColor,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Text("071-2470584",
+                                    style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  SizedBox(width: 130,),
+                                  Text("Update",
+                                    style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                            ]
+                        ),
+                      ),
+
+                      //devider to seperate containers
+                      Container(
+                        child: Divider(
+                          color: hintTextColor,
+                        ),
+                      ),
+
+                      //Police devision Container
+                      Container(
+                        margin: EdgeInsets.only(left: 20, top: 12,bottom: 10,right: 10),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children:[
+                              Text("Police Devision",
+                                style: TextStyle(
+                                  color: secondaryColor,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Text("Matara Head Office",
+                                    style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  SizedBox(width: 85,),
+                                  Text("Update",
+                                    style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                            ]
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20,),
+                //Bank details container
+                Container(
+
+                  decoration: BoxDecoration(
+                    color: whiteColor,
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  margin: EdgeInsets.only(left: 20,right: 20),
+                  height: 100,
+                  width: 330,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+
+                      // Name Container
+                      Container(
+                        margin: EdgeInsets.only(left: 20, top: 14,bottom: 10,right: 10),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children:[
+                              Text("Bank Information",
+                                style: TextStyle(
+                                  color: secondaryColor,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Text("BOC Ending With 4542",
+                                    style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  SizedBox(width: 86,),
+                                  Text("Update",
+                                    style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+
+                                ],
+                              ),
+                              SizedBox(height: 10,),
+                              Text("Preffered For Payouts",
+                                style: TextStyle(
+                                  color: greenColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),
+                            ]
+                        ),
+                      ),
+
+
+                    ],
+                  ),
+                ),
+                SizedBox(height: 30,),
+
+                Container(
+                  margin: EdgeInsets.only(left: 20, top: 14,bottom: 10,right: 20),
                   width: double.infinity,
-                  height: 170,
+                  height: 53,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
-                    color: whiteColor,
                     boxShadow: [
                       BoxShadow(
-                        color: dropshadowColor2,
+                        color: dropshadowColor,
                         spreadRadius: 0,
-                        blurRadius: 25,
-                        offset: Offset(0, 6), // changes position of shadow
+                        blurRadius: 20,
+                        offset: Offset(0, 4), // changes position of shadow
                       ),
                     ],
                   ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 48.0,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 48.0,
-                              height: 48.0,
-                              child: Image.asset('assets/img/map.png'),
-                            ),
-                            Expanded(
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Complain No: ", style: TextStyle(
-                                        color: secondaryColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      ),
-                                      SizedBox(height: 4.0,),
-                                      Text("Account ID: ", style: TextStyle(
-                                        color: secondaryColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(width: 4.0,),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("23456789", style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      ),
-                                      SizedBox(height: 4.0,),
-                                      Text("980750736V", style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 6.0),
-                                child: Text("26 Aug", style: TextStyle(
-                                    color: secondaryColor,
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w400
-                                ),),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 14.0,),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        width: MediaQuery.of(context).size.width,
-                        height: 23.0,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: greenColor, width: 1.5),
-                          borderRadius: BorderRadius.all(Radius.circular(16)),
-                          color: whiteColor,
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(CupertinoIcons.square_list, color: greenColor, size: 15.0,),
-                            SizedBox(width: 8.0,),
-                            Text("Police Agent Assigned Your Complaint.", style: TextStyle(
-                              color: greenColor,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 16.0,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              height: 33,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(8)),
-                                border: Border.all(color: primaryColor, width: 1.5),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: dropshadowColor,
-                                    spreadRadius: 0,
-                                    blurRadius: 20,
-                                    offset: Offset(0, 4), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: TextButton(
-                                  onPressed: () async {
+                  child: TextButton(
+                    onPressed: () {
+                      FocusScope.of(context).unfocus();
 
-                                  },
-                                  style: ButtonStyle(
-                                      elevation: MaterialStateProperty.all(0),
-                                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                                      backgroundColor: MaterialStateProperty.all(whiteColor),
-                                      foregroundColor: MaterialStateProperty.all(primaryColor),
-                                      overlayColor: MaterialStateProperty.all(primaryColor.withOpacity(0.3)),
-                                      textStyle: MaterialStateProperty.all(TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14,
-                                      ))
-                                  ),
-                                  child: Text("Withdraw")
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 6.0,),
-                          Expanded(
-                            child: Container(
-                              height: 33,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(8)),
-                                border: Border.all(color: primaryColor, width: 1.5),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: dropshadowColor,
-                                    spreadRadius: 0,
-                                    blurRadius: 20,
-                                    offset: Offset(0, 4), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: TextButton(
-                                  onPressed: () async {
+                    },
+                    style: ButtonStyle(
+                        elevation: MaterialStateProperty.all(0),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+                        backgroundColor: MaterialStateProperty.all(primaryColor),
+                        foregroundColor: MaterialStateProperty.all(whiteColor),
+                        textStyle: MaterialStateProperty.all(TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                        ))
+                    ),
+                    child: Text("Add Another Account"),
+                  ),
+                ),
 
-                                  },
-                                  style: ButtonStyle(
-                                      elevation: MaterialStateProperty.all(0),
-                                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                                      backgroundColor: MaterialStateProperty.all(whiteColor),
-                                      foregroundColor: MaterialStateProperty.all(primaryColor),
-                                      overlayColor: MaterialStateProperty.all(primaryColor.withOpacity(0.3)),
-                                      textStyle: MaterialStateProperty.all(TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14,
-                                      ))
-                                  ),
-                                  child: Text("LiveTrack")
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 6.0,),
-                          Expanded(
-                            child: Container(
-                              height: 33,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(8)),
-                                border: Border.all(color: primaryColor, width: 1.5),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: dropshadowColor,
-                                    spreadRadius: 0,
-                                    blurRadius: 20,
-                                    offset: Offset(0, 4), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: TextButton(
-                                  onPressed: () async {
+              ]
 
-                                  },
-                                  style: ButtonStyle(
-                                      elevation: MaterialStateProperty.all(0),
-                                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                                      backgroundColor: MaterialStateProperty.all(whiteColor),
-                                      foregroundColor: MaterialStateProperty.all(primaryColor),
-                                      overlayColor: MaterialStateProperty.all(primaryColor.withOpacity(0.3)),
-                                      textStyle: MaterialStateProperty.all(TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14,
-                                      ))
-                                  ),
-                                  child: Text("Delete")
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  )
-              ),
-            ],
-          ),
+            ),
+
         ),
-      );
+
+      ),
+    );
   }
+
 }
