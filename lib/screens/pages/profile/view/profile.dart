@@ -1,8 +1,10 @@
+import 'package:etrafficcomplainer/screens/pages/profile/controller/profile_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget{
+  //final profileDataController = Get.find<ProfileDataController>();
   final primaryColor = Color(0xFF414B70);
   final whiteColor = Color(0xFFFFFFFF);
   final backgroundColor = Color(0xFFF6F6F6);
@@ -94,6 +96,7 @@ class ProfileScreen extends StatelessWidget{
                                   style: TextStyle(
                                     color: primaryColor,
                                     fontSize: 15,
+                                    fontWeight: FontWeight.bold
                                   ),
                                 ),
                               ],
@@ -134,6 +137,7 @@ class ProfileScreen extends StatelessWidget{
                                     style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 15,
+                                        fontWeight: FontWeight.bold
                                     ),
                                   ),
                                 ],
@@ -174,6 +178,7 @@ class ProfileScreen extends StatelessWidget{
                                     style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 15,
+                                        fontWeight: FontWeight.bold
                                     ),
                                   ),
                                 ],
@@ -215,6 +220,7 @@ class ProfileScreen extends StatelessWidget{
                                     style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 15,
+                                        fontWeight: FontWeight.bold
                                     ),
                                   ),
                                 ],
@@ -267,13 +273,14 @@ class ProfileScreen extends StatelessWidget{
                                     style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 15,
+                                        fontWeight: FontWeight.bold
                                     ),
                                   ),
 
                                 ],
                               ),
                               SizedBox(height: 10,),
-                              Text("Preffered For Payouts",
+                              Text("Preferred For Payouts",
                                 style: TextStyle(
                                   color: greenColor,
                                   fontSize: 14,
@@ -308,11 +315,11 @@ class ProfileScreen extends StatelessWidget{
                   child: TextButton(
                     onPressed: () {
                       FocusScope.of(context).unfocus();
-
+                      Get.offNamed("/add_payout_option");
                     },
                     style: ButtonStyle(
                         elevation: MaterialStateProperty.all(0),
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
                         backgroundColor: MaterialStateProperty.all(primaryColor),
                         foregroundColor: MaterialStateProperty.all(whiteColor),
                         textStyle: MaterialStateProperty.all(TextStyle(
