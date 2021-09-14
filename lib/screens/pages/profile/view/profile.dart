@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget{
-  //final profileDataController = Get.find<ProfileDataController>();
+  final profileDataController = Get.put(ProfileDataController());
   final primaryColor = Color(0xFF414B70);
   final whiteColor = Color(0xFFFFFFFF);
   final backgroundColor = Color(0xFFF6F6F6);
@@ -84,14 +84,15 @@ class ProfileScreen extends StatelessWidget{
                             ),
                           ),
                             Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Kasun Lakshitha",
+                                Text("${profileDataController.getUserName()}",
                                   style: TextStyle(
                                     color: primaryColor,
                                     fontSize: 18,
                                   ),
                                 ),
-                                SizedBox(width: 104,),
+                                // SizedBox(width: 104,),
                                 Text("Update",
                                   style: TextStyle(
                                     color: primaryColor,
@@ -125,6 +126,7 @@ class ProfileScreen extends StatelessWidget{
                                 ),
                               ),
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text("********",
                                     style: TextStyle(
@@ -132,7 +134,7 @@ class ProfileScreen extends StatelessWidget{
                                       fontSize: 18,
                                     ),
                                   ),
-                                  SizedBox(width: 172,),
+
                                   Text("Update",
                                     style: TextStyle(
                                       color: primaryColor,
@@ -166,6 +168,7 @@ class ProfileScreen extends StatelessWidget{
                                 ),
                               ),
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text("071-2470584",
                                     style: TextStyle(
@@ -173,7 +176,7 @@ class ProfileScreen extends StatelessWidget{
                                       fontSize: 18,
                                     ),
                                   ),
-                                  SizedBox(width: 130,),
+
                                   Text("Update",
                                     style: TextStyle(
                                       color: primaryColor,
@@ -208,6 +211,7 @@ class ProfileScreen extends StatelessWidget{
                                 ),
                               ),
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text("Matara Head Office",
                                     style: TextStyle(
@@ -215,7 +219,7 @@ class ProfileScreen extends StatelessWidget{
                                       fontSize: 18,
                                     ),
                                   ),
-                                  SizedBox(width: 85,),
+
                                   Text("Update",
                                     style: TextStyle(
                                       color: primaryColor,
@@ -261,6 +265,7 @@ class ProfileScreen extends StatelessWidget{
                                 ),
                               ),
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text("BOC Ending With 4542",
                                     style: TextStyle(
@@ -268,7 +273,7 @@ class ProfileScreen extends StatelessWidget{
                                       fontSize: 15,
                                     ),
                                   ),
-                                  SizedBox(width: 86,),
+
                                   Text("Update",
                                     style: TextStyle(
                                       color: primaryColor,
