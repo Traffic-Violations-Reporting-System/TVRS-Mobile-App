@@ -2,8 +2,10 @@
 import 'package:etrafficcomplainer/screens/pages/complaints/controller/complaints_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:cupertino_tabbar/cupertino_tabbar.dart' as CupertinoTabBar;
+import 'package:marquee/marquee.dart';
 
 class ComplaintsScreen extends StatelessWidget {
 
@@ -111,7 +113,7 @@ class ComplaintsScreen extends StatelessWidget {
                       child: CupertinoTabView(
                         builder: (context) {
                           return CupertinoPageScaffold(
-                              child: controller.pageIndex == 0? _activeComplaints(context) : SizedBox.shrink());
+                              child: controller.pageIndex == 0? _activeComplaints(context) : _savedComplaints(context));
                         },
                       ),
                     )
@@ -386,5 +388,227 @@ class ComplaintsScreen extends StatelessWidget {
     );
   }
 
+  Widget _savedComplaints(BuildContext context){
+    final controller = Get.find<ComplaintsController>();
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: backgroundGradient,
+      ),
+      child: controller.mySavedVideosList != null? SingleChildScrollView(
+        padding: EdgeInsets.only(top: 24.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: controller.mySavedVideosList!.map( (savedComplaint) => _savedViewComponent(context, savedComplaint.filename, savedComplaint.datetime, savedComplaint.location)).toList(),
+        ),
+      ):
+      Center(
+        child: Text("You don't have any saved complaints yet.", style: TextStyle(
+            color: secondaryColor,
+            fontSize: 12.0,
+            fontWeight: FontWeight.w500
+        ),
+        ),
+      ),
+    );
+  }
+
+  Widget _savedViewComponent(BuildContext context, String? filename, String? datetime, String? location){
+    return Container(
+        margin: EdgeInsets.only(left: 24.0, right: 24.0, bottom: 16.0),
+        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+        width: double.infinity,
+        height: 170,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+          color: whiteColor,
+          boxShadow: [
+            BoxShadow(
+              color: dropshadowColor2,
+              spreadRadius: 0,
+              blurRadius: 25,
+              offset: Offset(0, 6), // changes position of shadow
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 48.0,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("File Name: ", style: TextStyle(
+                        color: secondaryColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      ),
+                      SizedBox(height: 4.0,),
+                      Text("Saved Date: ", style: TextStyle(
+                        color: secondaryColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      )
+                    ],
+                  ),
+                  SizedBox(width: 4.0,),
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(filename ?? "Error", style: TextStyle(
+                        color: primaryColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      ),
+                      SizedBox(height: 4.0,),
+                      Text(datetime ?? "Error", style: TextStyle(
+                        color: primaryColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+            SizedBox(height: 14.0,),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              width: MediaQuery.of(context).size.width,
+              height: 23.0,
+              decoration: BoxDecoration(
+                border: Border.all(color: greenColor, width: 1.5),
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+                color: whiteColor,
+              ),
+              child: Row(
+                children: [
+                  Icon(CupertinoIcons.location, color: greenColor, size: 15.0,),
+                  SizedBox(width: 8.0,),
+                  GetBuilder<ComplaintsController>(
+                      builder: (controller) {
+                        return Flexible(
+                          child: controller.mySavedVideosList==null? Text("loading...", style: TextStyle(
+                            color: primaryColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),) :
+                          Marquee(
+                            text: "$location",
+                            style: TextStyle(
+                              color: greenColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            blankSpace: 40.0,
+                            velocity: 50.0,
+                            startAfter: Duration(seconds: 2),
+                            pauseAfterRound: Duration(seconds: 2),
+                            numberOfRounds: 4,
+                          ),
+                        );
+                      }
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 16.0,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 33,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      border: Border.all(color: primaryColor, width: 1.5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: dropshadowColor,
+                          spreadRadius: 0,
+                          blurRadius: 20,
+                          offset: Offset(0, 4), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: TextButton(
+                        onPressed: () async {
+
+                        },
+                        style: ButtonStyle(
+                            elevation: MaterialStateProperty.all(0),
+                            padding: MaterialStateProperty.all(EdgeInsets.all(0)),
+                            shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                            backgroundColor: MaterialStateProperty.all(whiteColor),
+                            foregroundColor: MaterialStateProperty.all(primaryColor),
+                            overlayColor: MaterialStateProperty.all(primaryColor.withOpacity(0.3)),
+                            textStyle: MaterialStateProperty.all(TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                            ))
+                        ),
+                        child: Text("Lodge Complaint")
+                    ),
+                  ),
+                ),
+                SizedBox(width: 6.0,),
+                Expanded(
+                  child: Container(
+                    height: 33,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      border: Border.all(color: primaryColor, width: 1.5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: dropshadowColor,
+                          spreadRadius: 0,
+                          blurRadius: 20,
+                          offset: Offset(0, 4), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: TextButton(
+                        onPressed: () async {
+
+                        },
+                        style: ButtonStyle(
+                            elevation: MaterialStateProperty.all(0),
+                            padding: MaterialStateProperty.all(EdgeInsets.all(0)),
+                            shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                            backgroundColor: MaterialStateProperty.all(whiteColor),
+                            foregroundColor: MaterialStateProperty.all(primaryColor),
+                            overlayColor: MaterialStateProperty.all(primaryColor.withOpacity(0.3)),
+                            textStyle: MaterialStateProperty.all(TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                            ))
+                        ),
+                        child: Text("Delete")
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        )
+    );
+  }
 
 }

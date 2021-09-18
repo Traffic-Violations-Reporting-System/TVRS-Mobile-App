@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:chewie/chewie.dart';
-import 'package:etrafficcomplainer/screens/pages/record/controller/lodge_complain_controller.dart';
+import 'package:etrafficcomplainer/screens/pages/upload/controller/upload_complain_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -14,16 +14,11 @@ import 'package:video_compress/video_compress.dart';
 import 'package:video_player/video_player.dart';
 
 //enum SingingCharacter { lafayette, jefferson }
-class LodgeComplain extends StatelessWidget {
+class UploadComplain extends StatelessWidget {
 
-
-  LodgeComplain({required this.path, required this.location, required this.isCropped}){
-    controller = Get.put(LodgeComplainController(location));
-  }
-  final String path;
-  final Position location;
-  final bool isCropped;
-  late final controller;
+  final controller = Get.put(UploadComplainController());
+  final String path = "";
+  late final Position location;
 
   final primaryColor = Color(0xFF414B70);
   final whiteColor = Color(0xFFFFFFFF);
@@ -141,7 +136,7 @@ class LodgeComplain extends StatelessWidget {
             color: whiteColor,
             child: SizedBox(
               height: 140,
-              child: VideoView(path: path, isCropped: isCropped,)
+              child: VideoView(path: path, isCropped: true,)
               ),
           ),
           SizedBox(
@@ -201,7 +196,7 @@ class LodgeComplain extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                             ),
                             ),
-                            GetBuilder<LodgeComplainController>(
+                            GetBuilder<UploadComplainController>(
                               builder: (controller) {
                                 return Flexible(
                                   child: controller.locationStr==null? Text("loading...", style: TextStyle(
@@ -257,7 +252,7 @@ class LodgeComplain extends StatelessWidget {
                         height: 52.0,
                         color: whiteColor,
                         padding: EdgeInsets.symmetric(horizontal: 24.0),
-                        child: GetBuilder<LodgeComplainController>(
+                        child: GetBuilder<UploadComplainController>(
                           builder: (controller) {
                             return Row(
                               mainAxisSize: MainAxisSize.max,
@@ -302,7 +297,7 @@ class LodgeComplain extends StatelessWidget {
                         height: 52.0,
                         color: whiteColor,
                         padding: EdgeInsets.symmetric(horizontal: 24.0),
-                        child: GetBuilder<LodgeComplainController>(
+                        child: GetBuilder<UploadComplainController>(
                           builder: (controller) {
                             return Row(
                               mainAxisSize: MainAxisSize.max,
@@ -362,7 +357,7 @@ class LodgeComplain extends StatelessWidget {
                         child: TextButton(
                           onPressed: () {
                             FocusScope.of(context).unfocus();
-                            controller.lodgeComplaint(location);
+                            //controller.lodgeComplaint(location);
                           },
                           style: ButtonStyle(
                               elevation: MaterialStateProperty.all(0),
@@ -443,9 +438,9 @@ class _VideoViewState extends State<VideoView> {
   late VideoPlayerController _videoPlayerController;
   ChewieController? _chewieController;
 
-  final controller = Get.find<LodgeComplainController>();
+  final controller = Get.find<UploadComplainController>();
 
-  Subscription? _subscription;
+  late Subscription _subscription;
 
   @override
   void initState() {
@@ -457,7 +452,7 @@ class _VideoViewState extends State<VideoView> {
   void dispose() {
     _videoPlayerController.dispose();
     _chewieController?.dispose();
-    if(_subscription!=null) _subscription!.unsubscribe();
+    _subscription.unsubscribe();
     super.dispose();
   }
 

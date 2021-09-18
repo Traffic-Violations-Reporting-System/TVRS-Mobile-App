@@ -11,7 +11,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:video_compress/video_compress.dart';
 
-class LodgeComplainController extends GetxController{
+class UploadComplainController extends GetxController{
   final lodgeComplainFormKey = GlobalKey<FormState>();
   final messageController = TextEditingController();
   int radioValue = 0;
@@ -22,10 +22,9 @@ class LodgeComplainController extends GetxController{
 
   late ApiService _apiservice;
 
-  LodgeComplainController(Position location){
+  UploadComplainController(){
     _apiservice = Get.put(ApiServiceImpl());
     _apiservice.init();
-    getLocationAddress(location);
   }
 
   @override

@@ -2,11 +2,11 @@ import 'package:etrafficcomplainer/screens/pages/complaints/view/complaints.dart
 import 'package:etrafficcomplainer/screens/pages/profile/view/profile.dart';
 import 'package:etrafficcomplainer/screens/pages/record/view/record.dart';
 import 'package:etrafficcomplainer/screens/pages/settings/view/settings.dart';
+import 'package:etrafficcomplainer/screens/pages/upload/view/upload_complain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:etrafficcomplainer/screens/home/controller/home_controller.dart';
-import 'package:etrafficcomplainer/services/api_service.dart';
 
 class HomeScreen extends StatelessWidget {
 
@@ -19,6 +19,7 @@ class HomeScreen extends StatelessWidget {
 
   final pages = [
     RecordScreen(),
+    UploadComplain(),
     ComplaintsScreen(),
     ProfileScreen(),
     SettingsScreen()
@@ -42,11 +43,15 @@ class HomeScreen extends StatelessWidget {
                             label: "Record"
                         ),
                         BottomNavigationBarItem(
-                            icon: controller.pageIndex==1? Icon(CupertinoIcons.exclamationmark_octagon_fill) : Icon(CupertinoIcons.exclamationmark_octagon),
+                            icon: controller.pageIndex==1? Icon(CupertinoIcons.arrow_up_doc_fill) : Icon(CupertinoIcons.arrow_up_doc),
+                            label: "Upload"
+                        ),
+                        BottomNavigationBarItem(
+                            icon: controller.pageIndex==2? Icon(CupertinoIcons.exclamationmark_octagon_fill) : Icon(CupertinoIcons.exclamationmark_octagon),
                             label: "Complaints"
                         ),
                         BottomNavigationBarItem(
-                            icon: controller.pageIndex==2? Icon(CupertinoIcons.person_crop_circle_fill) : Icon(CupertinoIcons.person_crop_circle),
+                            icon: controller.pageIndex==3? Icon(CupertinoIcons.person_crop_circle_fill) : Icon(CupertinoIcons.person_crop_circle),
                             label: "My Profile"
                         ),
                         BottomNavigationBarItem(

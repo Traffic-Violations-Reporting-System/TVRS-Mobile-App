@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:etrafficcomplainer/core/models/complaint.dart';
+import 'package:etrafficcomplainer/core/models/savevideo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -13,6 +16,7 @@ class ComplaintsController extends GetxController{
 
   int pageIndex = 0;
   List<Complaint>? myComplainList;
+  List<SaveVideo>? mySavedVideosList;
 
   @override
   void onInit(){
@@ -24,6 +28,7 @@ class ComplaintsController extends GetxController{
 
   void changePageIndex(int index){
     pageIndex = index;
+    if(index == 1) _setSavedVideosList();
     update();
   }
 
@@ -54,6 +59,18 @@ class ComplaintsController extends GetxController{
 
   }
 
+  Future<List<SaveVideo>?> _getVideoDetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? getStr = prefs.getString('SAVE_VIDEOS_LIST');
+    List<SaveVideo>? saveVideosList;
+    if(getStr != null){
+      saveVideosList = (json.decode(getStr) as List)
+          .map<SaveVideo>((item) => SaveVideo.fromJson(item))
+          .toList();
+    }
+    return saveVideosList;
+  }
+
   void myListErrorHandler(DioError error){
     EasyLoading.dismiss();
     Get.snackbar("Error", "Something went wrong! Please try again.", snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 2), colorText: redColor, icon: Icon(CupertinoIcons.clear_circled_solid, color: redColor), backgroundColor: Colors.white70, overlayColor: Color(0xFF151929).withOpacity(0.4) , overlayBlur: 0.001, isDismissible: true, margin: EdgeInsets.only(left: 5.0, right: 5.0, bottom: 10.0));
@@ -67,6 +84,12 @@ class ComplaintsController extends GetxController{
 
   void tapToRefresh(){
     getMyComplainList();
+  }
+
+  void _setSavedVideosList() async{
+    EasyLoading.show(status: "Loading...");
+    mySavedVideosList = await _getVideoDetails();
+    EasyLoading.dismiss();
   }
 
 }

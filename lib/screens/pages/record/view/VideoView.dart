@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
+import 'package:etrafficcomplainer/core/models/savevideo.dart';
 import 'package:etrafficcomplainer/screens/pages/record/view/lodge_complain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +10,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:path/path.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_trimmer/video_trimmer.dart';
 
@@ -76,9 +82,12 @@ class _VideoViewPageState extends State<VideoViewPage> {
       file = compressedMediaInfo!.file!;
       _trimmer.loadVideo(videoFile:compressedMediaInfo.file!);
     }catch (e){
+      print("VideoCompressionError");
+      print(e);
       EasyLoading.dismiss();
       VideoCompress.cancelCompression();
       file = File(widget.path);
+      _trimmer.loadVideo(videoFile:file);
     }
   }
 
@@ -248,9 +257,12 @@ class _VideoViewPageState extends State<VideoViewPage> {
                           EasyLoading.show(status: "Saving...");
                           //video save
                           await GallerySaver.saveVideo(file.path);
+                          String savedpath = '/storage/emulated/0/Movies/${basename(file.path)}';
+                          _saveVideoDetails(basename(file.path), savedpath, widget.location);
                           file.deleteSync();
                           await VideoCompress.deleteAllCache();
                           EasyLoading.dismiss();
+                          return;
                           Get.snackbar("Saved!", "Your complaint is successfully saved.", snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 2), colorText: primaryColor, icon: Icon(CupertinoIcons.checkmark_alt_circle_fill, color: primaryColor), backgroundColor: Colors.white70, overlayColor: Color(0xFF151929).withOpacity(0.4) , overlayBlur: 0.001, isDismissible: false, margin: EdgeInsets.only(left: 5.0, right: 5.0, bottom: 10.0), snackbarStatus: (status) async {
                             if(status == SnackbarStatus.CLOSED){
                               Get.offAllNamed("/home");
@@ -353,6 +365,41 @@ class _VideoViewPageState extends State<VideoViewPage> {
           ],
         )
     );
+  }
+
+  _saveVideoDetails(String filename, String path, Position location) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? getStr = prefs.getString('SAVE_VIDEOS_LIST');
+    List<SaveVideo> saveVideosList =  [];
+    if(getStr != null){
+      saveVideosList = (json.decode(getStr) as List)
+          .map<SaveVideo>((item) => SaveVideo.fromJson(item))
+          .toList();
+    }
+    String now = DateFormat("d MMM yy hh:mm a").format(DateTime.now());
+    String? locationStr = await _getLocationAddress(location);
+    saveVideosList.add(SaveVideo(filename: filename, path: path, datetime: now, location: locationStr));
+    String objectList = jsonEncode(saveVideosList.map<Map<String, dynamic>>((video) => video.toJson()).toList());
+    prefs.setString('SAVE_VIDEOS_LIST', objectList);
+  }
+
+  Future<String?> _getLocationAddress(Position location) async{
+    try {
+      String url = "https://nominatim.openstreetmap.org/reverse?format=geocodejson&lat=${location.latitude}&lon=${location.longitude}&accept-language=en";
+      final response = await Dio().get(url);
+
+      if (response.statusCode == 200) {
+        List<String> labels = response.data['features'][0]['properties']['geocoding']['label'].toString().split(",");
+        labels.removeRange(labels.length-2, labels.length);
+        return labels.join(", ");
+      }
+
+    } on DioError catch (error) {
+      EasyLoading.dismiss();
+      Get.snackbar("Error", "Something went wrong! Please try again.", snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 2), colorText: redColor, icon: Icon(CupertinoIcons.clear_circled_solid, color: redColor), backgroundColor: Colors.white70, overlayColor: Color(0xFF151929).withOpacity(0.4) , overlayBlur: 0.001, isDismissible: true, margin: EdgeInsets.only(left: 5.0, right: 5.0, bottom: 10.0));
+      print('${error.response?.statusCode} : ${error.response}');
+    }
+
   }
 
 }

@@ -169,7 +169,7 @@ class _RecordScreenState extends State<RecordScreen> {
 
                               late final page;
                               //String convertedVideoPath;
-                              if(controller.timer.tick > 10){
+                              if(controller.timer.tick > 1){
 
                                 page = VideoViewPage(
                                     path: videopath.path,
