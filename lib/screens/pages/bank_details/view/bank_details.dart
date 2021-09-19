@@ -182,39 +182,79 @@ class BankDetailsScreen extends StatelessWidget{
                   ),
                   SizedBox(height: 30,),
 
-                  Container(
-                    margin: EdgeInsets.only(top: 14,bottom: 10,right: 20),
-                    width: double.infinity,
-                    height: 53,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: dropshadowColor,
-                          spreadRadius: 0,
-                          blurRadius: 20,
-                          offset: Offset(0, 4), // changes position of shadow
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 14,bottom: 10,right: 20),
+                        width: 150,
+                        height: 53,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: dropshadowColor,
+                              spreadRadius: 0,
+                              blurRadius: 20,
+                              offset: Offset(0, 4), // changes position of shadow
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        FocusScope.of(context).unfocus();
-                        Get.offNamed("/add_payout_option");
-                      },
-                      style: ButtonStyle(
-                          elevation: MaterialStateProperty.all(0),
-                          shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                          backgroundColor: MaterialStateProperty.all(primaryColor),
-                          foregroundColor: MaterialStateProperty.all(whiteColor),
-                          textStyle: MaterialStateProperty.all(TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                          ))
+                        child: TextButton(
+                          onPressed: () {
+                            FocusScope.of(context).unfocus();
+                            // Get.offNamed("/add_payout_option");
+                          },
+                          style: ButtonStyle(
+                              elevation: MaterialStateProperty.all(0),
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                              backgroundColor: MaterialStateProperty.all(primaryColor),
+                              foregroundColor: MaterialStateProperty.all(whiteColor),
+                              textStyle: MaterialStateProperty.all(TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                              ))
+                          ),
+                          child: Text("Confirm Bank Details"),
+                        ),
                       ),
-                      child: Text("Confirm Bank Details"),
-                    ),
+
+                      Container(
+                        margin: EdgeInsets.only(top: 14,bottom: 10,right: 20),
+                        width: 150,
+                        height: 53,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: dropshadowColor,
+                              spreadRadius: 0,
+                              blurRadius: 20,
+                              offset: Offset(0, 4), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: TextButton(
+                          onPressed: () {
+                            FocusScope.of(context).unfocus();
+                            Get.offNamed("/home");
+                          },
+                          style: ButtonStyle(
+                              elevation: MaterialStateProperty.all(0),
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                              backgroundColor: MaterialStateProperty.all(secondaryColor),
+                              foregroundColor: MaterialStateProperty.all(whiteColor),
+                              textStyle: MaterialStateProperty.all(TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 10,
+                              ))
+                          ),
+                          child: Text("Cancel"),
+                        ),
+                      ),
+                    ],
                   ),
+
                 ],
               ),
             ),

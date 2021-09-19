@@ -1,17 +1,22 @@
 import 'package:etrafficcomplainer/screens/pages/complaints/controller/complaint_status_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:intl/intl.dart';
 
-class MyComplaintScreen extends StatelessWidget{
+class MyComplaintScreen extends StatelessWidget {
 
 
-  final myComplaintController = Get.find<ComplaintStatusController>();
+  final myComplaintStatusController = Get.find<ComplaintStatusController>();
+
   final primaryColor = Color(0xFF414B70);
   final secondaryColor = Color(0xFF8E92A8);
   final whiteColor = Color(0xFFFFFFFF);
-  final backgroundGradient = LinearGradient(colors: [Colors.white, Color(0xFFEEEEEC)], begin: Alignment.topCenter, end: Alignment.bottomCenter,);
+  final backgroundGradient = LinearGradient(
+    colors: [Colors.white, Color(0xFFEEEEEC)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,);
   final borderEnableColor = Color(0xFFF6F6F6);
   final hintTextColor = Color(0xFFB2B5C4);
   final dropshadowColor = Color(0x1A4B4B4B);
@@ -20,157 +25,220 @@ class MyComplaintScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    // myComplaintStatusController.getMyStatusList();
+
+
     print("my complaint status build");
-    return SafeArea(
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: backgroundGradient,
+    return GetBuilder<ComplaintStatusController>(
+        init: ComplaintStatusController(),
+        builder: (controller) {
+          return SafeArea(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: backgroundGradient,
 
-        ),
-        child: Scaffold(
-          appBar: new AppBar(
-            backgroundColor: primaryColor,
-            toolbarHeight: 88,
+              ),
+              child: Scaffold(
+                appBar: new AppBar(
+                  backgroundColor: primaryColor,
+                  toolbarHeight: 88,
 
-            centerTitle: true,
-            title: Column(
-              children: [
-                SizedBox(height: 30,),
-                Text("Track Status",style: TextStyle(fontSize: 24 ,color: whiteColor),),
+                  centerTitle: true,
+                  title: Column(
+                    children: [
+                      SizedBox(height: 30,),
+                      Text("Track Status",
+                        style: TextStyle(fontSize: 24, color: whiteColor),),
 
-              ],
-            ),
-          ),
-          backgroundColor: Colors.transparent,
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 0),
-            child: Column(
-              
-              children: [
-                Center(
+                    ],
 
-                child: Column(
-                  children: [
+                  ),
+                ),
+                backgroundColor: Colors.transparent,
 
-                    SizedBox(height: 12,),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            decoration: new BoxDecoration(
-                              borderRadius: new BorderRadius.circular(16.0),
-                              color: whiteColor,
+                body: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 0),
+                  child: Column(
 
+                      children: [
+                        Center(
+
+                          child: Column(
+                            children: [
+
+                              SizedBox(height: 12,),
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   children: [
+                              //     Container(
+                              //       decoration: new BoxDecoration(
+                              //         borderRadius: new BorderRadius.circular(
+                              //             16.0),
+                              //         color: whiteColor,
+                              //
+                              //       ),
+                              //
+                              //       child: Text("Complaint ID : ",
+                              //           style: TextStyle(
+                              //             fontSize: 14.0,
+                              //             // fontWeight: FontWeight.w500,
+                              //             color: secondaryColor,
+                              //           )
+                              //       ),
+                              //
+                              //     ),
+                              //
+                              //     Text("${controller.getComplaintStatus}",
+                              //         style: TextStyle(
+                              //           fontSize: 20.0,
+                              //           fontWeight: FontWeight.w500,
+                              //           color: primaryColor,
+                              //         )
+                              //     ),
+                              //
+                              //   ],
+                              // ),
+                              // Divider(color: secondaryColor,),
+                              // Text("Matara Devision",
+                              //   style: TextStyle(
+                              //     fontSize: 15.0,
+                              //     fontWeight: FontWeight.w500,
+                              //     color: primaryColor,
+                              //     // backgroundColor: Colors.green
+                              //   ),
+                              // ),
+
+                              // SizedBox(height: 10,),
+                              // Text("Kasun Lakshitha",
+                              //   style: TextStyle(
+                              //     fontSize: 14.0,
+                              //     // fontWeight: FontWeight.w500,
+                              //     color: secondaryColor,
+                              //     // backgroundColor: Colors.green
+                              //   ),
+                              // ),
+                              // Divider(color: secondaryColor,),
+                              //
+                              // Text("Matara Stand",
+                              //   style: TextStyle(
+                              //     fontSize: 15.0,
+                              //     fontWeight: FontWeight.w500,
+                              //     color: primaryColor,
+                              //     // backgroundColor: Colors.blue
+                              //   ),
+                              // ),
+                              SizedBox(height: 16,),
+                              Column(
+                                children: [
+
+                                  Container(
+                                    margin: new EdgeInsets.symmetric(horizontal: 10.0),
+                                    child: GridView.count(
+                                      crossAxisCount: 1,
+                                      childAspectRatio: 2 / 1,
+                                      shrinkWrap: true,
+                                      children: List.generate(1, (index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(0.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              gradient: backgroundGradient,
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/img/locationImg.jpg"),
+                                                fit: BoxFit.cover,
+                                              ),
+                                              borderRadius:
+                                              BorderRadius.all(
+                                                Radius.circular(10.0),),
+                                              border: Border.all(
+                                                  color: borderEnableColor),
+                                            ),
+                                          ),
+                                        );
+                                      },),
+                                    ),
+                                  ),
+                                  SizedBox(height: 16,),
+
+                                ],
+
+                              ),
+
+                            ],
+                          ),
+                        ),
+
+
+
+                            Expanded(
+                              child: CupertinoTabView(
+                                builder: (context) {
+                                  return CupertinoPageScaffold(
+                                      child: getStatus(context));
+                                },
+                              ),
                             ),
 
-                            child:Text("Complaint ID : ",
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  // fontWeight: FontWeight.w500,
-                                  color: secondaryColor,
-                                )
-                            ) ,
+                        Container(
+                          width: double.infinity,
+                          height: 53,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: dropshadowColor,
+                                spreadRadius: 0,
+                                blurRadius: 20,
+                                offset: Offset(0, 4), // changes position of shadow
+                              ),
+                            ],
+                          ),
+
+                          child: TextButton(
+                            onPressed: () {
+                              Get.offNamed("/home");
+                            },
+                            style: ButtonStyle(
+                                elevation: MaterialStateProperty.all(0),
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                                backgroundColor: MaterialStateProperty.all(borderEnableColor),
+                                foregroundColor: MaterialStateProperty.all(primaryColor),
+                                textStyle: MaterialStateProperty.all(TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
+                                ))
+                            ),
+
+
+                            child: Text("Back To Home"),
 
                           ),
 
-                          Text("${myComplaintController.getComplaintId}",
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.w500,
-                                    color: primaryColor,
-                                  )
-                              ),
-
-                        ],
-                    ),
-                    Divider( color: secondaryColor,),
-                    Text("${myComplaintController.getPoliceDevision}",
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w500,
-                      color: primaryColor,
-                      // backgroundColor: Colors.green
-                    ),
-                    ),
-
-                    SizedBox(height: 10,),
-                    Text("${myComplaintController.getComplainantName}",
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        // fontWeight: FontWeight.w500,
-                        color: secondaryColor,
-                        // backgroundColor: Colors.green
-                      ),
-                    ),
-                    Divider( color: secondaryColor,),
-
-                    Text("${myComplaintController.getComplaintLocation}",
-                      style: TextStyle(
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.w500,
-                          color: primaryColor,
-                          // backgroundColor: Colors.blue
-                      ),
-                    ),
-                    SizedBox(height: 16,),
-                    Column(
-                      children: [
-
-                    Container(
-                        child: GridView.count(
-                        crossAxisCount: 1,
-                          childAspectRatio: 2/1,
-                          shrinkWrap: true,
-                          children: List.generate(1, (index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(0.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  gradient: backgroundGradient,
-                                  image: DecorationImage(
-                                    image: AssetImage("assets/img/locationImg.jpg"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0),),
-                                  border: Border.all(color: borderEnableColor),
-                                ),
-                              ),
-                            );
-                          },),
                         ),
-                      ),
-                        SizedBox(height: 16,),
+                          ],
+                  ),
 
-                      ],
 
-                    ),
-
-                  ],
                 ),
+
               ),
-                Column(
-                  children: [
-                    getStatus(context),
-
-                  ],
-                ),
-
-              ]
             ),
+          );
+        }
 
-
-          ),
-
-        ),
-      ),
     );
   }
 
+
   Widget getStatus(BuildContext context){
     final controller = Get.find<ComplaintStatusController>();
+    // controller.getMyStatusList();
+    print("1");
+    // print(controller.myStatusList!.length);
 
     return Container(
+      margin: new EdgeInsets.symmetric(horizontal: 10.0),
       height: double.infinity,
       width: double.infinity,
       decoration: BoxDecoration(
@@ -178,179 +246,231 @@ class MyComplaintScreen extends StatelessWidget{
       ),
 
       child: controller.myStatusList != null? SingleChildScrollView(
+
         padding: EdgeInsets.only(top: 24.0),
+
         child: Column(
+
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: controller.myStatusList!.map( (complaintStatus) => _statusViewComponent(context, complaintStatus.date, complaintStatus.status)).toList(),
+          children: [
+            Container(
+
+              // child: Text("Your Complaint is pending in the queue", style: TextStyle(
+              //     color: secondaryColor,
+              //     fontSize: 12.0,
+              //     fontWeight: FontWeight.w500
+              // ),
+              //
+              // ),
+
+              child: Column(
+
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: 24,),
+
+                  Row(
+
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [
+                          Text("${controller.getPendingStatusDate()}" + "     ", style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: primaryColor),),
+
+                        ],
+                      ),
+                      // Column(
+                      //   children: [
+                      //     Container(
+                      //       // color: primaryColor,
+                      //       // height: 20,
+                      //       // width: 1,
+                      //       child: Icon(
+                      //         Icons.check,
+                      //         color: primaryColor,
+                      //         size: 14.0,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+
+
+                      Container(
+                        color: primaryColor,
+                        height: 14,
+                        width: 1,
+                      ),
+
+
+                      Column(
+                        children: [
+                          Text("      " +"Pending", style: TextStyle(fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: primaryColor),),
+                        ],
+                      ),
+
+                    ],
+                  )
+                ],
+              ),
+
+            ),
+            Container(
+              child:Column(
+              children:controller.myStatusList!.map( (complaintStatus) => _statusViewComponent(context,complaintStatus.createdAt, complaintStatus.date, complaintStatus.getStatus())).toList(),
+              )
+            )
+          ]
         ),
       ):
-      Center(
-        child: Text("You don't have any complaints yet.", style: TextStyle(
-            color: secondaryColor,
-            fontSize: 12.0,
-            fontWeight: FontWeight.w500
+
+      Container(
+
+        // child: Text("Your Complaint is pending in the queue", style: TextStyle(
+        //     color: secondaryColor,
+        //     fontSize: 12.0,
+        //     fontWeight: FontWeight.w500
+        // ),
+        //
+        // ),
+
+        child: Column(
+
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 24,),
+
+            Row(
+
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    Text("${controller.getPendingStatusDate()}" + "     ", style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: primaryColor),),
+
+                  ],
+                ),
+                // Column(
+                //   children: [
+                //     Container(
+                //       // color: primaryColor,
+                //       // height: 20,
+                //       // width: 1,
+                //       child: Icon(
+                //         Icons.check,
+                //         color: primaryColor,
+                //         size: 14.0,
+                //       ),
+                //     ),
+                //   ],
+                // ),
+
+
+                Container(
+                  color: primaryColor,
+                  height: 14,
+                  width: 1,
+                ),
+
+
+                Column(
+                  children: [
+                    Text("      " +"Pending", style: TextStyle(fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: primaryColor),),
+                  ],
+                ),
+
+              ],
+            )
+          ],
         ),
+
+      ),
+
+    );
+    print("6");
+  }
+
+  Widget _statusViewComponent(BuildContext context, String? createdAt, String? date, String? status) {
+    print("2");
+    // final mycomplaintController = Get.find<ComplaintStatusController>();
+
+    print("My complaint status build");
+    return SafeArea(
+      child: Container(
+        margin: new EdgeInsets.symmetric(horizontal: 10.0),
+        // height: 400,
+        width: double.infinity,
+
+        decoration: new BoxDecoration(
+          // borderRadius: new BorderRadius.circular(16.0),
+          color: whiteColor,
+        ),
+
+        child: Column(
+
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 24,),
+
+              Row(
+
+                // mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    children: [
+                      Text(date! + "     ", style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: primaryColor),),
+
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Container(
+                        // color: primaryColor,
+                        // height: 20,
+                        // width: 1,
+                        child: Icon(
+                          Icons.check,
+                          color: primaryColor,
+                          size: 14.0,
+                        ),
+                      ),
+                    ],
+                  ),
+
+
+                  Column(
+                    children: [
+                      Text("   " +status!, style: TextStyle(fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: primaryColor),),
+                    ],
+                  ),
+
+                ],
+              )
+          ],
         ),
       ),
     );
-
   }
-
-  Widget _statusViewComponent(BuildContext context, String? createdAt, String? complainID){
-
-      final mycomplaintController = Get.find<ComplaintStatusController>();
-      // final myList = mycomplaintController.getMyStatusComplainList();
-      // print(myList);
-
-      print("My complaint status build");
-      return SafeArea(
-        child: Container(
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.circular(16.0),
-            color: whiteColor,
-          ),
-
-          child: Column(
-
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 24,),
-              for(int i=0; i<4; i++)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      children: [
-                        Text("kasun"+"       ", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500,color: primaryColor),),
-                        // Text(myList[i]["time"]+"       ", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500,color: primaryColor),),
-                        // Text("\n"),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        if(i==0)
-                          Icon(Icons.download, size: 24),
-                        if(i==1)
-                          Icon(Icons.check, size: 24),
-                        if(i==2)
-                          Icon(Icons.email, size: 24),
-                        if(i==3)
-                          Icon(Icons.upload, size: 24),
-                        if(i<5-1)
-                          Container(
-                            color: primaryColor,
-                            height: 30,
-                            width: 1,
-                          ),
-                      ],
-                    ),
-
-
-                    Column(
-                      children: [
-                        // Text(" "+myList[i]["status"], style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500,color: primaryColor),),
-                        Text(" "+"lakshitha", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500,color: primaryColor),),
-
-                      ],
-                    ),
-
-                  ],
-                )
-            ],
-          ),
-        ),
-      );
-    }
-  }
+}
 
 
 
-
-// class MyComplaintStatus extends StatefulWidget {
-//   @override
-//   _MyComplaintStatusState createState() => _MyComplaintStatusState();
-// }
-// class _MyComplaintStatusState extends State<MyComplaintStatus> {
-
-  // DateTime now = DateTime.now();
-  //
-  // final primaryColor = Color(0xFF414B70);
-  // final secondaryColor = Color(0xFF8E92A8);
-  // final whiteColor = Color(0xFFFFFFFF);
-  // final backgroundGradient = LinearGradient(colors: [Colors.white, Color(0xFFEEEEEC)], begin: Alignment.topCenter, end: Alignment.bottomCenter,);
-  // final borderEnableColor = Color(0xFFF6F6F6);
-  // final hintTextColor = Color(0xFFB2B5C4);
-  // final dropshadowColor = Color(0x1A4B4B4B);
-  // final redColor = Color(0xFFFF6666);
-  // final popupBarrierColor = Color(0xFF151929).withOpacity(0.4);
-  //
-  // @override
-  // Widget build(BuildContext context) {
-  //   final mycomplaintController = Get.find<ComplaintStatusController>();
-  //   // final myList = mycomplaintController.getMyStatusComplainList();
-  //   // print(myList);
-  //
-  //   print("My complaint status build");
-  //   return SafeArea(
-  //     child: Container(
-  //       decoration: new BoxDecoration(
-  //         borderRadius: new BorderRadius.circular(16.0),
-  //         color: whiteColor,
-  //       ),
-  //
-  //       child: Column(
-  //
-  //         crossAxisAlignment: CrossAxisAlignment.start,
-  //         children: [
-  //           SizedBox(height: 24,),
-  //           for(int i=0; i<4; i++)
-  //             Row(
-  //               mainAxisAlignment: MainAxisAlignment.center,
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: [
-  //                 Column(
-  //                   children: [
-  //                      Text("kasun"+"       ", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500,color: primaryColor),),
-  //                     // Text(myList[i]["time"]+"       ", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500,color: primaryColor),),
-  //                     // Text("\n"),
-  //                   ],
-  //                 ),
-  //                 Column(
-  //                   children: [
-  //                     if(i==0)
-  //                     Icon(Icons.download, size: 24),
-  //                     if(i==1)
-  //                       Icon(Icons.check, size: 24),
-  //                     if(i==2)
-  //                       Icon(Icons.email, size: 24),
-  //                     if(i==3)
-  //                       Icon(Icons.upload, size: 24),
-  //                     if(i<5-1)
-  //                     Container(
-  //                       color: primaryColor,
-  //                       height: 30,
-  //                       width: 1,
-  //                     ),
-  //                   ],
-  //                 ),
-  //
-  //
-  //                 Column(
-  //                   children: [
-  //                   // Text(" "+myList[i]["status"], style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500,color: primaryColor),),
-  //                     Text(" "+"lakshitha", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500,color: primaryColor),),
-  //
-  //                   ],
-  //                 ),
-  //
-  //               ],
-  //             )
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-// }
 

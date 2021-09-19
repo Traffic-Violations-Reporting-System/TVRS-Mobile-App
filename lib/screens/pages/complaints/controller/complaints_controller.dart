@@ -32,6 +32,7 @@ class ComplaintsController extends GetxController{
     try {
       EasyLoading.show(status: "Loading...");
       final String myAuthToken = await _getMyAuthToken();
+      print(myAuthToken);
       final response = await Dio().get(baseUrl+"/complain/viewMyComplaints", options: Options(headers: {
         "Authorization": "$myAuthToken",
       }));
@@ -44,6 +45,8 @@ class ComplaintsController extends GetxController{
           myComplainList = (response.data['result'][0]['mobile_user']['complaints'] as List)
               .map((complaint) => Complaint.fromJson(complaint, response.data['result'][0]['mobile_user']['nic']))
               .toList().reversed.toList();
+
+          print(myComplainList!.length);
           print("*******");
         }
 
@@ -55,6 +58,8 @@ class ComplaintsController extends GetxController{
       Get.snackbar("Error", "Something went wrong! Please try again.", snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 2), colorText: redColor, icon: Icon(CupertinoIcons.clear_circled_solid, color: redColor), backgroundColor: Colors.white70, overlayColor: Color(0xFF151929).withOpacity(0.4) , overlayBlur: 0.001, isDismissible: true, margin: EdgeInsets.only(left: 5.0, right: 5.0, bottom: 10.0));
       print('${error.response?.statusCode} : ${error.response}');
     }
+
+
 
   }
 
@@ -71,6 +76,13 @@ class ComplaintsController extends GetxController{
 
   void tapToRefresh(){
     getMyComplainList();
+  }
+
+  void gotoStatusScreen(String complaintId, String createdAt) {
+    Get.offNamed("/complaintStatus", arguments: {
+      'complaint_id': complaintId,
+      'createdAt': createdAt
+    });
   }
 
 }

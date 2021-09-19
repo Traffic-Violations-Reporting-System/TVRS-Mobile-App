@@ -20,7 +20,10 @@ class ProfileScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    print("login is build!");
+    final controller = Get.find<ProfileDataController>();
+
+    print(controller.userProfile);
+    print("Profile is build!");
     return SafeArea(
       child: Container(
         height: double.infinity,
@@ -86,7 +89,7 @@ class ProfileScreen extends StatelessWidget{
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("${profileDataController.getUserName()}",
+                                Text("${controller.userProfile!.userName}",
                                   style: TextStyle(
                                     color: primaryColor,
                                     fontSize: 18,
@@ -170,7 +173,7 @@ class ProfileScreen extends StatelessWidget{
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("071-2470584",
+                                  Text("${controller.userProfile!.phone}",
                                     style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 18,
@@ -213,7 +216,7 @@ class ProfileScreen extends StatelessWidget{
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("Matara Head Office",
+                                  Text("${controller.userProfile!.policeDevision}",
                                     style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 18,

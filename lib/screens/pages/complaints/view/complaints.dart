@@ -155,6 +155,7 @@ class ComplaintsScreen extends StatelessWidget {
   }
 
   Widget _complainViewComponent(BuildContext context, String? createdAt, String? complainID, String? userID, String status){
+    final controller = Get.find<ComplaintsController>();
     return Container(
         margin: EdgeInsets.only(left: 24.0, right: 24.0, bottom: 16.0),
         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
@@ -330,7 +331,7 @@ class ComplaintsScreen extends StatelessWidget {
                     ),
                     child: TextButton(
                         onPressed: () async {
-
+                          controller.gotoStatusScreen(complainID!,createdAt!);
                         },
                         style: ButtonStyle(
                             elevation: MaterialStateProperty.all(0),
