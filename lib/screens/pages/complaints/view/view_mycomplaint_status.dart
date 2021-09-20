@@ -67,66 +67,7 @@ class MyComplaintScreen extends StatelessWidget {
                             children: [
 
                               SizedBox(height: 12,),
-                              // Row(
-                              //   mainAxisAlignment: MainAxisAlignment.center,
-                              //   children: [
-                              //     Container(
-                              //       decoration: new BoxDecoration(
-                              //         borderRadius: new BorderRadius.circular(
-                              //             16.0),
-                              //         color: whiteColor,
-                              //
-                              //       ),
-                              //
-                              //       child: Text("Complaint ID : ",
-                              //           style: TextStyle(
-                              //             fontSize: 14.0,
-                              //             // fontWeight: FontWeight.w500,
-                              //             color: secondaryColor,
-                              //           )
-                              //       ),
-                              //
-                              //     ),
-                              //
-                              //     Text("${controller.getComplaintStatus}",
-                              //         style: TextStyle(
-                              //           fontSize: 20.0,
-                              //           fontWeight: FontWeight.w500,
-                              //           color: primaryColor,
-                              //         )
-                              //     ),
-                              //
-                              //   ],
-                              // ),
-                              // Divider(color: secondaryColor,),
-                              // Text("Matara Devision",
-                              //   style: TextStyle(
-                              //     fontSize: 15.0,
-                              //     fontWeight: FontWeight.w500,
-                              //     color: primaryColor,
-                              //     // backgroundColor: Colors.green
-                              //   ),
-                              // ),
 
-                              // SizedBox(height: 10,),
-                              // Text("Kasun Lakshitha",
-                              //   style: TextStyle(
-                              //     fontSize: 14.0,
-                              //     // fontWeight: FontWeight.w500,
-                              //     color: secondaryColor,
-                              //     // backgroundColor: Colors.green
-                              //   ),
-                              // ),
-                              // Divider(color: secondaryColor,),
-                              //
-                              // Text("Matara Stand",
-                              //   style: TextStyle(
-                              //     fontSize: 15.0,
-                              //     fontWeight: FontWeight.w500,
-                              //     color: primaryColor,
-                              //     // backgroundColor: Colors.blue
-                              //   ),
-                              // ),
                               SizedBox(height: 16,),
                               Column(
                                 children: [
@@ -168,8 +109,6 @@ class MyComplaintScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-
-
 
                             Expanded(
                               child: CupertinoTabView(
@@ -247,7 +186,7 @@ class MyComplaintScreen extends StatelessWidget {
 
       child: controller.myStatusList != null? SingleChildScrollView(
 
-        padding: EdgeInsets.only(top: 24.0),
+        padding: EdgeInsets.only(top: 28.0),
 
         child: Column(
 
@@ -256,24 +195,17 @@ class MyComplaintScreen extends StatelessWidget {
           children: [
             Container(
 
-              // child: Text("Your Complaint is pending in the queue", style: TextStyle(
-              //     color: secondaryColor,
-              //     fontSize: 12.0,
-              //     fontWeight: FontWeight.w500
-              // ),
-              //
-              // ),
 
               child: Column(
 
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 24,),
 
                   Row(
 
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Column(
                         children: [
@@ -284,21 +216,6 @@ class MyComplaintScreen extends StatelessWidget {
 
                         ],
                       ),
-                      // Column(
-                      //   children: [
-                      //     Container(
-                      //       // color: primaryColor,
-                      //       // height: 20,
-                      //       // width: 1,
-                      //       child: Icon(
-                      //         Icons.check,
-                      //         color: primaryColor,
-                      //         size: 14.0,
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-
 
                       Container(
                         color: primaryColor,
@@ -323,7 +240,7 @@ class MyComplaintScreen extends StatelessWidget {
             ),
             Container(
               child:Column(
-              children:controller.myStatusList!.map( (complaintStatus) => _statusViewComponent(context,complaintStatus.createdAt, complaintStatus.date, complaintStatus.getStatus())).toList(),
+              children:controller.myStatusList!.map( (complaintStatus) => _statusViewComponent(context,complaintStatus.createdAt, complaintStatus.date, complaintStatus.getStatus(), complaintStatus.statusIcon)).toList(),
               )
             )
           ]
@@ -331,14 +248,6 @@ class MyComplaintScreen extends StatelessWidget {
       ):
 
       Container(
-
-        // child: Text("Your Complaint is pending in the queue", style: TextStyle(
-        //     color: secondaryColor,
-        //     fontSize: 12.0,
-        //     fontWeight: FontWeight.w500
-        // ),
-        //
-        // ),
 
         child: Column(
 
@@ -360,26 +269,12 @@ class MyComplaintScreen extends StatelessWidget {
 
                   ],
                 ),
-                // Column(
-                //   children: [
-                //     Container(
-                //       // color: primaryColor,
-                //       // height: 20,
-                //       // width: 1,
-                //       child: Icon(
-                //         Icons.check,
-                //         color: primaryColor,
-                //         size: 14.0,
-                //       ),
-                //     ),
-                //   ],
-                // ),
-
 
                 Container(
                   color: primaryColor,
                   height: 14,
                   width: 1,
+
                 ),
 
 
@@ -402,14 +297,14 @@ class MyComplaintScreen extends StatelessWidget {
     print("6");
   }
 
-  Widget _statusViewComponent(BuildContext context, String? createdAt, String? date, String? status) {
+  Widget _statusViewComponent(BuildContext context, String? createdAt, String? date, String? status, IconData? statusIcon) {
     print("2");
     // final mycomplaintController = Get.find<ComplaintStatusController>();
 
     print("My complaint status build");
     return SafeArea(
       child: Container(
-        margin: new EdgeInsets.symmetric(horizontal: 10.0),
+        margin: new EdgeInsets.symmetric(horizontal: 0.0),
         // height: 400,
         width: double.infinity,
 
@@ -425,14 +320,13 @@ class MyComplaintScreen extends StatelessWidget {
             SizedBox(height: 24,),
 
               Row(
-
                 // mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Column(
                     children: [
                       Text(date! + "     ", style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 10,
                           fontWeight: FontWeight.w500,
                           color: primaryColor),),
 
@@ -441,14 +335,15 @@ class MyComplaintScreen extends StatelessWidget {
                   Column(
                     children: [
                       Container(
-                        // color: primaryColor,
-                        // height: 20,
-                        // width: 1,
+
                         child: Icon(
-                          Icons.check,
+                          statusIcon,
                           color: primaryColor,
                           size: 14.0,
                         ),
+                        // color: primaryColor,
+                        // height: 20,
+                        // width: 1,
                       ),
                     ],
                   ),
@@ -456,7 +351,7 @@ class MyComplaintScreen extends StatelessWidget {
 
                   Column(
                     children: [
-                      Text("   " +status!, style: TextStyle(fontSize: 14,
+                      Text("   " +status!, style: TextStyle(fontSize: 10,
                           fontWeight: FontWeight.w500,
                           color: primaryColor),),
                     ],
