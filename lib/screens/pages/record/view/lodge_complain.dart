@@ -1,15 +1,22 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:chewie/chewie.dart';
+import 'package:dio/dio.dart';
+import 'package:etrafficcomplainer/core/models/savevideo.dart';
 import 'package:etrafficcomplainer/screens/pages/record/controller/lodge_complain_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:marquee/marquee.dart';
+import 'package:path/path.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player/video_player.dart';
 
@@ -17,13 +24,14 @@ import 'package:video_player/video_player.dart';
 class LodgeComplain extends StatelessWidget {
 
 
-  LodgeComplain({required this.path, required this.location, required this.isCropped}){
+  LodgeComplain({required this.path, required this.location, required this.isCropped, this.notSaved}){
     controller = Get.put(LodgeComplainController(location));
   }
   final String path;
   final Position location;
   final bool isCropped;
   late final controller;
+  final bool? notSaved;
 
   final primaryColor = Color(0xFF414B70);
   final whiteColor = Color(0xFFFFFFFF);
@@ -141,7 +149,7 @@ class LodgeComplain extends StatelessWidget {
             color: whiteColor,
             child: SizedBox(
               height: 140,
-              child: VideoView(path: path, isCropped: isCropped,)
+              child: VideoView(path: path, isCropped: isCropped, notSaved: notSaved,)
               ),
           ),
           SizedBox(
@@ -395,9 +403,23 @@ class LodgeComplain extends StatelessWidget {
                           ],
                         ),
                         child: TextButton(
-                          onPressed: () {
+                          onPressed: () async{
                             FocusScope.of(context).unfocus();
-                            controller.discardComplaint();
+                            if(notSaved!=null && notSaved!){
+                              EasyLoading.show(status: "Saving...");
+                              //video save
+                              await GallerySaver.saveVideo(controller.videoFile.path);
+                              String savedpath = '/storage/emulated/0/Movies/${basename(controller.videoFile.path)}';
+                              String videolength;
+                              videolength = "${controller.minutes < 10? '0'+controller.minutes.toString() : controller.minutes}:${controller.seconds < 10? '0'+controller.seconds.toString() : controller.seconds} Min";
+                              _saveVideoDetails(basename(controller.videoFile.path), savedpath, location, videolength);
+                              await VideoCompress.deleteAllCache();
+                              EasyLoading.dismiss();
+                              Get.offAllNamed("/home");
+                            }else{
+                              controller.discardComplaint();
+                            }
+
                           },
                           style: ButtonStyle(
                               elevation: MaterialStateProperty.all(0),
@@ -410,7 +432,7 @@ class LodgeComplain extends StatelessWidget {
                                 fontSize: 18,
                               ))
                           ),
-                          child: Text("Discard"),
+                          child: Text(notSaved!=null && notSaved!? "Save & Discard" : "Discard"),
                         ),
                       ),
                       SizedBox(height: 32),
@@ -424,12 +446,48 @@ class LodgeComplain extends StatelessWidget {
     );
   }
 
+  _saveVideoDetails(String filename, String path, Position location, String videolength) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? getStr = prefs.getString('SAVE_VIDEOS_LIST');
+    List<SaveVideo> saveVideosList =  [];
+    if(getStr != null){
+      saveVideosList = (json.decode(getStr) as List)
+          .map<SaveVideo>((item) => SaveVideo.fromJson(item))
+          .toList();
+    }
+    String now = DateFormat("d MMM yy hh:mm a").format(DateTime.now());
+    String? locationStr = await _getLocationAddress(location);
+    saveVideosList.add(SaveVideo(filename: filename, path: path, datetime: now, locationStr: locationStr, location: location, videoLength: videolength));
+    String objectList = jsonEncode(saveVideosList.map<Map<String, dynamic>>((video) => video.toJson()).toList());
+    prefs.setString('SAVE_VIDEOS_LIST', objectList);
+  }
+
+  Future<String?> _getLocationAddress(Position location) async{
+    try {
+      String url = "https://nominatim.openstreetmap.org/reverse?format=geocodejson&lat=${location.latitude}&lon=${location.longitude}&accept-language=en";
+      final response = await Dio().get(url);
+
+      if (response.statusCode == 200) {
+        List<String> labels = response.data['features'][0]['properties']['geocoding']['label'].toString().split(",");
+        labels.removeRange(labels.length-2, labels.length);
+        return labels.join(", ");
+      }
+
+    } on DioError catch (error) {
+      EasyLoading.dismiss();
+      Get.snackbar("Error", "Something went wrong! Please try again.", snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 2), colorText: redColor, icon: Icon(CupertinoIcons.clear_circled_solid, color: redColor), backgroundColor: Colors.white70, overlayColor: Color(0xFF151929).withOpacity(0.4) , overlayBlur: 0.001, isDismissible: true, margin: EdgeInsets.only(left: 5.0, right: 5.0, bottom: 10.0));
+      print('${error.response?.statusCode} : ${error.response}');
+    }
+
+  }
+
 }
 
 class VideoView extends StatefulWidget {
-  const VideoView({Key? key, required this.path, required this.isCropped}) : super(key: key);
+  const VideoView({Key? key, required this.path, required this.isCropped, this.notSaved, required}) : super(key: key);
   final String path;
   final bool isCropped;
+  final bool? notSaved;
 
   @override
   _VideoViewState createState() => _VideoViewState();
@@ -463,7 +521,7 @@ class _VideoViewState extends State<VideoView> {
 
   Future<void> initializePlayer() async {
 
-    if(widget.isCropped){
+    if(widget.isCropped || widget.notSaved==null){
       _videoPlayerController = VideoPlayerController.file(File(widget.path));
       controller.videoFile = File(widget.path);
     }else{
@@ -503,6 +561,8 @@ class _VideoViewState extends State<VideoView> {
       ),
       placeholder: Container(color: Colors.black,)
     );
+    controller.minutes = _videoPlayerController.value.duration.inMinutes;
+    controller.seconds = _videoPlayerController.value.duration.inSeconds;
     setState(() {});
   }
 

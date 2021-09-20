@@ -29,7 +29,7 @@ class UploadComplainController extends GetxController{
 
   @override
   void onClose() {
-    messageController.dispose();
+    //messageController.dispose();
     super.onClose();
   }
 

@@ -33,6 +33,7 @@ class _RecordScreenState extends State<RecordScreen> {
   @override
   void initState() {
     super.initState();
+    print("init eke inne");
     _cameraController = CameraController(cameras[0], ResolutionPreset.veryHigh);
     cameraValue = _cameraController.initialize();
   }
@@ -40,7 +41,7 @@ class _RecordScreenState extends State<RecordScreen> {
   @override
   void dispose() {
     super.dispose();
-    _cameraController.dispose();
+    //_cameraController.dispose();
     controller.disposeRecording();
     print("RecordScreen is dispose!");
   }
@@ -169,7 +170,7 @@ class _RecordScreenState extends State<RecordScreen> {
 
                               late final page;
                               //String convertedVideoPath;
-                              if(controller.timer.tick > 1){
+                              if(controller.timer.tick > 10){
 
                                 page = VideoViewPage(
                                     path: videopath.path,
@@ -180,6 +181,7 @@ class _RecordScreenState extends State<RecordScreen> {
                                     path: videopath.path,
                                     location: controller.complainLocation!,
                                     isCropped: false,
+                                    notSaved: true,
                                 );
                               }
                               Navigator.pushReplacement(

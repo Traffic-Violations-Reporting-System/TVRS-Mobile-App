@@ -25,7 +25,7 @@ class ComplaintsScreen extends StatelessWidget {
   //final complaintController = Get.put(ComplaintsController());
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext complaintContext) {
     print("Complaints is build!");
     return GetBuilder<ComplaintsController>(
         init: ComplaintsController(),
@@ -44,7 +44,7 @@ class ComplaintsScreen extends StatelessWidget {
                   )
               ),
               child: SizedBox(
-                width: MediaQuery.of(context).size.width,
+                width: MediaQuery.of(complaintContext).size.width,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -112,8 +112,7 @@ class ComplaintsScreen extends StatelessWidget {
                     Expanded(
                       child: CupertinoTabView(
                         builder: (context) {
-                          return CupertinoPageScaffold(
-                              child: controller.pageIndex == 0? _activeComplaints(context) : _savedComplaints(context));
+                          return controller.pageIndex == 0? CupertinoPageScaffold( child: _activeComplaints(complaintContext)) : CupertinoPageScaffold( child: _savedComplaints(complaintContext));
                         },
                       ),
                     )
@@ -154,6 +153,7 @@ class ComplaintsScreen extends StatelessWidget {
   }
 
   Widget _complainViewComponent(BuildContext context, String? createdAt, String? complainID, String? userID, String status){
+    final controller = Get.find<ComplaintsController>();
     return Container(
         margin: EdgeInsets.only(left: 24.0, right: 24.0, bottom: 16.0),
         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
@@ -293,42 +293,7 @@ class ComplaintsScreen extends StatelessWidget {
                       ],
                     ),
                     child: TextButton(
-                        onPressed: () async {
-
-                        },
-                        style: ButtonStyle(
-                            elevation: MaterialStateProperty.all(0),
-                            shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                            backgroundColor: MaterialStateProperty.all(whiteColor),
-                            foregroundColor: MaterialStateProperty.all(primaryColor),
-                            overlayColor: MaterialStateProperty.all(primaryColor.withOpacity(0.3)),
-                            textStyle: MaterialStateProperty.all(TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                            ))
-                        ),
-                        child: Text("Withdraw")
-                    ),
-                  ),
-                ),
-                SizedBox(width: 6.0,),
-                Expanded(
-                  child: Container(
-                    height: 33,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      border: Border.all(color: primaryColor, width: 1.5),
-                      boxShadow: [
-                        BoxShadow(
-                          color: dropshadowColor,
-                          spreadRadius: 0,
-                          blurRadius: 20,
-                          offset: Offset(0, 4), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: TextButton(
-                        onPressed: () async {
+                        onPressed: () {
 
                         },
                         style: ButtonStyle(
@@ -364,7 +329,7 @@ class ComplaintsScreen extends StatelessWidget {
                     ),
                     child: TextButton(
                         onPressed: () async {
-
+                          if(complainID!=null) controller.saveHideComplaintsList(complainID);
                         },
                         style: ButtonStyle(
                             elevation: MaterialStateProperty.all(0),
@@ -377,7 +342,7 @@ class ComplaintsScreen extends StatelessWidget {
                               fontSize: 14,
                             ))
                         ),
-                        child: Text("Delete")
+                        child: Text("Hide")
                     ),
                   ),
                 ),
@@ -401,7 +366,7 @@ class ComplaintsScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: controller.mySavedVideosList!.map( (savedComplaint) => _savedViewComponent(context, savedComplaint.filename, savedComplaint.datetime, savedComplaint.location)).toList(),
+          children: controller.mySavedVideosList!.map( (savedComplaint) => _savedViewComponent(context, savedComplaint.filename, savedComplaint.datetime, savedComplaint.locationStr, savedComplaint.path, savedComplaint.location, savedComplaint.videoLength)).toList(),
         ),
       ):
       Center(
@@ -415,12 +380,13 @@ class ComplaintsScreen extends StatelessWidget {
     );
   }
 
-  Widget _savedViewComponent(BuildContext context, String? filename, String? datetime, String? location){
+  Widget _savedViewComponent(BuildContext context, String? filename, String? datetime, String? locationStr, String? path, Position? location, String videolength){
+    final controller = Get.find<ComplaintsController>();
     return Container(
         margin: EdgeInsets.only(left: 24.0, right: 24.0, bottom: 16.0),
         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
         width: double.infinity,
-        height: 170,
+        height: 194,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(8)),
           color: whiteColor,
@@ -438,7 +404,7 @@ class ComplaintsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 48.0,
+              height: 72.0,
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -460,6 +426,13 @@ class ComplaintsScreen extends StatelessWidget {
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                       ),
+                      ),
+                      SizedBox(height: 4.0,),
+                      Text("Video length: ", style: TextStyle(
+                        color: secondaryColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
                       )
                     ],
                   ),
@@ -477,6 +450,13 @@ class ComplaintsScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 4.0,),
                       Text(datetime ?? "Error", style: TextStyle(
+                        color: primaryColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      ),
+                      SizedBox(height: 4.0,),
+                      Text(videolength, style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -510,7 +490,7 @@ class ComplaintsScreen extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                           ),) :
                           Marquee(
-                            text: "$location",
+                            text: "$locationStr",
                             style: TextStyle(
                               color: greenColor,
                               fontSize: 12,
@@ -549,8 +529,8 @@ class ComplaintsScreen extends StatelessWidget {
                       ],
                     ),
                     child: TextButton(
-                        onPressed: () async {
-
+                        onPressed: () {
+                          if(path != null && location != null)controller.lodgeComplaint(context, path, location, videolength);
                         },
                         style: ButtonStyle(
                             elevation: MaterialStateProperty.all(0),

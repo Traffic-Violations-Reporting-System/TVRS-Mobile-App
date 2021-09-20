@@ -14,12 +14,14 @@ import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_compress/video_compress.dart';
+import 'package:video_player/video_player.dart';
 import 'package:video_trimmer/video_trimmer.dart';
 
 class VideoViewPage extends StatefulWidget {
-  const VideoViewPage({Key? key, required this.path, required this.location}) : super(key: key);
+  const VideoViewPage({Key? key, required this.path, required this.location, this.fromSaved}) : super(key: key);
   final String path;
   final Position location;
+  final bool? fromSaved;
 
   @override
   _VideoViewPageState createState() => _VideoViewPageState();
@@ -47,13 +49,13 @@ class _VideoViewPageState extends State<VideoViewPage> {
 
   double? progress;
 
-  late Subscription _subscription;
+  Subscription? _subscription;
 
-  Future<String?> _saveVideo() async {
+  Future<String?> _saveVideo(String filename) async {
     String? _value;
 
     await _trimmer
-        .saveTrimmedVideo(startValue: _startValue, endValue: _endValue)
+        .saveTrimmedVideo(startValue: _startValue, endValue: _endValue, videoFileName: filename)
         .then((value) {
       setState(() {
         _value = value;
@@ -64,6 +66,12 @@ class _VideoViewPageState extends State<VideoViewPage> {
   }
 
   void _loadVideo() async {
+
+    if(widget.fromSaved!=null && widget.fromSaved!){
+      file = File(widget.path);
+      _trimmer.loadVideo(videoFile:file);
+      return;
+    }
 
     _subscription =
     VideoCompress.compressProgress$.subscribe((progress) {
@@ -99,7 +107,7 @@ class _VideoViewPageState extends State<VideoViewPage> {
 
   @override
   void dispose() {
-    _subscription.unsubscribe();
+    if(_subscription!=null) _subscription!.unsubscribe();
     super.dispose();
   }
 
@@ -107,15 +115,7 @@ class _VideoViewPageState extends State<VideoViewPage> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-          leading: IconButton(
-            padding: const EdgeInsets.all(0.0),
-            icon: Icon(CupertinoIcons.back, color: primaryColor,),
-            iconSize: 32.0,
-            alignment: Alignment.centerLeft,
-            onPressed: () {
-
-            },
-          ),
+          automaticallyImplyLeading: false,
           middle: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -135,7 +135,6 @@ class _VideoViewPageState extends State<VideoViewPage> {
               Icon(CupertinoIcons.cloud_upload, color: secondaryColor,),
             ],
           ),
-          trailing: SizedBox(width: 48.0,),
         ),
         backgroundColor: Colors.black,
         child: Column(
@@ -214,7 +213,7 @@ class _VideoViewPageState extends State<VideoViewPage> {
                       .of(context)
                       .size
                       .width,
-                  maxVideoLength: Duration(seconds: 60),
+                  maxVideoLength: Duration(seconds: 10),
                   onChangeStart: (value) {
                     _startValue = value;
                   },
@@ -254,15 +253,24 @@ class _VideoViewPageState extends State<VideoViewPage> {
                       ),
                       child: TextButton(
                         onPressed: () async {
+                          if(widget.fromSaved!=null && widget.fromSaved!){
+                            Navigator.of(context).pop();
+                            return;
+                          }
                           EasyLoading.show(status: "Saving...");
                           //video save
                           await GallerySaver.saveVideo(file.path);
                           String savedpath = '/storage/emulated/0/Movies/${basename(file.path)}';
-                          _saveVideoDetails(basename(file.path), savedpath, widget.location);
+                          String videolength = "00:00 Min";
+                          if(_trimmer.videoPlayerController!=null){
+                            int _minutes = _trimmer.videoPlayerController!.value.duration.inMinutes;
+                            int _seconds = _trimmer.videoPlayerController!.value.duration.inSeconds;
+                            videolength = "${_minutes < 10? '0'+_minutes.toString() : _minutes}:${_seconds < 10? '0'+_seconds.toString() : _seconds} Min";
+                          }
+                          _saveVideoDetails(basename(file.path), savedpath, widget.location, videolength);
                           file.deleteSync();
                           await VideoCompress.deleteAllCache();
                           EasyLoading.dismiss();
-                          return;
                           Get.snackbar("Saved!", "Your complaint is successfully saved.", snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 2), colorText: primaryColor, icon: Icon(CupertinoIcons.checkmark_alt_circle_fill, color: primaryColor), backgroundColor: Colors.white70, overlayColor: Color(0xFF151929).withOpacity(0.4) , overlayBlur: 0.001, isDismissible: false, margin: EdgeInsets.only(left: 5.0, right: 5.0, bottom: 10.0), snackbarStatus: (status) async {
                             if(status == SnackbarStatus.CLOSED){
                               Get.offAllNamed("/home");
@@ -288,9 +296,9 @@ class _VideoViewPageState extends State<VideoViewPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(CupertinoIcons.square_arrow_down),
+                            Icon(widget.fromSaved!=null && widget.fromSaved!? CupertinoIcons.arrow_left : CupertinoIcons.square_arrow_down),
                             SizedBox(width: 6.0,),
-                            Text("Save")
+                            Text(widget.fromSaved!=null && widget.fromSaved!? "Discard": "Save")
                           ],
                         ),
                       ),
@@ -314,8 +322,8 @@ class _VideoViewPageState extends State<VideoViewPage> {
                       child: TextButton(
                         onPressed: () {
                           EasyLoading.show(status: "Cropping...");
-                          _saveVideo().then((value) {
-                            file.deleteSync();
+                          _saveVideo(basename(file.path).replaceAll(".mp4", "")).then((value) {
+                            if(widget.fromSaved==null) file.deleteSync();
                             EasyLoading.dismiss();
                             if (value!.isNotEmpty) {
                               print("crop file path: " + value);
@@ -323,6 +331,7 @@ class _VideoViewPageState extends State<VideoViewPage> {
                                   path: value,
                                   location: widget.location,
                                   isCropped: true,
+                                  notSaved: widget.fromSaved!=null && widget.fromSaved!? null : true,
                               );
                               Navigator.pushReplacement(
                                   context,
@@ -367,7 +376,7 @@ class _VideoViewPageState extends State<VideoViewPage> {
     );
   }
 
-  _saveVideoDetails(String filename, String path, Position location) async {
+  _saveVideoDetails(String filename, String path, Position location, String videolength) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? getStr = prefs.getString('SAVE_VIDEOS_LIST');
     List<SaveVideo> saveVideosList =  [];
@@ -378,7 +387,7 @@ class _VideoViewPageState extends State<VideoViewPage> {
     }
     String now = DateFormat("d MMM yy hh:mm a").format(DateTime.now());
     String? locationStr = await _getLocationAddress(location);
-    saveVideosList.add(SaveVideo(filename: filename, path: path, datetime: now, location: locationStr));
+    saveVideosList.add(SaveVideo(filename: filename, path: path, datetime: now, locationStr: locationStr, location: location, videoLength: videolength));
     String objectList = jsonEncode(saveVideosList.map<Map<String, dynamic>>((video) => video.toJson()).toList());
     prefs.setString('SAVE_VIDEOS_LIST', objectList);
   }

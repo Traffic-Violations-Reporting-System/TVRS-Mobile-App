@@ -93,21 +93,12 @@ class UploadComplain extends StatelessWidget {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         automaticallyImplyLeading: false,
-        middle: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(CupertinoIcons.videocam_circle, color: primaryColor,),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-              child: Icon(CupertinoIcons.chevron_right_2, color: primaryColor, size: 10,),
-            ),
-            Icon(CupertinoIcons.crop, color: primaryColor,),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-              child: Icon(CupertinoIcons.chevron_right_2, color: primaryColor, size: 10,),
-            ),
-            Icon(CupertinoIcons.cloud_upload, color: primaryColor,),
-          ],
+        middle:  Text("Lodge Complaint From Device",
+          style: TextStyle(
+              color: primaryColor,
+              fontWeight: FontWeight.w500,
+              fontSize: 18.0
+          ),
         ),
       ),
       backgroundColor: backgroundColor,
@@ -130,15 +121,15 @@ class UploadComplain extends StatelessWidget {
             ),
           ),
           Divider(color: dividerColor, height: 0.0,),
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(0.0),
-            color: whiteColor,
-            child: SizedBox(
-              height: 140,
-              child: VideoView(path: path, isCropped: true,)
-              ),
-          ),
+          // Container(
+          //   width: double.infinity,
+          //   padding: EdgeInsets.all(0.0),
+          //   color: whiteColor,
+          //   child: SizedBox(
+          //     height: 140,
+          //     child: VideoView(path: path, isCropped: true,)
+          //     ),
+          // ),
           SizedBox(
             width: double.infinity,
             height: 48,
@@ -146,7 +137,7 @@ class UploadComplain extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: const EdgeInsets.only(left: 24.0),
-                child: Text("Information", style: TextStyle(
+                child: Text("Pick Location", style: TextStyle(
                     fontWeight: FontWeight.w500,
                     color: primaryColor
                 ),
@@ -161,25 +152,25 @@ class UploadComplain extends StatelessWidget {
                   key: controller.lodgeComplainFormKey,
                   child: Column(
                     children: <Widget>[
-                      SizedBox(
-                        height: 100,
-                        child: GoogleMap(
-                              liteModeEnabled: true,
-                              myLocationButtonEnabled: false,
-                              myLocationEnabled: false,
-                              mapType: MapType.normal,
-                              initialCameraPosition: CameraPosition(
-                                target: LatLng(location.latitude, location.longitude),
-                                zoom: 15.4746,
-                              ),
-                              markers: _createMaker(),
-                              zoomControlsEnabled: true,
-                              zoomGesturesEnabled: true,
-                              onMapCreated: (GoogleMapController gmController) {
-                                _mapcontroller.complete(gmController);
-                              },
-                        ),
-                      ),
+                      // SizedBox(
+                      //   height: 100,
+                      //   child: GoogleMap(
+                      //         liteModeEnabled: true,
+                      //         myLocationButtonEnabled: false,
+                      //         myLocationEnabled: false,
+                      //         mapType: MapType.normal,
+                      //         initialCameraPosition: CameraPosition(
+                      //           target: LatLng(location.latitude, location.longitude),
+                      //           zoom: 15.4746,
+                      //         ),
+                      //         markers: _createMaker(),
+                      //         zoomControlsEnabled: true,
+                      //         zoomGesturesEnabled: true,
+                      //         onMapCreated: (GoogleMapController gmController) {
+                      //           _mapcontroller.complete(gmController);
+                      //         },
+                      //   ),
+                      // ),
                       Container(
                         height: 50.0,
                         color: whiteColor,
