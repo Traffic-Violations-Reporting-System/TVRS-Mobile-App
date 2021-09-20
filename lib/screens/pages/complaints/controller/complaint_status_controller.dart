@@ -71,7 +71,7 @@ class ComplaintStatusController extends GetxController{
   //   return data.toString();
   // }
 
-  Future<String?> _getVideoPath(DateTime dateTime) async {
+  Future<String?> getVideoPath(DateTime dateTime) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? getStr = prefs.getString('SAVE_LODGED_VIDEOS_LIST');
     List<LodgedVideo> saveLodgedVideosList =  [];

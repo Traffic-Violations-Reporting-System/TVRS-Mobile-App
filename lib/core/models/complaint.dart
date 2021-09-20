@@ -14,13 +14,13 @@ class Complaint{
     switch(this.latestStatus){
       case "pending":
         return "Pending in the queue.";
-      case "accept":
+      case "accepted":
         return "Processing under related police department.";
       case "review":
         return "Complain is under review.";
-      case "reject":
+      case "rejected":
         return "Complain is rejected.";
-      case "complete":
+      case "completed":
         return "Complain is completely executed.";
       default:
         return "";
