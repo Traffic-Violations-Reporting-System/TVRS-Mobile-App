@@ -147,4 +147,11 @@ class ComplaintsController extends GetxController{
 
   }
 
+  void gotoStatusScreen(String complaintId, String createdAt) {
+    Get.toNamed("/complaintStatus", arguments: {
+      'complaint_id': complaintId,
+      'createdAt': createdAt
+    });
+  }
+
 }

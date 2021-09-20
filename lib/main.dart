@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/otp_verify", page: ()=>OTPVerifyScreen(), binding: OTPVerifyBinding()),
         GetPage(name: "/otp_verify_2", page: ()=>OTPVerify2Screen(), binding: OTPVerify2Binding()),
         GetPage(name: "/complaintStatus", page: ()=>MyComplaintScreen(), binding: complaintStatusBinding()),
-        GetPage(name: "/add_payout_option", page: ()=>BankDetailsScreen(), binding: BankDetailsBinding())
+        GetPage(name: "/add_payout_option", page: ()=>BankDetailsScreen(), binding: BankDetailsBinding()),
       ],
       initialRoute: "/login",
       builder: EasyLoading.init(),

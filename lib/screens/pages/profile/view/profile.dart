@@ -44,7 +44,7 @@ class ProfileScreen extends StatelessWidget{
               children :[
                   Container(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 20,top: 70),
+                    padding: const EdgeInsets.only(left: 25,top: 70),
                     child: Column(
                       children: [
                         Text("My Profile",
@@ -67,9 +67,9 @@ class ProfileScreen extends StatelessWidget{
                     color: whiteColor,
                     borderRadius: BorderRadius.circular(5.0),
                   ),
-                  margin: EdgeInsets.only(left: 20,right: 20),
+                  margin: EdgeInsets.only(left: 25,right: 25),
                   height: 300,
-                  width: 330,
+                  width: double.infinity,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -248,9 +248,9 @@ class ProfileScreen extends StatelessWidget{
                     color: whiteColor,
                     borderRadius: BorderRadius.circular(5.0),
                   ),
-                  margin: EdgeInsets.only(left: 20,right: 20),
+                  margin: EdgeInsets.only(left: 25,right: 25),
                   height: 100,
-                  width: 330,
+                  width: double.infinity,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -306,7 +306,7 @@ class ProfileScreen extends StatelessWidget{
                 SizedBox(height: 30,),
 
                 Container(
-                  margin: EdgeInsets.only(left: 20, top: 14,bottom: 10,right: 20),
+                  margin: EdgeInsets.only(left: 25, top: 14,bottom: 10,right: 25),
                   width: double.infinity,
                   height: 53,
                   decoration: BoxDecoration(

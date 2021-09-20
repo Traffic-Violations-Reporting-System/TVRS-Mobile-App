@@ -294,7 +294,7 @@ class ComplaintsScreen extends StatelessWidget {
                     ),
                     child: TextButton(
                         onPressed: () {
-
+                          controller.gotoStatusScreen(complainID!,createdAt!);
                         },
                         style: ButtonStyle(
                             elevation: MaterialStateProperty.all(0),

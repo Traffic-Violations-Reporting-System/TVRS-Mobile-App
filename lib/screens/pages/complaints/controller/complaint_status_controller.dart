@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:etrafficcomplainer/core/models/complaint_status.dart';
+import 'package:etrafficcomplainer/core/models/lodgedvideo.dart';
 import 'package:etrafficcomplainer/services/api_service.dart';
 import 'package:etrafficcomplainer/services/api_service_impl.dart';
 import 'package:flutter/cupertino.dart';
@@ -70,5 +71,24 @@ class ComplaintStatusController extends GetxController{
   //   return data.toString();
   // }
 
+  Future<String?> _getVideoPath(DateTime dateTime) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? getStr = prefs.getString('SAVE_LODGED_VIDEOS_LIST');
+    List<LodgedVideo> saveLodgedVideosList =  [];
+    String? path;
+    if(getStr != null){
+      saveLodgedVideosList = (json.decode(getStr) as List)
+          .map<LodgedVideo>((item) => LodgedVideo.fromJson(item))
+          .toList();
+
+      saveLodgedVideosList.forEach((element) {
+        if(element.dateTime!.compareTo(dateTime) == 0){
+          path = element.path;
+          return;
+        }
+      });
+      return path;
+    }
+  }
 
 }

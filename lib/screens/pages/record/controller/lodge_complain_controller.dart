@@ -151,24 +151,4 @@ class LodgeComplainController extends GetxController{
     prefs.setString('SAVE_LODGED_VIDEOS_LIST', objectList);
   }
 
-  Future<String?> _getVideoPath(DateTime dateTime) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? getStr = prefs.getString('SAVE_LODGED_VIDEOS_LIST');
-    List<LodgedVideo> saveLodgedVideosList =  [];
-    String? path;
-    if(getStr != null){
-      saveLodgedVideosList = (json.decode(getStr) as List)
-          .map<LodgedVideo>((item) => LodgedVideo.fromJson(item))
-          .toList();
-
-      saveLodgedVideosList.forEach((element) {
-          if(element.dateTime!.compareTo(dateTime) == 0){
-            path = element.path;
-            return;
-          }
-      });
-      return path;
-    }
-  }
-
 }

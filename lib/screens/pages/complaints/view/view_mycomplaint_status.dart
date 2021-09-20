@@ -150,7 +150,7 @@ class MyComplaintScreen extends StatelessWidget {
                             ),
 
 
-                            child: Text("Back To Home"),
+                            child: Text("Back"),
 
                           ),
 
