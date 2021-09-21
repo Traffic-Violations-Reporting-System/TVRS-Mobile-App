@@ -9,6 +9,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:video_compress/video_compress.dart';
 
 class UploadComplainController extends GetxController{
@@ -19,6 +20,7 @@ class UploadComplainController extends GetxController{
   final redColor = Color(0xFFFF6666);
   late File videoFile;
   String? locationStr;
+  final ImagePicker _picker = ImagePicker();
 
   late ApiService _apiservice;
 
@@ -122,5 +124,11 @@ class UploadComplainController extends GetxController{
     update();
 
   }
+
+  void getDeviceVideo() async{
+    final XFile? video = await _picker.pickVideo(source: ImageSource.gallery);
+    print(video?.path);
+  }
+
 
 }

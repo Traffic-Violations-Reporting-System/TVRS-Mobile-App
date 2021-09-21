@@ -93,7 +93,7 @@ class UploadComplain extends StatelessWidget {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         automaticallyImplyLeading: false,
-        middle:  Text("Lodge Complaint From Device",
+        middle:  Text("Upload From Device",
           style: TextStyle(
               color: primaryColor,
               fontWeight: FontWeight.w500,
@@ -121,15 +121,36 @@ class UploadComplain extends StatelessWidget {
             ),
           ),
           Divider(color: dividerColor, height: 0.0,),
-          // Container(
-          //   width: double.infinity,
-          //   padding: EdgeInsets.all(0.0),
-          //   color: whiteColor,
-          //   child: SizedBox(
-          //     height: 140,
-          //     child: VideoView(path: path, isCropped: true,)
-          //     ),
-          // ),
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.all(0.0),
+            color: whiteColor,
+            child: SizedBox(
+              height: 140,
+              child: InkWell(
+                onTap: (){
+                  controller.getDeviceVideo();
+                },
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Icon( CupertinoIcons.circle_fill, color: hintTextColor.withOpacity(0.5), size: 110,),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(CupertinoIcons.square_arrow_up, color: secondaryColor, size: 48,),
+                        Text("Import", style: TextStyle(
+                            color: secondaryColor,
+                            fontSize: 10
+                        ),)
+                      ],
+                    )
+                  ],
+                ),
+              )
+              //child: VideoView(path: path, isCropped: true,)
+              ),
+          ),
           SizedBox(
             width: double.infinity,
             height: 48,

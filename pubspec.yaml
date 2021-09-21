@@ -48,6 +48,7 @@ dependencies:
   video_compress: ^3.1.0
   intl: ^0.17.0
   marquee: ^2.2.0
+  image_picker: ^0.8.4+2
 
 dev_dependencies:
   flutter_test:
