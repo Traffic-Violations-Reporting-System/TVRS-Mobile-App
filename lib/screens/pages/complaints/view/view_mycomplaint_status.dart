@@ -1,14 +1,18 @@
+import 'package:chewie/chewie.dart';
 import 'package:etrafficcomplainer/screens/pages/complaints/controller/complaint_status_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'package:intl/intl.dart';
+import 'package:video_player/video_player.dart';
+import 'dart:async';
+import 'dart:io';
 
 class MyComplaintScreen extends StatelessWidget {
 
-
   final myComplaintStatusController = Get.find<ComplaintStatusController>();
+  MyComplaintScreen() {
+    myComplaintStatusController.getVideoPath();
+  }
 
   final primaryColor = Color(0xFF414B70);
   final secondaryColor = Color(0xFF8E92A8);
@@ -25,7 +29,8 @@ class MyComplaintScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // myComplaintStatusController.getMyStatusList();
+    final myComplaintStatusController = Get.find<ComplaintStatusController>();
+    // ignore: non_constant_identifier_names
 
 
     print("my complaint status build");
@@ -49,9 +54,7 @@ class MyComplaintScreen extends StatelessWidget {
                       SizedBox(height: 30,),
                       Text("Track Status",
                         style: TextStyle(fontSize: 24, color: whiteColor),),
-
                     ],
-
                   ),
                 ),
                 backgroundColor: Colors.transparent,
@@ -65,41 +68,36 @@ class MyComplaintScreen extends StatelessWidget {
 
                           child: Column(
                             children: [
-
-                              SizedBox(height: 12,),
-
-                              SizedBox(height: 16,),
+                              Container(
+                                child: Divider(
+                                  color: hintTextColor,
+                                ),
+                              ),
                               Column(
                                 children: [
-
                                   Container(
-                                    margin: new EdgeInsets.symmetric(horizontal: 10.0),
-                                    child: GridView.count(
-                                      crossAxisCount: 1,
-                                      childAspectRatio: 2 / 1,
-                                      shrinkWrap: true,
-                                      children: List.generate(1, (index) {
-                                        return Padding(
-                                          padding: const EdgeInsets.all(0.0),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              gradient: backgroundGradient,
-                                              image: DecorationImage(
-                                                image: AssetImage(
-                                                    "assets/img/locationImg.jpg"),
-                                                fit: BoxFit.cover,
-                                              ),
-                                              borderRadius:
-                                              BorderRadius.all(
-                                                Radius.circular(10.0),),
-                                              border: Border.all(
-                                                  color: borderEnableColor),
-                                            ),
-                                          ),
-                                        );
-                                      },),
+                                    child: Text("Attachement", style: TextStyle(
+                                        fontSize: 15,
+                                        color: primaryColor,
+
+                                    ),),
+                                  ),
+                                  Container(
+                                    child: Divider(
+                                      color: hintTextColor,
                                     ),
                                   ),
+                                  // Video view component is here
+                                  Container(
+                                    width: double.infinity,
+                                    padding: EdgeInsets.all(0.0),
+                                    color: whiteColor,
+                                    child: SizedBox(
+                                        height: 140,
+                                        child: controller.videoPath!=null? VideoView(file: File(controller.videoPath!),):CircularProgressIndicator()
+                                    ),
+                                  ),
+
                                   SizedBox(height: 16,),
 
                                 ],
@@ -169,7 +167,11 @@ class MyComplaintScreen extends StatelessWidget {
     );
   }
 
-
+// void getPath() async{
+//   final controller = Get.find<ComplaintStatusController>();
+//   String? path = await controller.getVideoPath();
+//
+// }
   Widget getStatus(BuildContext context){
     final controller = Get.find<ComplaintStatusController>();
     // controller.getMyStatusList();
@@ -209,7 +211,7 @@ class MyComplaintScreen extends StatelessWidget {
                     children: [
                       Column(
                         children: [
-                          Text("${controller.getPendingStatusDate()}" + "     ", style: TextStyle(
+                          Text("${controller.getPendingStatusDate()}" + "                   ", style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               color: primaryColor),),
@@ -218,15 +220,22 @@ class MyComplaintScreen extends StatelessWidget {
                       ),
 
                       Container(
-                        color: primaryColor,
-                        height: 14,
-                        width: 1,
+                        // color: primaryColor,
+                        // height: 14,
+                        // width: 1,
+
+                        child: Icon(
+                          CupertinoIcons.ant,
+                          color: primaryColor,
+                          size: 14.0,
+                        ),
                       ),
+
 
 
                       Column(
                         children: [
-                          Text("      " +"Pending", style: TextStyle(fontSize: 14,
+                          Text("    "+"Complaint is pending.", style: TextStyle(fontSize: 14,
                               fontWeight: FontWeight.w500,
                               color: primaryColor),),
                         ],
@@ -271,16 +280,20 @@ class MyComplaintScreen extends StatelessWidget {
                 ),
 
                 Container(
-                  color: primaryColor,
-                  height: 14,
-                  width: 1,
 
+                  child: Icon(
+                    CupertinoIcons.ant,
+                    color: primaryColor,
+                    size: 14.0,
+                  ),
+                  // color: primaryColor,
+                  // height: 20,
+                  // width: 1,
                 ),
-
 
                 Column(
                   children: [
-                    Text("      " +"Pending", style: TextStyle(fontSize: 14,
+                    Text("           " +"Complaint is pending.", style: TextStyle(fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: primaryColor),),
                   ],
@@ -326,7 +339,7 @@ class MyComplaintScreen extends StatelessWidget {
                   Column(
                     children: [
                       Text(date! + "     ", style: TextStyle(
-                          fontSize: 10,
+                          fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: primaryColor),),
 
@@ -351,7 +364,7 @@ class MyComplaintScreen extends StatelessWidget {
 
                   Column(
                     children: [
-                      Text("   " +status!, style: TextStyle(fontSize: 10,
+                      Text("   " +status!, style: TextStyle(fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: primaryColor),),
                     ],
@@ -366,6 +379,66 @@ class MyComplaintScreen extends StatelessWidget {
   }
 }
 
+class VideoView extends StatefulWidget {
+  const VideoView({Key? key, required this.file}) : super(key: key);
+  final File file;
+
+  @override
+  _VideoViewState createState() => _VideoViewState();
+}
+
+class _VideoViewState extends State<VideoView> {
+
+  final secondaryColor = Color(0xFF8E92A8);
+  final redColor = Color(0xFFFF6666);
+
+  late VideoPlayerController _videoPlayerController;
+  ChewieController? _chewieController;
+
+  final controller = Get.find<ComplaintStatusController>();
+
+  @override
+  void initState() {
+    super.initState();
+    initializePlayer();
+  }
+
+  @override
+  void dispose() {
+    _videoPlayerController.dispose();
+    _chewieController?.dispose();
+    super.dispose();
+  }
+
+  Future<void> initializePlayer() async {
+    _videoPlayerController = VideoPlayerController.file(widget.file);
+    await _videoPlayerController.initialize();
+    _chewieController = ChewieController(
+        videoPlayerController: _videoPlayerController,
+        autoPlay: false,
+        looping: false,
+        autoInitialize: true,
+        materialProgressColors: ChewieProgressColors(
+          playedColor: redColor,
+          bufferedColor: secondaryColor,
+          handleColor: redColor,
+        ),
+        placeholder: Container(color: Colors.black,)
+    );
+    setState(() {});
+  }
 
 
-
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: _chewieController != null &&
+          _chewieController!
+              .videoPlayerController.value.isInitialized
+          ? Chewie(
+        controller: _chewieController!,
+      )
+          : CircularProgressIndicator(),
+    );
+  }
+}

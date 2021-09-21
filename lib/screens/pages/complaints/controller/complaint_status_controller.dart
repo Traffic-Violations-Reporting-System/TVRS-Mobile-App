@@ -1,10 +1,7 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:etrafficcomplainer/core/models/complaint_status.dart';
 import 'package:etrafficcomplainer/core/models/lodgedvideo.dart';
-import 'package:etrafficcomplainer/services/api_service.dart';
-import 'package:etrafficcomplainer/services/api_service_impl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -19,8 +16,9 @@ class ComplaintStatusController extends GetxController{
   final dynamic dataset = Get.arguments;
 
   String? getPendingStatusDate(){
-    return dataset['createdAt'];
+    return dataset['occured_date'];
   }
+  // DateTime date = DateTime.now();
   @override
   void onInit(){
     getMyStatusList();
@@ -71,7 +69,8 @@ class ComplaintStatusController extends GetxController{
   //   return data.toString();
   // }
 
-  Future<String?> _getVideoPath(DateTime dateTime) async {
+  late final String? videoPath;
+  void getVideoPath() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? getStr = prefs.getString('SAVE_LODGED_VIDEOS_LIST');
     List<LodgedVideo> saveLodgedVideosList =  [];
@@ -82,12 +81,13 @@ class ComplaintStatusController extends GetxController{
           .toList();
 
       saveLodgedVideosList.forEach((element) {
-        if(element.dateTime!.compareTo(dateTime) == 0){
+        if(element.dateTime!.compareTo(dataset['occured_date']) == 0){
           path = element.path;
           return;
         }
       });
-      return path;
+      videoPath =  path;
+      update();
     }
   }
 
