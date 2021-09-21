@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/complaintStatus", page: ()=>MyComplaintScreen(), binding: complaintStatusBinding()),
         GetPage(name: "/add_payout_option", page: ()=>BankDetailsScreen(), binding: BankDetailsBinding()),
       ],
-      initialRoute: "/login",
+      initialRoute: "/screen_controller",
       builder: EasyLoading.init(),
     );
   }

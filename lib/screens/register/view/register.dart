@@ -157,11 +157,11 @@ class RegisterScreen extends GetView<RegisterController> {
                                       showSelectedItem: false,
                                       items: [
                                         "PD001 - Colombo Police Head Office",
-                                        "PD002 - Matara Police Devision",
+                                        "81100 - Matara Police Devision",
                                         "PD003 - Galle Police Devision",
                                         "PD004 - Hambanthota Police Devision",
                                         "PD005 - Kalutara Police Devision",
-                                        "PD006 - Dickwella Police Devision",
+                                        "81200 - Dickwella Police Devision",
                                         "PD007 - Kamburupitiya Police Devision",
                                         "PD008 - Akuressa Police Devision",
                                       ],
