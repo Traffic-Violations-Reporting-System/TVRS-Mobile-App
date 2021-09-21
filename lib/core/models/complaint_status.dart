@@ -18,16 +18,16 @@ class ComplaintStatus{
         return "Pending in the queue.";
       case "accepted":
         statusIcon = CupertinoIcons.phone;
-        return "Processing under related police department.";
+        return "Complaint is processing.";
       case "review":
         statusIcon = CupertinoIcons.alarm;
-        return "Complain is under review.";
+        return "Complaint is under review.";
       case "reject":
         statusIcon = CupertinoIcons.add_circled;
-        return "Complain is rejected.";
+        return "Complaint is rejected.";
       case "complete":
         statusIcon = CupertinoIcons.ant;
-        return "Complain is completely executed.";
+        return "Complaint is completed.";
       default:
         return "";
     }

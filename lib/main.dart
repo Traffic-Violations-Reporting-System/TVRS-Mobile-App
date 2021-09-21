@@ -9,8 +9,6 @@ import 'package:etrafficcomplainer/screens/pages/bank_details/binding/bank_detai
 import 'package:etrafficcomplainer/screens/pages/bank_details/view/bank_details.dart';
 import 'package:etrafficcomplainer/screens/pages/complaints/binding/complaint_status_binding.dart';
 import 'package:etrafficcomplainer/screens/pages/complaints/view/view_mycomplaint_status.dart';
-import 'package:etrafficcomplainer/screens/pages/profile/binding/profile_binding.dart';
-import 'package:etrafficcomplainer/screens/pages/profile/view/profile.dart';
 import 'package:etrafficcomplainer/screens/pages/record/view/record.dart';
 import 'package:etrafficcomplainer/screens/screen_controller/binding/screencontroller_binding.dart';
 import 'package:etrafficcomplainer/screens/screen_controller/view/screencontroller.dart';

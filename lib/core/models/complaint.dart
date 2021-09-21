@@ -7,8 +7,9 @@ class Complaint{
   String? complainID;
   String? latestStatus;
   String? userID;
+  DateTime? dateTime;
 
-  Complaint({this.complainID, this.userID, this.createdAt, this.latestStatus});
+  Complaint({this.complainID, this.userID, this.createdAt, this.latestStatus, this.dateTime});
 
   String getStatus(){
     switch(this.latestStatus){
@@ -32,7 +33,8 @@ class Complaint{
     userID: accountID,
     createdAt: DateFormat("d MMM yy").format(DateTime.parse(data["occured_date"])),
     latestStatus: data["complaint_status"],
-  );
+    dateTime: DateTime.parse(data["occured_date"]
+  ));
 
 
 

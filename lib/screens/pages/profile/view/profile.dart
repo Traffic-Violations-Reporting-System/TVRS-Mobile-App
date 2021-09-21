@@ -242,68 +242,68 @@ class ProfileScreen extends StatelessWidget{
                 ),
                 SizedBox(height: 20,),
                 //Bank details container
-                Container(
-
-                  decoration: BoxDecoration(
-                    color: whiteColor,
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                  margin: EdgeInsets.only(left: 25,right: 25),
-                  height: 100,
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-
-                      // Name Container
-                      Container(
-                        margin: EdgeInsets.only(left: 20, top: 14,bottom: 10,right: 10),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children:[
-                              Text("Bank Information",
-                                style: TextStyle(
-                                  color: secondaryColor,
-                                  fontSize: 14,
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("BOC Ending With 4542",
-                                    style: TextStyle(
-                                      color: primaryColor,
-                                      fontSize: 15,
-                                    ),
-                                  ),
-
-                                  Text("Update",
-                                    style: TextStyle(
-                                      color: primaryColor,
-                                      fontSize: 15,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-
-                                ],
-                              ),
-                              SizedBox(height: 10,),
-                              Text("Preferred For Payouts",
-                                style: TextStyle(
-                                  color: greenColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold
-                                ),
-                              ),
-                            ]
-                        ),
-                      ),
-
-
-                    ],
-                  ),
-                ),
-                SizedBox(height: 30,),
+                // Container(
+                //
+                //   decoration: BoxDecoration(
+                //     color: whiteColor,
+                //     borderRadius: BorderRadius.circular(5.0),
+                //   ),
+                //   margin: EdgeInsets.only(left: 25,right: 25),
+                //   height: 100,
+                //   width: double.infinity,
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //
+                //       // Name Container
+                //       // Container(
+                //       //   margin: EdgeInsets.only(left: 20, top: 14,bottom: 10,right: 10),
+                //       //   child: Column(
+                //       //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       //       children:[
+                //       //         Text("Bank Information",
+                //       //           style: TextStyle(
+                //       //             color: secondaryColor,
+                //       //             fontSize: 14,
+                //       //           ),
+                //       //         ),
+                //       //         Row(
+                //       //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //       //           children: [
+                //       //             Text("BOC Ending With 4542",
+                //       //               style: TextStyle(
+                //       //                 color: primaryColor,
+                //       //                 fontSize: 15,
+                //       //               ),
+                //       //             ),
+                //       //
+                //       //             Text("Update",
+                //       //               style: TextStyle(
+                //       //                 color: primaryColor,
+                //       //                 fontSize: 15,
+                //       //                   fontWeight: FontWeight.bold
+                //       //               ),
+                //       //             ),
+                //       //
+                //       //           ],
+                //       //         ),
+                //       //         SizedBox(height: 10,),
+                //       //         Text("Preferred For Payouts",
+                //       //           style: TextStyle(
+                //       //             color: greenColor,
+                //       //             fontSize: 14,
+                //       //             fontWeight: FontWeight.bold
+                //       //           ),
+                //       //         ),
+                //       //       ]
+                //       //   ),
+                //       // ),
+                //
+                //
+                //     ],
+                //   ),
+                // ),
+                SizedBox(height: 140,),
 
                 Container(
                   margin: EdgeInsets.only(left: 25, top: 14,bottom: 10,right: 25),
@@ -335,7 +335,7 @@ class ProfileScreen extends StatelessWidget{
                           fontSize: 18,
                         ))
                     ),
-                    child: Text("Add Another Account"),
+                    child: Text("Add Bank Details"),
                   ),
                 ),
 

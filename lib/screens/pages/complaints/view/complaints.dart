@@ -138,7 +138,7 @@ class ComplaintsScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: controller.myComplainList!.map( (complaint) => _complainViewComponent(context, complaint.createdAt, complaint.complainID, complaint.userID, complaint.getStatus())).toList(),
+          children: controller.myComplainList!.map( (complaint) => _complainViewComponent(context, complaint.createdAt, complaint.complainID, complaint.userID, complaint.getStatus(), complaint.dateTime)).toList(),
         ),
       ):
       Center(
@@ -152,7 +152,7 @@ class ComplaintsScreen extends StatelessWidget {
     );
   }
 
-  Widget _complainViewComponent(BuildContext context, String? createdAt, String? complainID, String? userID, String status){
+  Widget _complainViewComponent(BuildContext context, String? createdAt, String? complainID, String? userID, String status, DateTime? dateTime){
     final controller = Get.find<ComplaintsController>();
     return Container(
         margin: EdgeInsets.only(left: 24.0, right: 24.0, bottom: 16.0),
@@ -294,7 +294,7 @@ class ComplaintsScreen extends StatelessWidget {
                     ),
                     child: TextButton(
                         onPressed: () {
-                          controller.gotoStatusScreen(complainID!,createdAt!);
+                          controller.gotoStatusScreen(complainID!,createdAt!,dateTime!);
                         },
                         style: ButtonStyle(
                             elevation: MaterialStateProperty.all(0),
