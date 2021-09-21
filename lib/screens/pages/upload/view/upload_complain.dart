@@ -77,8 +77,8 @@ class UploadComplain extends StatelessWidget {
   Set<Marker> _createMaker(){
     return <Marker>[
       Marker(
-          markerId: MarkerId("complain_location"),
-          position: LatLng(location.latitude, location.longitude),
+        markerId: MarkerId("complain_location"),
+        position: LatLng(location.latitude, location.longitude),
       ),
     ].toSet();
   }
@@ -113,8 +113,8 @@ class UploadComplain extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 24.0),
                 child: Text("Attachment", style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: primaryColor
+                    fontWeight: FontWeight.w500,
+                    color: primaryColor
                 ),
                 ),
               ),
@@ -126,30 +126,30 @@ class UploadComplain extends StatelessWidget {
             padding: EdgeInsets.all(0.0),
             color: whiteColor,
             child: SizedBox(
-              height: 140,
-              child: InkWell(
-                onTap: (){
-                  controller.getDeviceVideo();
-                },
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Icon( CupertinoIcons.circle_fill, color: hintTextColor.withOpacity(0.5), size: 110,),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(CupertinoIcons.square_arrow_up, color: secondaryColor, size: 48,),
-                        Text("Import", style: TextStyle(
-                            color: secondaryColor,
-                            fontSize: 10
-                        ),)
-                      ],
-                    )
-                  ],
-                ),
-              )
+                height: 140,
+                child: InkWell(
+                  onTap: (){
+                    controller.getDeviceVideo();
+                  },
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Icon( CupertinoIcons.circle_fill, color: hintTextColor.withOpacity(0.5), size: 110,),
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(CupertinoIcons.square_arrow_up, color: secondaryColor, size: 48,),
+                          Text("Import", style: TextStyle(
+                              color: secondaryColor,
+                              fontSize: 10
+                          ),)
+                        ],
+                      )
+                    ],
+                  ),
+                )
               //child: VideoView(path: path, isCropped: true,)
-              ),
+            ),
           ),
           SizedBox(
             width: double.infinity,
@@ -209,28 +209,28 @@ class UploadComplain extends StatelessWidget {
                             ),
                             ),
                             GetBuilder<UploadComplainController>(
-                              builder: (controller) {
-                                return Flexible(
-                                  child: controller.locationStr==null? Text("loading...", style: TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  ),) :
-                                  Marquee(
-                                    text: "${controller.locationStr}",
-                                    style: TextStyle(
+                                builder: (controller) {
+                                  return Flexible(
+                                    child: controller.locationStr==null? Text("loading...", style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
+                                    ),) :
+                                    Marquee(
+                                      text: "${controller.locationStr}",
+                                      style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      blankSpace: 40.0,
+                                      velocity: 50.0,
+                                      startAfter: Duration(seconds: 2),
+                                      pauseAfterRound: Duration(seconds: 2),
+                                      numberOfRounds: 4,
                                     ),
-                                    blankSpace: 40.0,
-                                    velocity: 50.0,
-                                    startAfter: Duration(seconds: 2),
-                                    pauseAfterRound: Duration(seconds: 2),
-                                    numberOfRounds: 4,
-                                  ),
-                                );
-                              }
+                                  );
+                                }
                             )
                           ],
                         ),
@@ -265,43 +265,43 @@ class UploadComplain extends StatelessWidget {
                         color: whiteColor,
                         padding: EdgeInsets.symmetric(horizontal: 24.0),
                         child: GetBuilder<UploadComplainController>(
-                          builder: (controller) {
-                            return Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Radio(
-                                  value: 0,
-                                  activeColor: yellowColor,
-                                  focusColor: secondaryColor,
-                                  groupValue: controller.radioValue,
-                                  onChanged: (int? value){
-                                    controller.radioValue = value!;
-                                    controller.update();
-                                  },
-                                ),
-                                SizedBox(width: 16.0,),
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("Victim", style: TextStyle(
-                                      color: primaryColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),),
-                                    SizedBox(height: 4.0,),
-                                    Text("I complain as a victim of the attachment.", style: TextStyle(
-                                      color: secondaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                    ),),
-                                  ],
-                                )
-                              ],
-                            );
-                          }
+                            builder: (controller) {
+                              return Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Radio(
+                                    value: 0,
+                                    activeColor: yellowColor,
+                                    focusColor: secondaryColor,
+                                    groupValue: controller.radioValue,
+                                    onChanged: (int? value){
+                                      controller.radioValue = value!;
+                                      controller.update();
+                                    },
+                                  ),
+                                  SizedBox(width: 16.0,),
+                                  Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Victim", style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),),
+                                      SizedBox(height: 4.0,),
+                                      Text("I complain as a victim of the attachment.", style: TextStyle(
+                                        color: secondaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                      ),),
+                                    ],
+                                  )
+                                ],
+                              );
+                            }
                         ),
                       ),
                       Divider(color: dividerColor, height: 0.0,),
@@ -310,43 +310,43 @@ class UploadComplain extends StatelessWidget {
                         color: whiteColor,
                         padding: EdgeInsets.symmetric(horizontal: 24.0),
                         child: GetBuilder<UploadComplainController>(
-                          builder: (controller) {
-                            return Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Radio(
-                                  value: 1,
-                                  activeColor: yellowColor,
-                                  focusColor: secondaryColor,
-                                  groupValue: controller.radioValue,
-                                  onChanged: (int? value){
-                                    controller.radioValue = value!;
-                                    controller.update();
-                                  },
-                                ),
-                                SizedBox(width: 16.0,),
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("Other", style: TextStyle(
-                                      color: primaryColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),),
-                                    SizedBox(height: 4.0,),
-                                    Text("I complain as a non-victim of the attachment.", style: TextStyle(
-                                      color: secondaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                    ),),
-                                  ],
-                                ),
-                              ],
-                            );
-                          }
+                            builder: (controller) {
+                              return Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Radio(
+                                    value: 1,
+                                    activeColor: yellowColor,
+                                    focusColor: secondaryColor,
+                                    groupValue: controller.radioValue,
+                                    onChanged: (int? value){
+                                      controller.radioValue = value!;
+                                      controller.update();
+                                    },
+                                  ),
+                                  SizedBox(width: 16.0,),
+                                  Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Other", style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),),
+                                      SizedBox(height: 4.0,),
+                                      Text("I complain as a non-victim of the attachment.", style: TextStyle(
+                                        color: secondaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                      ),),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            }
                         ),
                       ),
                       Divider(color: dividerColor, height: 0.0,),
@@ -425,7 +425,7 @@ class UploadComplain extends StatelessWidget {
                   ),
                 )
             ),
-            ),
+          ),
         ],
       ),
     );
@@ -499,16 +499,16 @@ class _VideoViewState extends State<VideoView> {
 
     await _videoPlayerController.initialize();
     _chewieController = ChewieController(
-      videoPlayerController: _videoPlayerController,
-      autoPlay: false,
-      looping: false,
-      autoInitialize: true,
-      materialProgressColors: ChewieProgressColors(
-        playedColor: redColor,
-        bufferedColor: secondaryColor,
-        handleColor: redColor,
-      ),
-      placeholder: Container(color: Colors.black,)
+        videoPlayerController: _videoPlayerController,
+        autoPlay: false,
+        looping: false,
+        autoInitialize: true,
+        materialProgressColors: ChewieProgressColors(
+          playedColor: redColor,
+          bufferedColor: secondaryColor,
+          handleColor: redColor,
+        ),
+        placeholder: Container(color: Colors.black,)
     );
     setState(() {});
   }

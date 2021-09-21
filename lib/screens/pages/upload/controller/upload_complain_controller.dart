@@ -51,8 +51,8 @@ class UploadComplainController extends GetxController{
           final response2 = await Dio().put(preSignedUrl, data: videoFile.openRead(), options: Options(headers: {
             Headers.contentLengthHeader: len,
           }, contentType: "video/mp4"), onSendProgress: (send,total){
-                percentage = (send / total);
-                EasyLoading.showProgress(percentage, status: "Uploading...");
+            percentage = (send / total);
+            EasyLoading.showProgress(percentage, status: "Uploading...");
           });
           print(response2);
 
