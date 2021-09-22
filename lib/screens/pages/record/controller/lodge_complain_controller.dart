@@ -148,6 +148,7 @@ class LodgeComplainController extends GetxController{
     }
     saveLodgedVideosList.add(LodgedVideo(dateTime: dateTime, path: path));
     String objectList = jsonEncode(saveLodgedVideosList.map<Map<String, dynamic>>((video) => video.toJson()).toList());
+    print(objectList);
     prefs.setString('SAVE_LODGED_VIDEOS_LIST', objectList);
   }
 

@@ -332,7 +332,7 @@ class LodgeComplain extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("Other", style: TextStyle(
+                                    Text("Non-Victim", style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,

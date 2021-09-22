@@ -35,33 +35,33 @@ class SettingsScreen extends GetView<SettingsController> {
                   alignment: Alignment.topCenter
               ),
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
 
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20,top: 70,right: 20),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Settings",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: primaryColor,
-                                fontSize: 22,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20,top: 70,right: 20),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Settings",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: primaryColor,
+                                  fontSize: 22,
+                                ),
                               ),
-                            ),
 
-                          ],
-                        ),
-                        
-                        SizedBox(height: 20,),
-                        SingleChildScrollView(
-                          child: Container(
+                            ],
+                          ),
+                          
+                          SizedBox(height: 20,),
+                          Container(
                             decoration: BoxDecoration(
                               color: whiteColor,
                               borderRadius: BorderRadius.circular(5.0),
@@ -174,20 +174,20 @@ class SettingsScreen extends GetView<SettingsController> {
                                   ),
                                 ),
 
-
                             ]
                             ),
 
 
                           ),
-                        ),
+                          SizedBox(height: 20,),
 
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
 
-              ],
+                ],
+              ),
             ),
           ),
         )

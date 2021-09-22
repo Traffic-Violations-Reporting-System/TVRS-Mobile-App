@@ -14,19 +14,19 @@ class ComplaintStatus{
 
     switch(this.latestStatus){
       case "pending":
-        statusIcon = CupertinoIcons.pencil;
+        statusIcon = CupertinoIcons.doc_plaintext;
         return "Pending in the queue.";
       case "accepted":
-        statusIcon = CupertinoIcons.phone;
+        statusIcon = CupertinoIcons.check_mark_circled_solid;
         return "Complaint is processing.";
       case "review":
         statusIcon = CupertinoIcons.alarm;
         return "Complaint is under review.";
       case "reject":
-        statusIcon = CupertinoIcons.add_circled;
+        statusIcon = CupertinoIcons.clear_circled_solid;
         return "Complaint is rejected.";
-      case "complete":
-        statusIcon = CupertinoIcons.ant;
+      case "completed":
+        statusIcon = CupertinoIcons.check_mark_circled_solid;
         return "Complaint is completed.";
       default:
         return "";

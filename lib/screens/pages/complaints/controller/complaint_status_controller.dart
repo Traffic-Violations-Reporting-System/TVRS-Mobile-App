@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ComplaintStatusController extends GetxController{
@@ -16,7 +17,7 @@ class ComplaintStatusController extends GetxController{
   final dynamic dataset = Get.arguments;
 
   String? getPendingStatusDate(){
-    return dataset['occured_date'];
+    return DateFormat("d MMM yy hh:mm a").format(dataset['occured_date']);
   }
   // DateTime date = DateTime.now();
   @override
@@ -30,7 +31,7 @@ class ComplaintStatusController extends GetxController{
       EasyLoading.show(status: "Loading...");
       final String complaintId = dataset['complaint_id'];
 
-      print(complaintId);
+     // print(complaintId+" : "+dataset['occured_date']);
       final response = await Dio().get(baseUrl+"/complain/complaintStatus", options: Options(headers: {
         'Authorization': complaintId,
       }));
@@ -69,19 +70,24 @@ class ComplaintStatusController extends GetxController{
   //   return data.toString();
   // }
 
-  late final String? videoPath;
+  String? videoPath;
   void getVideoPath() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? getStr = prefs.getString('SAVE_LODGED_VIDEOS_LIST');
     List<LodgedVideo> saveLodgedVideosList =  [];
     String? path;
     if(getStr != null){
+      print("meka balanna");
       saveLodgedVideosList = (json.decode(getStr) as List)
           .map<LodgedVideo>((item) => LodgedVideo.fromJson(item))
           .toList();
 
       saveLodgedVideosList.forEach((element) {
-        if(element.dateTime!.compareTo(dataset['occured_date']) == 0){
+         print("meka balanna");
+         DateTime date1 = dataset['occured_date'];
+         String date1str = date1.toIso8601String().split(".")[0];
+         String date2str = element.dateTime!.toIso8601String().split(".")[0];
+        if(date1str == date2str){
           path = element.path;
           return;
         }

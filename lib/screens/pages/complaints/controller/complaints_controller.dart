@@ -151,7 +151,7 @@ class ComplaintsController extends GetxController{
     Get.toNamed("/complaintStatus", arguments: {
       'complaint_id': complaintId,
       'createdAt': createdAt,
-      'dateTime': dateTime
+      'occured_date': dateTime
     });
   }
 

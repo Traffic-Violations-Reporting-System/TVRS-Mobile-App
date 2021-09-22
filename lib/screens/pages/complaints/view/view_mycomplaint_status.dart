@@ -94,7 +94,7 @@ class MyComplaintScreen extends StatelessWidget {
                                     color: whiteColor,
                                     child: SizedBox(
                                         height: 140,
-                                        child: controller.videoPath!=null? VideoView(file: File(controller.videoPath!),):CircularProgressIndicator()
+                                        child: controller.videoPath!=null? VideoView(file: File(controller.videoPath!),): SizedBox.shrink()
                                     ),
                                   ),
 
@@ -225,7 +225,7 @@ class MyComplaintScreen extends StatelessWidget {
                         // width: 1,
 
                         child: Icon(
-                          CupertinoIcons.ant,
+                          CupertinoIcons.gobackward,
                           color: primaryColor,
                           size: 14.0,
                         ),
@@ -282,7 +282,7 @@ class MyComplaintScreen extends StatelessWidget {
                 Container(
 
                   child: Icon(
-                    CupertinoIcons.ant,
+                    CupertinoIcons.doc_plaintext,
                     color: primaryColor,
                     size: 14.0,
                   ),

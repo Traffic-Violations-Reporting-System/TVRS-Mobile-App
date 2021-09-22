@@ -31,7 +31,7 @@ class Complaint{
   factory Complaint.fromJson(Map<String, dynamic> data, String accountID) => Complaint(
     complainID: data["complainant_id"],
     userID: accountID,
-    createdAt: DateFormat("d MMM yy").format(DateTime.parse(data["occured_date"])),
+    createdAt: DateFormat("d MMM yy").format(DateTime.parse(data["createdAt"])),
     latestStatus: data["complaint_status"],
     dateTime: DateTime.parse(data["occured_date"]
   ));

@@ -41,7 +41,7 @@ class _RecordScreenState extends State<RecordScreen> {
   @override
   void dispose() {
     super.dispose();
-    //_cameraController.dispose();
+    _cameraController.dispose();
     controller.disposeRecording();
     print("RecordScreen is dispose!");
   }
