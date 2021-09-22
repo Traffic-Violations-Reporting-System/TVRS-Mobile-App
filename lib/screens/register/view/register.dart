@@ -17,7 +17,7 @@ class RegisterScreen extends GetView<RegisterController> {
   final redColor = Color(0xFFFF6666);
   final popupBarrierColor = Color(0xFF151929).withOpacity(0.4);
 
-  Widget getTextFormField({required String hint, required TextEditingController controller, required Function validator, double paddingTop = 16.0}){
+  Widget getTextFormField({required String hint, required TextEditingController controller, required Function validator, double paddingTop = 16.0, bool obscureText = false}){
     return Padding(
       padding: EdgeInsets.only(top: paddingTop),
       child: TextFormField(
@@ -58,6 +58,7 @@ class RegisterScreen extends GetView<RegisterController> {
         validator: (value) {
           return validator(value);
         },
+        obscureText: obscureText,
       ),
     );
   }
@@ -155,17 +156,17 @@ class RegisterScreen extends GetView<RegisterController> {
                                       mode: Mode.DIALOG,
                                       showSelectedItem: false,
                                       items: [
-                                        "PD001 - Colombo Police Head Office",
-                                        "PD002 - Matara Police Devision",
-                                        "PD003 - Galle Police Devision",
-                                        "PD004 - Hambanthota Police Devision",
-                                        "PD005 - Kalutara Police Devision",
-                                        "PD006 - Dickwella Police Devision",
-                                        "PD007 - Kamburupitiya Police Devision",
-                                        "PD008 - Akuressa Police Devision",
+                                        "00100 - Colombo Police Head Office",
+                                        "81100 - Matara Police Devision",
+                                        "80000 - Galle Police Devision",
+                                        "82000 - Hambanthota Police Devision",
+                                        "12500 - Kalutara Police Devision",
+                                        "81200 - Dickwella Police Devision",
+                                        "81050 - Kamburupitiya Police Devision",
+                                        "81400 - Akuressa Police Devision",
                                       ],
                                       hint: "Nearest Police Division",
-                                      onChanged: print,
+                                      onChanged: (text) {if(text!=null) controller.npdController.text = text;},
                                       showSearchBox: true,
                                       popupBarrierColor: popupBarrierColor,
                                       popupShape: RoundedRectangleBorder(
@@ -247,7 +248,7 @@ class RegisterScreen extends GetView<RegisterController> {
                                       return null;
                                     }
                                   }),
-                                  getTextFormField(hint: "Password", controller: controller.passwordController, validator: (value){
+                                  getTextFormField(hint: "Password", controller: controller.passwordController, obscureText: true, validator: (value){
                                     if(value!.isEmpty){
                                       return "Required!";
                                     }
@@ -258,7 +259,7 @@ class RegisterScreen extends GetView<RegisterController> {
                                       return null;
                                     }
                                   }),
-                                  getTextFormField(hint: "Confirm Password", controller: controller.confirmPasswordController, validator: (value){
+                                  getTextFormField(hint: "Confirm Password", controller: controller.confirmPasswordController, obscureText: true, validator: (value){
                                     if(value != null && value!.isEmpty){
                                       return "Required!";
                                     }

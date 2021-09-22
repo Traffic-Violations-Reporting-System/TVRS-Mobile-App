@@ -13,7 +13,7 @@ class LoginScreen extends GetView<LoginController> {
   final dropshadowColor = Color(0x1A4B4B4B);
   final redColor = Color(0xFFFF6666);
 
-  Widget getTextFormField({required String hint, required TextEditingController controller, required Function validator, double paddingTop = 8.0}){
+  Widget getTextFormField({required String hint, required TextEditingController controller, required Function validator, double paddingTop = 8.0, bool obscureText = false}){
     return Padding(
       padding: EdgeInsets.only(top: paddingTop),
       child: TextFormField(
@@ -54,6 +54,7 @@ class LoginScreen extends GetView<LoginController> {
         validator: (value) {
           return validator(value);
         },
+        obscureText: obscureText,
       ),
     );
   }
@@ -65,11 +66,11 @@ class LoginScreen extends GetView<LoginController> {
       child: Container(
         decoration: BoxDecoration(
           gradient: backgroundGradient,
-            image: DecorationImage(
-                image: AssetImage("assets/img/back_vec_1.png"),
-                fit: BoxFit.contain,
-                alignment: Alignment.topCenter
-            ),
+          image: DecorationImage(
+              image: AssetImage("assets/img/back_vec_1.png"),
+              fit: BoxFit.contain,
+              alignment: Alignment.topCenter
+          ),
         ),
 
         child: Scaffold(
@@ -123,7 +124,7 @@ class LoginScreen extends GetView<LoginController> {
                                   return null;
                                 }
                               }),
-                              getTextFormField(hint: "Password", controller: controller.passwordController, validator: (value){
+                              getTextFormField(hint: "Password", controller: controller.passwordController, obscureText: true, validator: (value){
                                 if(value!.isEmpty){
                                   return "Required!";
                                 }
@@ -149,6 +150,7 @@ class LoginScreen extends GetView<LoginController> {
                                 ),
                                 child: TextButton(
                                   onPressed: () {
+                                    FocusScope.of(context).unfocus();
                                     controller.loginUser();
                                   },
                                   style: ButtonStyle(
@@ -167,6 +169,9 @@ class LoginScreen extends GetView<LoginController> {
                               SizedBox(height: 21),
                               Container(
                                 child: new InkWell(
+                                  onTap: (){
+
+                                  },
                                   child: new Text('forgot your password?',style: TextStyle(color: Color(0xFF414B70)),),
 
                                 ),
@@ -184,42 +189,42 @@ class LoginScreen extends GetView<LoginController> {
                         SizedBox(height: 23,),
                         Text("Dont have an account?", style: TextStyle(color:primaryColor ),),
                         SizedBox(height: 15,),
-                        new Container(
-                            width: double.infinity,
-                            height: 53,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(8)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: dropshadowColor,
-                                  spreadRadius: 0,
-                                  blurRadius: 20,
-                                  offset: Offset(0, 4), // changes position of shadow
-                                ),
-                              ],
-                            ),
-
-                            child: TextButton(
-                              onPressed: () {
-                              //  Get.offNamed("/register");
-                              },
-                              style: ButtonStyle(
-                                  elevation: MaterialStateProperty.all(0),
-                                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                                  backgroundColor: MaterialStateProperty.all(borderEnableColor),
-                                  foregroundColor: MaterialStateProperty.all(primaryColor),
-                                  textStyle: MaterialStateProperty.all(TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18,
-                                  ))
+                        Container(
+                          width: double.infinity,
+                          height: 53,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: dropshadowColor,
+                                spreadRadius: 0,
+                                blurRadius: 20,
+                                offset: Offset(0, 4), // changes position of shadow
                               ),
+                            ],
+                          ),
 
-
-                              child: Text("Register"),
-
+                          child: TextButton(
+                            onPressed: () {
+                              Get.offNamed("/register");
+                            },
+                            style: ButtonStyle(
+                                elevation: MaterialStateProperty.all(0),
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                                backgroundColor: MaterialStateProperty.all(borderEnableColor),
+                                foregroundColor: MaterialStateProperty.all(primaryColor),
+                                textStyle: MaterialStateProperty.all(TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
+                                ))
                             ),
+
+
+                            child: Text("Register"),
 
                           ),
+
+                        ),
 
                       ],
 
