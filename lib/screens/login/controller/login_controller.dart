@@ -44,7 +44,7 @@ class LoginController extends GetxController{
       EasyLoading.show(status: "Loading...");
 
       final response = await _apiservice.postRequest("/user/login", {
-        'nic': usernameController.text,
+        'nic': usernameController.text.toUpperCase(),
         'password': passwordController.text,
       }, loginErrorHandler);
 

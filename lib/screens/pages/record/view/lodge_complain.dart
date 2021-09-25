@@ -9,13 +9,14 @@ import 'package:etrafficcomplainer/screens/pages/record/controller/lodge_complai
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:gallery_saver/gallery_saver.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:marquee/marquee.dart';
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player/video_player.dart';
@@ -408,11 +409,10 @@ class LodgeComplain extends StatelessWidget {
                             if(notSaved!=null && notSaved!){
                               EasyLoading.show(status: "Saving...");
                               //video save
-                              await GallerySaver.saveVideo(controller.videoFile.path);
-                              String savedpath = '/storage/emulated/0/Movies/${basename(controller.videoFile.path)}';
+                              String? savedpath = await saveFile(basename(controller.videoFile.path), controller.videoFile);
                               String videolength;
                               videolength = "${controller.minutes < 10? '0'+controller.minutes.toString() : controller.minutes}:${controller.seconds < 10? '0'+controller.seconds.toString() : controller.seconds} Min";
-                              _saveVideoDetails(basename(controller.videoFile.path), savedpath, location, videolength);
+                              _saveVideoDetails(basename(controller.videoFile.path), savedpath??"", location, videolength);
                               await VideoCompress.deleteAllCache();
                               EasyLoading.dismiss();
                               Get.offAllNamed("/home");
@@ -479,6 +479,56 @@ class LodgeComplain extends StatelessWidget {
       print('${error.response?.statusCode} : ${error.response}');
     }
 
+  }
+
+
+  Future<String?> saveFile(String fileName, File file) async {
+    late Directory directory;
+    try {
+      if (Platform.isAndroid) {
+        if (await _requestPermission(Permission.storage)) {
+          directory = (await getExternalStorageDirectory())!;
+          String newPath = "";
+          print(directory);
+          List<String> paths = directory.path.split("/");
+          for (int x = 1; x < paths.length; x++) {
+            String folder = paths[x];
+            if (folder != "Android") {
+              newPath += "/" + folder;
+            } else {
+              break;
+            }
+          }
+          newPath = newPath + "/eTrafficComplainer";
+          directory = Directory(newPath);
+        }
+      }
+
+      String savepath = directory.path + "/$fileName";
+      if (!await directory.exists()) {
+        await directory.create(recursive: true);
+      }
+      if (await directory.exists()) {
+        file.copySync(savepath);
+        return savepath;
+      }
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<bool> _requestPermission(Permission permission) async {
+    if (await permission.isGranted) {
+      return true;
+    } else {
+      var result = await permission.request();
+      if (result == PermissionStatus.granted) {
+        return true;
+      }
+    }
+    return false;
   }
 
 }
@@ -562,7 +612,7 @@ class _VideoViewState extends State<VideoView> {
       placeholder: Container(color: Colors.black,)
     );
     controller.minutes = _videoPlayerController.value.duration.inMinutes;
-    controller.seconds = _videoPlayerController.value.duration.inSeconds;
+    controller.seconds = controller.minutes==0? _videoPlayerController.value.duration.inSeconds : _videoPlayerController.value.duration.inSeconds%controller.minutes;
     setState(() {});
   }
 

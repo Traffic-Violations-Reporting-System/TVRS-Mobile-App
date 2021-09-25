@@ -8,13 +8,14 @@ import 'package:etrafficcomplainer/services/api_service_impl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:gallery_saver/gallery_saver.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_compress/video_compress.dart';
 
@@ -82,9 +83,8 @@ class UploadComplainController extends GetxController{
               Get.snackbar("Complaint Placed!", "Your complaint is successfully placed.", snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 2), colorText: primaryColor, icon: Icon(CupertinoIcons.checkmark_alt_circle_fill, color: primaryColor), backgroundColor: Colors.white70, overlayColor: Color(0xFF151929).withOpacity(0.4) , overlayBlur: 0.001, isDismissible: false, margin: EdgeInsets.only(left: 5.0, right: 5.0, bottom: 10.0), snackbarStatus: (status) async {
                 if(status == SnackbarStatus.CLOSED){
                   //video save
-                  await GallerySaver.saveVideo(videoFile!.path);
-                  String savedpath = '/storage/emulated/0/Movies/${basename(videoFile!.path)}';
-                  _saveLodgedVideoDetails(savedpath, now);
+                  String? savedpath = await saveFile(basename(videoFile!.path), videoFile!);
+                  _saveLodgedVideoDetails(savedpath??"", now);
                   videoFile!.deleteSync();
                   await VideoCompress.deleteAllCache();
 
@@ -168,6 +168,55 @@ class UploadComplainController extends GetxController{
   void setDateTime(DateTime dateTime){
     this.dateTime = dateTime;
     update();
+  }
+
+  Future<String?> saveFile(String fileName, File file) async {
+    late Directory directory;
+    try {
+      if (Platform.isAndroid) {
+        if (await _requestPermission(Permission.storage)) {
+          directory = (await getExternalStorageDirectory())!;
+          String newPath = "";
+          print(directory);
+          List<String> paths = directory.path.split("/");
+          for (int x = 1; x < paths.length; x++) {
+            String folder = paths[x];
+            if (folder != "Android") {
+              newPath += "/" + folder;
+            } else {
+              break;
+            }
+          }
+          newPath = newPath + "/eTrafficComplainer";
+          directory = Directory(newPath);
+        }
+      }
+
+      String savepath = directory.path + "/$fileName";
+      if (!await directory.exists()) {
+        await directory.create(recursive: true);
+      }
+      if (await directory.exists()) {
+        file.copySync(savepath);
+        return savepath;
+      }
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<bool> _requestPermission(Permission permission) async {
+    if (await permission.isGranted) {
+      return true;
+    } else {
+      var result = await permission.request();
+      if (result == PermissionStatus.granted) {
+        return true;
+      }
+    }
+    return false;
   }
 
 }

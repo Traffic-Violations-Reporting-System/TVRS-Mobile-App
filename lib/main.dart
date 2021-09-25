@@ -1,4 +1,10 @@
 import 'package:camera/camera.dart';
+import 'package:etrafficcomplainer/screens/forgot_password/binding/forgot_password_binding.dart';
+import 'package:etrafficcomplainer/screens/forgot_password/binding/mobile_number_binding.dart';
+import 'package:etrafficcomplainer/screens/forgot_password/binding/mobile_otp_verify_binding.dart';
+import 'package:etrafficcomplainer/screens/forgot_password/view/forgot_password.dart';
+import 'package:etrafficcomplainer/screens/forgot_password/view/mobile_number_input.dart';
+import 'package:etrafficcomplainer/screens/forgot_password/view/mobile_otp_verify.dart';
 import 'package:etrafficcomplainer/screens/login/binding/login_binding.dart';
 import 'package:etrafficcomplainer/screens/login/view/login.dart';
 import 'package:etrafficcomplainer/screens/otp_verify/binding/otp_verify_binding.dart';
@@ -9,7 +15,9 @@ import 'package:etrafficcomplainer/screens/pages/bank_details/binding/bank_detai
 import 'package:etrafficcomplainer/screens/pages/bank_details/view/bank_details.dart';
 import 'package:etrafficcomplainer/screens/pages/complaints/binding/complaint_status_binding.dart';
 import 'package:etrafficcomplainer/screens/pages/complaints/view/view_mycomplaint_status.dart';
+import 'package:etrafficcomplainer/screens/pages/record/controller/record_controller.dart';
 import 'package:etrafficcomplainer/screens/pages/record/view/record.dart';
+import 'package:etrafficcomplainer/screens/pages/upload/view/upload_complain.dart';
 import 'package:etrafficcomplainer/screens/screen_controller/binding/screencontroller_binding.dart';
 import 'package:etrafficcomplainer/screens/screen_controller/view/screencontroller.dart';
 import 'package:flutter/material.dart';
@@ -57,6 +65,10 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/otp_verify_2", page: ()=>OTPVerify2Screen(), binding: OTPVerify2Binding()),
         GetPage(name: "/complaintStatus", page: ()=>MyComplaintScreen(), binding: complaintStatusBinding()),
         GetPage(name: "/add_payout_option", page: ()=>BankDetailsScreen(), binding: BankDetailsBinding()),
+        GetPage(name: "/manuel_upload", page: ()=>UploadComplain()),
+        GetPage(name: "/forgot_password", page: ()=>ForgotPassword(), binding: ForgotPasswordBinding()),
+        GetPage(name: "/mobile_input", page: ()=>MobileNumberinput(), binding: MobileVerifyBinding()),
+        GetPage(name: "/mobile_otp_verify", page: ()=>MobileOtpVerify(), binding: MobileOtpVerifyBinding()),
       ],
       initialRoute: "/screen_controller",
       builder: EasyLoading.init(),

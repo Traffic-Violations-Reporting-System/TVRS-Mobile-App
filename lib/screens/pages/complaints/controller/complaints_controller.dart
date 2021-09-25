@@ -73,7 +73,7 @@ class ComplaintsController extends GetxController{
     if(getStr != null){
       saveVideosList = (json.decode(getStr) as List)
           .map<SaveVideo>((item) => SaveVideo.fromJson(item))
-          .toList();
+          .toList().reversed.toList();
     }
     return saveVideosList;
   }
@@ -102,6 +102,7 @@ class ComplaintsController extends GetxController{
     EasyLoading.show(status: "Loading...");
     mySavedVideosList = await _getVideoDetails();
     EasyLoading.dismiss();
+    update();
   }
 
   saveHideComplaintsList(String complaintID) async {
@@ -126,7 +127,7 @@ class ComplaintsController extends GetxController{
     int min = int.parse(lenList[0].replaceAll(RegExp('[^0-9]'), ''));
     int sec = int.parse(lenList[1].replaceAll(RegExp('[^0-9]'), ''));
     int lengthSec = min * 60 + sec;
-    if(lengthSec > 10){
+    if(lengthSec > 60){
       page = VideoViewPage(
           path: path,
           location: location,
@@ -153,6 +154,22 @@ class ComplaintsController extends GetxController{
       'createdAt': createdAt,
       'occured_date': dateTime
     });
+  }
+
+  void deleteSaved(String filename, String path) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? getStr = prefs.getString('SAVE_VIDEOS_LIST');
+    List<SaveVideo>? saveVideosList;
+    if(getStr != null){
+      saveVideosList = (json.decode(getStr) as List)
+          .map<SaveVideo>((item) => SaveVideo.fromJson(item))
+          .toList();
+      saveVideosList.removeWhere((element) => element.filename == filename);
+      String objectList = jsonEncode(saveVideosList.map<Map<String, dynamic>>((video) => video.toJson()).toList());
+      prefs.setString('SAVE_VIDEOS_LIST', objectList);
+      File(path).deleteSync();
+    }
+    _setSavedVideosList();
   }
 
 }

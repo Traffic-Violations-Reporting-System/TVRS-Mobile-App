@@ -211,8 +211,8 @@ class UploadComplain extends StatelessWidget {
                                 onPressed: () async{
                                   FocusScope.of(context).unfocus();
                                   LocationResult? result = await showLocationPicker(
-                                    context,
-                                    "",
+                                    context,"",
+        //                            "AIzaSyDM7g6pufnXhAA0X_mHZW3HbpXqJGVIfHg",
 //                      automaticallyAnimateToCurrentLocation: true,
 //                      mapStylePath: 'assets/mapStyle.json',
                                     myLocationButtonEnabled: true,
@@ -592,7 +592,7 @@ class _VideoViewState extends State<VideoView> {
     await _videoPlayerController.initialize();
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
-      autoPlay: false,
+      autoPlay: true,
       looping: false,
       autoInitialize: true,
       materialProgressColors: ChewieProgressColors(
