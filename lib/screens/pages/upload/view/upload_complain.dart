@@ -212,7 +212,7 @@ class UploadComplain extends StatelessWidget {
                                   FocusScope.of(context).unfocus();
                                   LocationResult? result = await showLocationPicker(
                                     context,"",
-        //                            "AIzaSyDM7g6pufnXhAA0X_mHZW3HbpXqJGVIfHg",
+        //                            "",
 //                      automaticallyAnimateToCurrentLocation: true,
 //                      mapStylePath: 'assets/mapStyle.json',
                                     myLocationButtonEnabled: true,
