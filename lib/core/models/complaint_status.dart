@@ -24,7 +24,7 @@ class ComplaintStatus{
         return "Complaint is under review.";
       case "reject":
         statusIcon = CupertinoIcons.clear_circled_solid;
-        return "Complaint is rejected.";
+        return "We are sorry to inform \n you that your complaint \n is rejected. There were \n no traffic violations  \n occured in the incident. \n Thank you!";
       case "completed":
         statusIcon = CupertinoIcons.check_mark_circled_solid;
         return "Complaint is completed.";

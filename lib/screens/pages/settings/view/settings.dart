@@ -94,13 +94,11 @@ class SettingsScreen extends GetView<SettingsController> {
                                 Theme(
                                   data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
                                   child:ExpansionTile(
-                                    title: Flexible(
-                                      child: Text("Privacy Policy",style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: primaryColor,
-                                        fontSize: 14,
-                                      ),),
-                                    ),
+                                    title: Text("Privacy Policy",style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: primaryColor,
+                                      fontSize: 14,
+                                    ),),
                                     children: <Widget>[
                                       ListTile(
                                         title: Scrollbar(
@@ -137,13 +135,11 @@ class SettingsScreen extends GetView<SettingsController> {
                                 Theme(
                                   data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
                                   child:ExpansionTile(
-                                    title: Flexible(
-                                      child: Text("About Us",style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: primaryColor,
-                                        fontSize: 14,
-                                      ),),
-                                    ),
+                                    title: Text("About Us",style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: primaryColor,
+                                      fontSize: 14,
+                                    ),),
                                     children: <Widget>[
 
                                       ListTile(

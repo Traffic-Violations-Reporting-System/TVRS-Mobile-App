@@ -38,7 +38,6 @@ dependencies:
   path:
   video_trimmer: ^0.5.4
   pausable_timer: ^1.0.0+1
-  gallery_saver: ^2.1.3
   chewie: ^1.2.2
   video_player: ^2.2.0
   geolocator: ^7.6.2
@@ -50,6 +49,8 @@ dependencies:
   marquee: ^2.2.0
   image_picker: ^0.8.4+2
   flutter_datetime_picker: ^1.5.1
+  permission_handler: ^8.1.6
+  android_intent: ^2.0.2
   google_map_location_picker:
     git:
       url: https://github.com/blbhargav/google_map_location_picker.git
@@ -59,6 +60,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -74,12 +76,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/img/back_vec_1.png
-    - assets/img/back_vec_2.png
-    - assets/img/logo.png
     - assets/img/e_logo.png
-    - assets/img/slide.png
     - assets/img/map.png
-    - assets/img/locationImg.jpg
+    - assets/img/app_logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

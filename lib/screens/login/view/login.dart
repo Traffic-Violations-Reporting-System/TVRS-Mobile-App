@@ -170,7 +170,7 @@ class LoginScreen extends GetView<LoginController> {
                               Container(
                                 child: new InkWell(
                                   onTap: (){
-
+                                      controller.forgotPasswordPage();
                                   },
                                   child: new Text('forgot your password?',style: TextStyle(color: Color(0xFF414B70)),),
 

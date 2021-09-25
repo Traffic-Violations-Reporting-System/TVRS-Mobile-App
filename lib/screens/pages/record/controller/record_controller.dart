@@ -1,3 +1,6 @@
+import 'package:android_intent/android_intent.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:pausable_timer/pausable_timer.dart';
@@ -13,6 +16,7 @@ class RecordController extends GetxController{
   RxBool isRecording = false.obs;
   RxBool isPaused = false.obs;
   Position? complainLocation;
+  final redColor = Color(0xFFFF6666);
 
   RecordController(){
     initTimer();
@@ -39,7 +43,7 @@ class RecordController extends GetxController{
     );
   }
 
-  void determinePosition() async {
+  Future<bool> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -49,7 +53,15 @@ class RecordController extends GetxController{
       // Location services are not enabled don't continue
       // accessing the position and request users of the
       // App to enable the location services.
-      return Future.error('Location services are disabled.');
+      Get.snackbar("Location Required!", "Please enable location service to continue.", snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 3), colorText: redColor, icon: Icon(CupertinoIcons.location_solid, color: redColor), backgroundColor: Colors.white70, overlayColor: Color(0xFF151929).withOpacity(0.4) , overlayBlur: 0.001, isDismissible: false, margin: EdgeInsets.only(left: 5.0, right: 5.0, bottom: 10.0), snackbarStatus: (status) async {
+        if(status == SnackbarStatus.CLOSED){
+          final AndroidIntent intent = new AndroidIntent(
+            action: 'android.settings.LOCATION_SOURCE_SETTINGS',
+          );
+          await intent.launch();
+        }
+      },);
+      return false;
     }
 
     permission = await Geolocator.checkPermission();
@@ -61,19 +73,24 @@ class RecordController extends GetxController{
         // Android's shouldShowRequestPermissionRationale
         // returned true. According to Android guidelines
         // your App should show an explanatory UI now.
-        return Future.error('Location permissions are denied');
+        Get.snackbar("Permission required!", "Location permission is required to continue. Please allow.", snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 2), colorText: redColor, icon: Icon(CupertinoIcons.location_solid, color: redColor), backgroundColor: Colors.white70, overlayColor: Color(0xFF151929).withOpacity(0.4) , overlayBlur: 0.001, isDismissible: false, margin: EdgeInsets.only(left: 5.0, right: 5.0, bottom: 10.0), snackbarStatus: (status) async {
+          if(status == SnackbarStatus.CLOSED){
+            permission = await Geolocator.requestPermission();
+          }
+        },);
+        return false;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      return false;
     }
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
     this.complainLocation = await Geolocator.getCurrentPosition();
+    return true;
   }
 
   void disposeRecording(){

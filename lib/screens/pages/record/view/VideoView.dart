@@ -7,11 +7,12 @@ import 'package:etrafficcomplainer/screens/pages/record/view/lodge_complain.dart
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:gallery_saver/gallery_saver.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player/video_player.dart';
@@ -213,7 +214,7 @@ class _VideoViewPageState extends State<VideoViewPage> {
                       .of(context)
                       .size
                       .width,
-                  maxVideoLength: Duration(seconds: 10),
+                  maxVideoLength: Duration(seconds: 60),
                   onChangeStart: (value) {
                     _startValue = value;
                   },
@@ -259,15 +260,14 @@ class _VideoViewPageState extends State<VideoViewPage> {
                           }
                           EasyLoading.show(status: "Saving...");
                           //video save
-                          await GallerySaver.saveVideo(file.path);
-                          String savedpath = '/storage/emulated/0/Movies/${basename(file.path)}';
+                          String? savedpath = await saveFile(basename(file.path), file);
                           String videolength = "00:00 Min";
                           if(_trimmer.videoPlayerController!=null){
                             int _minutes = _trimmer.videoPlayerController!.value.duration.inMinutes;
-                            int _seconds = _trimmer.videoPlayerController!.value.duration.inSeconds;
+                            int _seconds = _minutes==0? _trimmer.videoPlayerController!.value.duration.inSeconds : _trimmer.videoPlayerController!.value.duration.inSeconds%_minutes;
                             videolength = "${_minutes < 10? '0'+_minutes.toString() : _minutes}:${_seconds < 10? '0'+_seconds.toString() : _seconds} Min";
                           }
-                          _saveVideoDetails(basename(file.path), savedpath, widget.location, videolength);
+                          _saveVideoDetails(basename(file.path), savedpath??"", widget.location, videolength);
                           file.deleteSync();
                           await VideoCompress.deleteAllCache();
                           EasyLoading.dismiss();
@@ -409,6 +409,55 @@ class _VideoViewPageState extends State<VideoViewPage> {
       print('${error.response?.statusCode} : ${error.response}');
     }
 
+  }
+
+  Future<String?> saveFile(String fileName, File file) async {
+    late Directory directory;
+    try {
+      if (Platform.isAndroid) {
+        if (await _requestPermission(Permission.storage)) {
+          directory = (await getExternalStorageDirectory())!;
+          String newPath = "";
+          print(directory);
+          List<String> paths = directory.path.split("/");
+          for (int x = 1; x < paths.length; x++) {
+            String folder = paths[x];
+            if (folder != "Android") {
+              newPath += "/" + folder;
+            } else {
+              break;
+            }
+          }
+          newPath = newPath + "/eTrafficComplainer";
+          directory = Directory(newPath);
+        }
+      }
+
+      String savepath = directory.path + "/$fileName";
+      if (!await directory.exists()) {
+        await directory.create(recursive: true);
+      }
+      if (await directory.exists()) {
+        file.copySync(savepath);
+        return savepath;
+      }
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<bool> _requestPermission(Permission permission) async {
+    if (await permission.isGranted) {
+      return true;
+    } else {
+      var result = await permission.request();
+      if (result == PermissionStatus.granted) {
+        return true;
+      }
+    }
+    return false;
   }
 
 }

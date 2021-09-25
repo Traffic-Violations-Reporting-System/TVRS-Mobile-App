@@ -263,11 +263,16 @@ class ComplaintsScreen extends StatelessWidget {
                 children: [
                   Icon(CupertinoIcons.square_list, color: greenColor, size: 15.0,),
                   SizedBox(width: 8.0,),
-                  Text(status, style: TextStyle(
-                    color: greenColor,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  Flexible(
+                    child: Text(status, style: TextStyle(
+                      color: greenColor,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                      overflow: TextOverflow.fade,
+                      softWrap: true,
+                      maxLines: 1,
+                    ),
                   ),
                 ],
               ),
@@ -566,7 +571,7 @@ class ComplaintsScreen extends StatelessWidget {
                     ),
                     child: TextButton(
                         onPressed: () async {
-
+                          controller.deleteSaved(filename!, path!);
                         },
                         style: ButtonStyle(
                             elevation: MaterialStateProperty.all(0),

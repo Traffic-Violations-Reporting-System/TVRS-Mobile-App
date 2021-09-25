@@ -63,97 +63,97 @@ class MyComplaintScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 0),
                   child: Column(
 
-                      children: [
-                        Center(
+                    children: [
+                      Center(
 
-                          child: Column(
-                            children: [
-                              Container(
-                                child: Divider(
-                                  color: hintTextColor,
+                        child: Column(
+                          children: [
+                            Container(
+                              child: Divider(
+                                color: hintTextColor,
+                              ),
+                            ),
+                            Column(
+                              children: [
+                                Container(
+                                  child: Text("Attachement", style: TextStyle(
+                                    fontSize: 15,
+                                    color: primaryColor,
+
+                                  ),),
                                 ),
-                              ),
-                              Column(
-                                children: [
-                                  Container(
-                                    child: Text("Attachement", style: TextStyle(
-                                        fontSize: 15,
-                                        color: primaryColor,
-
-                                    ),),
+                                Container(
+                                  child: Divider(
+                                    color: hintTextColor,
                                   ),
-                                  Container(
-                                    child: Divider(
-                                      color: hintTextColor,
-                                    ),
+                                ),
+                                // Video view component is here
+                                Container(
+                                  width: double.infinity,
+                                  padding: EdgeInsets.all(0.0),
+                                  color: whiteColor,
+                                  child: SizedBox(
+                                      height: 140,
+                                      child: controller.videoPath!=null? VideoView(file: File(controller.videoPath!),): SizedBox.shrink()
                                   ),
-                                  // Video view component is here
-                                  Container(
-                                    width: double.infinity,
-                                    padding: EdgeInsets.all(0.0),
-                                    color: whiteColor,
-                                    child: SizedBox(
-                                        height: 140,
-                                        child: controller.videoPath!=null? VideoView(file: File(controller.videoPath!),): SizedBox.shrink()
-                                    ),
-                                  ),
+                                ),
 
-                                  SizedBox(height: 16,),
+                                SizedBox(height: 16,),
 
-                                ],
+                              ],
 
-                              ),
-
-                            ],
-                          ),
-                        ),
-
-                            Expanded(
-                              child: CupertinoTabView(
-                                builder: (context) {
-                                  return CupertinoPageScaffold(
-                                      child: getStatus(context));
-                                },
-                              ),
                             ),
 
-                        Container(
-                          width: double.infinity,
-                          height: 53,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: dropshadowColor,
-                                spreadRadius: 0,
-                                blurRadius: 20,
-                                offset: Offset(0, 4), // changes position of shadow
-                              ),
-                            ],
-                          ),
-
-                          child: TextButton(
-                            onPressed: () {
-                              Get.offNamed("/home");
-                            },
-                            style: ButtonStyle(
-                                elevation: MaterialStateProperty.all(0),
-                                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                                backgroundColor: MaterialStateProperty.all(borderEnableColor),
-                                foregroundColor: MaterialStateProperty.all(primaryColor),
-                                textStyle: MaterialStateProperty.all(TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18,
-                                ))
-                            ),
-
-
-                            child: Text("Back"),
-
-                          ),
-
-                        ),
                           ],
+                        ),
+                      ),
+
+                      Expanded(
+                        child: CupertinoTabView(
+                          builder: (context) {
+                            return CupertinoPageScaffold(
+                                child: getStatus(context));
+                          },
+                        ),
+                      ),
+
+                      Container(
+                        width: double.infinity,
+                        height: 53,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: dropshadowColor,
+                              spreadRadius: 0,
+                              blurRadius: 20,
+                              offset: Offset(0, 4), // changes position of shadow
+                            ),
+                          ],
+                        ),
+
+                        child: TextButton(
+                          onPressed: () {
+                            Get.offNamed("/home");
+                          },
+                          style: ButtonStyle(
+                              elevation: MaterialStateProperty.all(0),
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                              backgroundColor: MaterialStateProperty.all(borderEnableColor),
+                              foregroundColor: MaterialStateProperty.all(primaryColor),
+                              textStyle: MaterialStateProperty.all(TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18,
+                              ))
+                          ),
+
+
+                          child: Text("Back"),
+
+                        ),
+
+                      ),
+                    ],
                   ),
 
 
@@ -192,67 +192,69 @@ class MyComplaintScreen extends StatelessWidget {
 
         child: Column(
 
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+
+            children: [
+              Container(
 
 
-              child: Column(
+                child: Column(
 
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 24,),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 24,),
 
-                  Row(
+                    Row(
 
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        children: [
-                          Text("${controller.getPendingStatusDate()}" + "                   ", style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: primaryColor),),
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          children: [
+                            Text("${controller.getPendingStatusDate()}" + "  ", style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: primaryColor),),
 
-                        ],
-                      ),
-
-                      Container(
-                        // color: primaryColor,
-                        // height: 14,
-                        // width: 1,
-
-                        child: Icon(
-                          CupertinoIcons.gobackward,
-                          color: primaryColor,
-                          size: 14.0,
+                          ],
                         ),
-                      ),
+
+                        Container(
+                          // color: primaryColor,
+                          // height: 14,
+                          // width: 1,
+
+                          child: Icon(
+                            CupertinoIcons.gobackward,
+                            color: primaryColor,
+                            size: 14.0,
+                          ),
+                        ),
 
 
 
-                      Column(
-                        children: [
-                          Text("    "+"Complaint is pending.", style: TextStyle(fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: primaryColor),),
-                        ],
-                      ),
 
-                    ],
-                  )
-                ],
+                        Column(
+                          children: [
+                            Text("    "+"Complaint is pending.", style: TextStyle(fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: primaryColor),),
+                          ],
+                        ),
+
+                      ],
+                    )
+                  ],
+                ),
+
               ),
-
-            ),
-            Container(
-              child:Column(
-              children:controller.myStatusList!.map( (complaintStatus) => _statusViewComponent(context,complaintStatus.createdAt, complaintStatus.date, complaintStatus.getStatus(), complaintStatus.statusIcon)).toList(),
+              Container(
+                  child:Column(
+                    children:controller.myStatusList!.map( (complaintStatus) => _statusViewComponent(context,complaintStatus.createdAt, complaintStatus.date, complaintStatus.getStatus(), complaintStatus.statusIcon)).toList(),
+                  )
               )
-            )
-          ]
+            ]
         ),
       ):
 
@@ -271,7 +273,7 @@ class MyComplaintScreen extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    Text("${controller.getPendingStatusDate()}" + "     ", style: TextStyle(
+                    Text("${controller.getPendingStatusDate()}" + "       ", style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: primaryColor),),
@@ -282,7 +284,7 @@ class MyComplaintScreen extends StatelessWidget {
                 Container(
 
                   child: Icon(
-                    CupertinoIcons.doc_plaintext,
+                    CupertinoIcons.gobackward,
                     color: primaryColor,
                     size: 14.0,
                   ),
@@ -290,10 +292,13 @@ class MyComplaintScreen extends StatelessWidget {
                   // height: 20,
                   // width: 1,
                 ),
-
+                SizedBox(width:10),
                 Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+
                   children: [
-                    Text("           " +"Complaint is pending.", style: TextStyle(fontSize: 14,
+                    Text("    "+"Complaint is pending.", style: TextStyle(fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: primaryColor),),
                   ],
@@ -332,46 +337,47 @@ class MyComplaintScreen extends StatelessWidget {
           children: [
             SizedBox(height: 24,),
 
-              Row(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    children: [
-                      Text(date! + "     ", style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: primaryColor),),
+            Row(
+              // mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  children: [
+                    Text(date! + "      ", style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: primaryColor),),
 
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Container(
+                  ],
+                ),
+                Column(
+                  children: [
+                    Container(
 
-                        child: Icon(
-                          statusIcon,
-                          color: primaryColor,
-                          size: 14.0,
-                        ),
-                        // color: primaryColor,
-                        // height: 20,
-                        // width: 1,
+                      child: Icon(
+                        statusIcon,
+                        color: primaryColor,
+                        size: 14.0,
                       ),
-                    ],
-                  ),
+                      // color: primaryColor,
+                      // height: 20,
+                      // width: 1,
+                    ),
+                  ],
+                ),
+                SizedBox(width: 10),
 
 
-                  Column(
-                    children: [
-                      Text("   " +status!, style: TextStyle(fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: primaryColor),),
-                    ],
-                  ),
+                Column(
+                  children: [
+                    Text("" +status!, style: TextStyle(fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: primaryColor),),
+                  ],
+                ),
 
-                ],
-              )
+              ],
+            )
           ],
         ),
       ),

@@ -41,7 +41,6 @@ class _RecordScreenState extends State<RecordScreen> {
   @override
   void dispose() {
     super.dispose();
-    _cameraController.dispose();
     controller.disposeRecording();
     print("RecordScreen is dispose!");
   }
@@ -162,7 +161,10 @@ class _RecordScreenState extends State<RecordScreen> {
                               controller.timer.start();
                               controller.determinePosition();
                             }else{
-                              if(controller.complainLocation == null) return;
+                              bool result = await controller.determinePosition();
+                              if(!result){
+                                return;
+                              }
                               controller.isRecording.toggle();
                               controller.timer.pause();
                               XFile videopath = await _cameraController.stopVideoRecording();
@@ -170,7 +172,7 @@ class _RecordScreenState extends State<RecordScreen> {
 
                               late final page;
                               //String convertedVideoPath;
-                              if(controller.timer.tick > 10){
+                              if(controller.timer.tick > 60){
 
                                 page = VideoViewPage(
                                     path: videopath.path,
@@ -188,7 +190,7 @@ class _RecordScreenState extends State<RecordScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (builder) => page)
-                              );
+                              ).then((value) =>   _cameraController.dispose());
                             }
                           }),
                       Obx(() => controller.isRecording.isTrue? IconButton(
@@ -241,4 +243,5 @@ class _RecordScreenState extends State<RecordScreen> {
       ),
     );
   }
+
 }
